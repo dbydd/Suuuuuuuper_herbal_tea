@@ -10,6 +10,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 public class CommonSetupEvent {
     @SubscribeEvent
     public static void onCommonSetup(FMLCommonSetupEvent event) {
-        BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(Suuuuuuuper_herbal_tea.tea_villa.get(), 1000));
+
     }
 }

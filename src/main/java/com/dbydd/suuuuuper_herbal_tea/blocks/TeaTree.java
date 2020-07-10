@@ -78,7 +78,7 @@ public class TeaTree extends BlockBase implements IGrowable {
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote) {
             if (state.get(GROW_TIER) > 2) {
-                ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Registered_Items.TEA_LEAVE1, worldIn.rand.nextInt(5)));
+                ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Registered_Items.TEA_LEAVE, worldIn.rand.nextInt(5)));
                 worldIn.setBlockState(pos, state.with(GROW_TIER, state.get(GROW_TIER) - 1));
             }
         }
