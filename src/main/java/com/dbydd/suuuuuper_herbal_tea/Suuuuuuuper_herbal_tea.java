@@ -2,14 +2,13 @@ package com.dbydd.suuuuuper_herbal_tea;
 
 import com.dbydd.suuuuuper_herbal_tea.blocks.BlockBase;
 import com.dbydd.suuuuuper_herbal_tea.items.ItemBase;
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Block;
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Blocks;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Fluids;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Items;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_TileEntities;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.*;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.fml.common.Mod;
@@ -36,7 +35,7 @@ public class Suuuuuuuper_herbal_tea {
 
         Suuuuuuuper_herbal_tea.RegisteryItems(ItemBase.registeries);
         Suuuuuuuper_herbal_tea.RegisteryBlocks(BlockBase.registeries);
-        Suuuuuuuper_herbal_tea.RegisterySingleBlock("big_black_pot", Registered_Block.BIG_BLACK_POT, Registered_Items.BIG_BLACK_POT_ITEM);
+        Suuuuuuuper_herbal_tea.RegisterySingleBlock("big_black_pot", Registered_Blocks.BIG_BLACK_POT, Registered_Items.BIG_BLACK_POT_ITEM);
         RegisteryBiomes();
     }
 
@@ -73,7 +72,7 @@ public class Suuuuuuuper_herbal_tea {
     }
 
     private static void InitElementsNeedToRegister() {
-        Registered_Block.init();
+        Registered_Blocks.init();
         Registered_Items.init();
         Registered_Fluids.init();
     }
