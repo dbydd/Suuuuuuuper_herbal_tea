@@ -19,7 +19,8 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
     private static final int MAIN_BRANCH_CHUNK_RANGE = 12;
     private static final int MAIN_BRANCH_BLOCK_RANGE = MAIN_BRANCH_CHUNK_RANGE << 4;
     private static final int MAIN_BRANCH_HEIGHT = 200;
-    private static final int LEAVE_RANGE = MAIN_BRANCH_BLOCK_RANGE<<3;
+    private static final int LEAVE_BLOCK_RANGE = MAIN_BRANCH_BLOCK_RANGE << 3;
+    private static final int LEAVE_CHUNK_RANGE = LEAVE_BLOCK_RANGE >> 4;
 
     public World_Tea_Tree_ChunkGenerator(IWorld worldIn, BiomeProvider biomeProviderIn) {
         super(worldIn, biomeProviderIn, new World_Tea_Tree_GenerationSettings());
@@ -32,13 +33,34 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
         boolean isGenerate_Big_Branch = RandomUtils.outputBooleanByChance(rand, 0.02);
         if (MathUtils.inCircle(chunkPos.x, chunkPos.z, MAIN_BRANCH_CHUNK_RANGE)) {
             generateMainBranch(region, iChunk, chunkPos);
-            if(chunkPos.x == 0 && chunkPos.z == 0){
+            if (chunkPos.x == 0 && chunkPos.z == 0) {
 
             }
-        }else if(MathUtils.inCircle(chunkPos.x, chunkPos.z, LEAVE_RANGE)){
+        } else if(MathUtils.inCircle(chunkPos.x, chunkPos.z, LEAVE_CHUNK_RANGE)){
+
 
         }
+        else{
+            generateBarrier(region, iChunk, chunkPos);
+        }
     }
+
+    private void generateBarrier(WorldGenRegion region, IChunk iChunk, ChunkPos chunkPos){
+        int beginX = chunkPos.getXStart();
+        int endX = chunkPos.getXEnd();
+        int beginZ = chunkPos.getZStart();
+        int endZ = chunkPos.getZEnd();
+        for (int x = beginX; x <= endX; x++) {
+            for (int z = beginZ; z <= endZ; z++) {
+                if (MathUtils.inCircle(x, z, MAIN_BRANCH_BLOCK_RANGE)) {
+                    for (int y = 1; y <= MAIN_BRANCH_HEIGHT; y++) {
+                        iChunk.setBlockState(new BlockPos(x, y, z), Blocks.BARRIER.getDefaultState(), false);
+                    }
+                }
+            }
+        }
+    }
+
 
     private void generateMainBranch(WorldGenRegion region, IChunk iChunk, ChunkPos chunkPos) {
         int beginX = chunkPos.getXStart();
