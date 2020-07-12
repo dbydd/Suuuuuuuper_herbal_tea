@@ -18,6 +18,8 @@ import java.util.Random;
 public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSettings> {
     private static final int MAIN_BRANCH_CHUNK_RANGE = 12;
     private static final int MAIN_BRANCH_BLOCK_RANGE = MAIN_BRANCH_CHUNK_RANGE << 4;
+    private static final int MAIN_BRANCH_HEIGHT = 200;
+    private static final int LEAVE_RANGE = MAIN_BRANCH_BLOCK_RANGE<<3;
 
     public World_Tea_Tree_ChunkGenerator(IWorld worldIn, BiomeProvider biomeProviderIn) {
         super(worldIn, biomeProviderIn, new World_Tea_Tree_GenerationSettings());
@@ -31,7 +33,10 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
         if (MathUtils.inCircle(chunkPos.x, chunkPos.z, MAIN_BRANCH_CHUNK_RANGE)) {
             generateMainBranch(region, iChunk, chunkPos);
             if(chunkPos.x == 0 && chunkPos.z == 0){
+
             }
+        }else if(MathUtils.inCircle(chunkPos.x, chunkPos.z, LEAVE_RANGE)){
+
         }
     }
 
@@ -40,12 +45,10 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
         int endX = chunkPos.getXEnd();
         int beginZ = chunkPos.getZStart();
         int endZ = chunkPos.getZEnd();
-        int beginY = 0;
-        int endY = region.getHeight();
         for (int x = beginX; x <= endX; x++) {
             for (int z = beginZ; z <= endZ; z++) {
                 if (MathUtils.inCircle(x, z, MAIN_BRANCH_BLOCK_RANGE)) {
-                    for (int y = beginY; y <= endY; y++) {
+                    for (int y = 1; y <= MAIN_BRANCH_HEIGHT; y++) {
                         iChunk.setBlockState(new BlockPos(x, y, z), Blocks.OAK_WOOD.getDefaultState(), false);
                     }
                 }
@@ -55,7 +58,7 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
 
     @Override
     public int getGroundHeight() {
-        return 100;
+        return 0;
     }
 
     @Override

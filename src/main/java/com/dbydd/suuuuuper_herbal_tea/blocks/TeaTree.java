@@ -30,8 +30,8 @@ public class TeaTree extends BlockBase implements IGrowable {
     protected static final IntegerProperty GROW_TIER = IntegerProperty.create("grow_tier", 0, 5);
     protected static final Properties default_properties = Properties.create(Material.PLANTS).hardnessAndResistance(3.0f).tickRandomly().notSolid().doesNotBlockMovement().sound(SoundType.PLANT);
 
-    public TeaTree(String name) {
-        super(default_properties, name, RenderType.getCutoutMipped());
+    public TeaTree() {
+        super(default_properties, "tea_tree", RenderType.getCutoutMipped());
         this.setDefaultState(this.stateContainer.getBaseState().with(GROW_TIER, 0));
     }
 
@@ -43,7 +43,20 @@ public class TeaTree extends BlockBase implements IGrowable {
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return Block.makeCuboidShape(0, 0, 0, 16, 24, 16);
+        int tier = state.get(GROW_TIER);
+        VoxelShape voxelShape;
+        switch (tier) {
+            case 0:
+                voxelShape = Block.makeCuboidShape(0, 0, 0, 16, 12, 16);
+                break;
+            case 1:
+                voxelShape = Block.makeCuboidShape(0, 0, 0, 16, 19, 16);
+                break;
+            default:
+                voxelShape =Block.makeCuboidShape(0, 0, 0, 16, 24, 16);
+                break;
+        }
+        return voxelShape;
     }
 
     @Override
@@ -64,7 +77,7 @@ public class TeaTree extends BlockBase implements IGrowable {
     @Override
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
         Biome biomeIn = worldIn.getBiome(pos);
-        float wet_value = (float) Math.sqrt(biomeIn.getDownfall() * biomeIn.getTemperature(pos));
+        float wet_value = (float) Math.sqrt((biomeIn.getDownfall() * biomeIn.getTemperature(pos)) / 2) / 2;
         if (rand.nextFloat() <= wet_value && state.get(GROW_TIER) < 5)
             worldIn.setBlockState(pos, state.with(GROW_TIER, state.get(GROW_TIER) + 1));
     }
