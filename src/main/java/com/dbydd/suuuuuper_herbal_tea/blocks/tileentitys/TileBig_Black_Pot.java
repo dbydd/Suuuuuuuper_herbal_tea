@@ -1,6 +1,6 @@
 package com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys;
 
-import com.dbydd.suuuuuper_herbal_tea.blocks.Big_Black_Pot;
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_TileEntities;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.capabilities.Capability;
@@ -17,7 +17,7 @@ public class TileBig_Black_Pot extends TileEntity {
     private ItemStackHandler resources = new ItemStackHandler(9);
 
     public TileBig_Black_Pot() {
-        super(Big_Black_Pot.registryObject.get());
+        super(Registered_TileEntities.TilE_BIG_BLACK_POT_TYPE.get());
     }
 
     @Nonnull
@@ -41,7 +41,7 @@ public class TileBig_Black_Pot extends TileEntity {
 
     @Override
     public CompoundNBT write(CompoundNBT compound) {
-        compound.put("tank",tank.writeToNBT(new CompoundNBT()));
+        compound.put("tank", tank.writeToNBT(new CompoundNBT()));
         compound.put("resources", resources.serializeNBT());
         return super.write(compound);
     }

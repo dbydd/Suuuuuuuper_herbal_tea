@@ -1,8 +1,8 @@
 package com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys;
 
-import com.dbydd.suuuuuper_herbal_tea.blocks.Earth_Stovetop;
 import com.dbydd.suuuuuper_herbal_tea.items.Big_Black_Pot_Item;
 import com.dbydd.suuuuuper_herbal_tea.interfaces.ITeaResource;
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_TileEntities;
 import com.dbydd.suuuuuper_herbal_tea.utils.IntegerContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FlintAndSteelItem;
@@ -32,7 +32,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
     private IResourceItemHandler resources = new IResourceItemHandler(9);
 
     public TileEarth_Stovetop() {
-        super(Earth_Stovetop.registryObject.get());
+        super(Registered_TileEntities.TILE_EARTH_STOVETOP_TYPE.get());
     }
 
     @Override
@@ -107,7 +107,8 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
         }
     }
 }
-class IResourceItemHandler extends ItemStackHandler{
+
+class IResourceItemHandler extends ItemStackHandler {
     public IResourceItemHandler(int i) {
         super(i);
     }
@@ -123,7 +124,7 @@ class IResourceItemHandler extends ItemStackHandler{
     @Nonnull
     @Override
     public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-        if(stack.getItem() instanceof ITeaResource){
+        if (stack.getItem() instanceof ITeaResource) {
             return super.insertItem(slot, stack, simulate);
         }
         return stack;

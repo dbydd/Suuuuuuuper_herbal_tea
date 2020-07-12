@@ -28,7 +28,7 @@ import java.util.Random;
 
 public class TeaTree extends BlockBase implements IGrowable {
     protected static final IntegerProperty GROW_TIER = IntegerProperty.create("grow_tier", 0, 5);
-    protected static final Properties default_properties = Properties.create(Material.PLANTS).hardnessAndResistance(3.0f).tickRandomly().notSolid().doesNotBlockMovement().sound(SoundType.GLASS);
+    protected static final Properties default_properties = Properties.create(Material.PLANTS).hardnessAndResistance(3.0f).tickRandomly().notSolid().doesNotBlockMovement().sound(SoundType.PLANT);
 
     public TeaTree(String name) {
         super(default_properties, name, RenderType.getCutoutMipped());
