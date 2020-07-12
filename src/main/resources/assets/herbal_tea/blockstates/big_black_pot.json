@@ -1,0 +1,10 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "herbal_tea:big_black_pot"
+	},
+	"variants": {
+		"normal": [{}],
+		"inventory": [{}]
+	}
+}
