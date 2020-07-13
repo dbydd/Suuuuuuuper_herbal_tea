@@ -1,5 +1,5 @@
 {
-	"parent": "herbal_tea:block/big_black_pot",
+	"parent": "suuuuuuuper_herbal_tea:block/big_black_pot",
 	"display": {
 		"thirdperson": {
 			"rotation": [ 10, -45, 170 ],
