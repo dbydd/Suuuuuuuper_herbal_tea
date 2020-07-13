@@ -2,15 +2,14 @@ package com.dbydd.suuuuuper_herbal_tea;
 
 import com.dbydd.suuuuuper_herbal_tea.blocks.BlockBase;
 import com.dbydd.suuuuuper_herbal_tea.items.ItemBase;
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Blocks;
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Fluids;
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Items;
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_TileEntities;
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.*;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.*;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraftforge.common.ModDimension;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -28,6 +27,7 @@ public class Suuuuuuuper_herbal_tea {
     public static final DeferredRegister<Fluid> FLUID_REGISTER = new DeferredRegister<>(ForgeRegistries.FLUIDS, NAME);
     public static final DeferredRegister<Feature<?>> FEATURES_REGISTER = new DeferredRegister<>(ForgeRegistries.FEATURES, NAME);
     public static final DeferredRegister<Biome> BIOMES_REGISTER = new DeferredRegister<>(ForgeRegistries.BIOMES, NAME);
+    public static final DeferredRegister<ModDimension> MOD_DIMENSION = new DeferredRegister<>(ForgeRegistries.MOD_DIMENSIONS, NAME);
     public static final ItemGroup TAB = new Tab();
 
     static {
@@ -46,6 +46,7 @@ public class Suuuuuuuper_herbal_tea {
         FEATURES_REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
         BIOMES_REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
         Registered_TileEntities.TILEENTITY_TYPE_REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
+        MOD_DIMENSION.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     public static void RegisteryItems(Map<String, Supplier<Item>> map) {
@@ -66,6 +67,10 @@ public class Suuuuuuuper_herbal_tea {
         ITEM_REGISTER.register(name, () -> item);
     }
 
+    public static RegistryObject<ModDimension> RegisteryDimenision(String name, ModDimension dimension) {
+        return MOD_DIMENSION.register(name, () -> dimension);
+    }
+
 
     public static void RegisteryBiomes() {
 
@@ -75,6 +80,7 @@ public class Suuuuuuuper_herbal_tea {
         Registered_Blocks.init();
         Registered_Items.init();
         Registered_Fluids.init();
+        Registered_Dimenisions.init();
     }
 
 }

@@ -6,10 +6,11 @@ import net.minecraft.item.Item;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.Supplier;
 
 public class ItemBase extends Item {
-    public static Map<String, Supplier<Item>> registeries = new HashMap<>();
+    public static Map<String, Supplier<Item>> registeries = new TreeMap<>();
     public static Properties DEFAULT_PROPERTIES = new Properties().group(Suuuuuuuper_herbal_tea.TAB);
 
     public ItemBase(Properties properties, String name) {

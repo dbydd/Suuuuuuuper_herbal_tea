@@ -7,15 +7,14 @@ import net.minecraft.client.renderer.RenderType;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.Supplier;
 
 public class BlockBase extends Block {
-    public static Map<String, Supplier<Block>> registeries = new HashMap<>();
-    private final String name;
+    public static Map<String, Supplier<Block>> registeries = new TreeMap<>();
 
     public BlockBase(Properties properties, String name, RenderType renderType) {
         super(properties);
-        this.name = name;
         registeries.put(name, () -> this);
         BlockRenderTypes.blockRenderTypeMap.put(this, renderType);
     }
