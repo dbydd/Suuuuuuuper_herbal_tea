@@ -6,6 +6,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.chunk.IChunk;
@@ -14,12 +16,13 @@ import net.minecraft.world.gen.*;
 import java.util.*;
 
 public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSettings> {
-    private static final int MAIN_BRANCH_CHUNK_RANGE = 2;
+    private static final int MAIN_BRANCH_CHUNK_RANGE = 4;
     private static final int MAIN_BRANCH_BLOCK_RANGE = 32;
     private static final int MAIN_BRANCH_HEIGHT = 175;
     private static final int LEAVE_BLOCK_RANGE = MAIN_BRANCH_BLOCK_RANGE << 5;
     private static final int LEAVE_CHUNK_RANGE = LEAVE_BLOCK_RANGE >> 4;
     private static Map<Double, BlockState> generate_Map = new HashMap<>();
+    private static final BlockState BRANCH_DEFAULT_STATE = Blocks.OAK_LOG.getDefaultState();
 
     public World_Tea_Tree_ChunkGenerator(IWorld worldIn, BiomeProvider biomeProviderIn) {
         super(worldIn, biomeProviderIn, new World_Tea_Tree_GenerationSettings());
@@ -33,8 +36,46 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
 
     }
 
-    private void generateRandomBranch(WorldGenRegion region, IChunk iChunk, ChunkPos chunkPos) {
+    private void generateRandomBranch(IWorld world, IChunk iChunk, ChunkPos chunkPos, BlockPos pos, Random rand) {
+        if (MathUtils.inCircle(pos.getX(), pos.getZ(), 400)) {
+            BlockPos currentPos = pos;
+            int currentx;
+            int currentz;
+            int branchwidth = Math.round((float) (rand.nextInt(7) + 1) / 2.0f);
+            while (currentPos.getY() >= pos.getY() - 60) {
 
+                for (int x = -branchwidth; x < branchwidth; x++) {
+                    for (int z = -branchwidth; z < branchwidth; z++) {
+
+                        if (MathUtils.inCircle(x, z, branchwidth)) {
+                            world.setBlockState(new BlockPos(currentPos.getX() + x, currentPos.getY(), currentPos.getZ() + z), BRANCH_DEFAULT_STATE, 3);
+                        }
+                    }
+                }
+
+                if (currentPos.getX() < 0) {
+                    currentx = currentPos.getX() + 1;
+                } else currentx = currentPos.getX() - 1;
+
+                if (currentPos.getZ() < 0) {
+                    currentz = currentPos.getZ() + 1;
+                } else currentz = currentPos.getZ() - 1;
+
+                currentPos = new BlockPos(currentx, currentPos.getY() - 1, currentz);
+            }
+            while (currentPos.getY() > 0){
+                for (int x = -branchwidth; x < branchwidth; x++) {
+                    for (int z = -branchwidth; z < branchwidth; z++) {
+
+                        if (MathUtils.inCircle(x, z, branchwidth)) {
+                            world.setBlockState(new BlockPos(currentPos.getX() + x, currentPos.getY(), currentPos.getZ() + z), BRANCH_DEFAULT_STATE, 3);
+                        }
+                    }
+                }
+
+                currentPos = new BlockPos(currentPos.getX(), currentPos.getY() - 1, currentPos.getZ());
+            }
+        }
 
     }
 
@@ -47,22 +88,32 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
         int currentHeight = 60;
         for (int currentStratum = 1; currentStratum <= stratum; currentStratum++) {
             int stratumHeight = rand.nextInt(16);
-            if (RandomUtils.outputBooleanByChance(rand, 0.6)) {
+            if (RandomUtils.outputBooleanByChance(rand, 0.57)) {
+
+                if (RandomUtils.outputBooleanByChance(rand, 0.35)) {
+                    generateRandomBranch(world, iChunk, chunkPos, new BlockPos(beginx, currentHeight, beginz), rand);
+                }
+
                 for (int currentHeightEachStratum = 1; currentHeightEachStratum <= stratumHeight && currentHeight < 256; currentHeightEachStratum++) {
+
                     int radius = rand.nextInt(16) + 16;
+
                     for (int x = -radius; x < radius; x++) {
                         for (int z = -radius; z < radius; z++) {
+
                             if (Math.sqrt(Math.pow(x, 2) + Math.pow(z, 2)) <= radius) {
                                 BlockPos blockPos = new BlockPos(beginx + x, currentHeightEachStratum + currentHeight, beginz + z);
+
                                 if (world.getBlockState(blockPos).getBlock() == Blocks.AIR)
                                     world.setBlockState(blockPos, RandomUtils.outputRandmonBlockByList(rand, generate_Map), 3);
+
                             }
                         }
                     }
                     currentHeight++;
                 }
             }
-            currentHeight += rand.nextInt(8) + 8;
+            currentHeight += rand.nextInt(4) + 12;
         }
 
     }
@@ -93,7 +144,7 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
             for (int z = beginZ; z <= endZ; z++) {
                 if (MathUtils.inCircle(x, z, MAIN_BRANCH_BLOCK_RANGE)) {
                     for (int y = 1; y <= MAIN_BRANCH_HEIGHT; y++) {
-                        world.setBlockState(new BlockPos(x, y, z), Blocks.OAK_WOOD.getDefaultState(), 3);
+                        world.setBlockState(new BlockPos(x, y, z), BRANCH_DEFAULT_STATE, 3);
                     }
                 }
             }
@@ -116,7 +167,6 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
             }
         } else if (MathUtils.inCircle(chunkPos.x, chunkPos.z, LEAVE_CHUNK_RANGE)) {
             generateLeaves(worldIn, chunkIn, chunkPos);
-//            generateRandomBranch(region, iChunk, chunkPos);
         } else {
             generateBarrier(worldIn, chunkIn, chunkPos);
         }

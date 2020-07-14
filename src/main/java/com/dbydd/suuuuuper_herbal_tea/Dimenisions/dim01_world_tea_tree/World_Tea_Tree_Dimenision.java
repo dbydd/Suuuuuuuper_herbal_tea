@@ -7,12 +7,14 @@ import net.minecraft.world.World;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraftforge.client.IRenderHandler;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class World_Tea_Tree_Dimenision extends Dimension {
     public World_Tea_Tree_Dimenision(World world, DimensionType dimensionType) {
-        super(world,dimensionType, 0f);
+        super(world, dimensionType, 0f);
     }
 
     @Override
@@ -58,7 +60,7 @@ public class World_Tea_Tree_Dimenision extends Dimension {
 
     @Override
     public Vec3d getFogColor(float celestialAngle, float partialTicks) {
-        return new Vec3d(0, 0, 0);
+        return new Vec3d(0.182, 0.249, 0.247);
     }
 
     @Override
