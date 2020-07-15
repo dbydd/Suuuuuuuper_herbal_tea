@@ -17,6 +17,6 @@ public class World_Tea_Tree_BiomeProvider extends BiomeProvider {
     @Override
     public Biome getNoiseBiome(int x, int y, int z) {
 //        return BIOMES.get(new Random().nextInt(BIOMES.size()));
-    return BIOMES.get(0);
+        return BIOMES.get(0);
     }
 }

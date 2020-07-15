@@ -25,7 +25,6 @@ public class Suuuuuuuper_herbal_tea {
     public static final DeferredRegister<Item> ITEM_REGISTER = new DeferredRegister<>(ForgeRegistries.ITEMS, NAME);
     public static final DeferredRegister<Block> BLOCK_REGISTER = new DeferredRegister<>(ForgeRegistries.BLOCKS, NAME);
     public static final DeferredRegister<Fluid> FLUID_REGISTER = new DeferredRegister<>(ForgeRegistries.FLUIDS, NAME);
-    public static final DeferredRegister<Feature<?>> FEATURES_REGISTER = new DeferredRegister<>(ForgeRegistries.FEATURES, NAME);
     public static final DeferredRegister<ModDimension> MOD_DIMENSION = new DeferredRegister<>(ForgeRegistries.MOD_DIMENSIONS, NAME);
     public static final ItemGroup TAB = new Tab();
 
@@ -41,7 +40,7 @@ public class Suuuuuuuper_herbal_tea {
         ITEM_REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
         BLOCK_REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
         FLUID_REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
-        FEATURES_REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
+        Registered_Features.FEATURES_REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
         Registered_Biomes.BIOMES_REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
         Registered_TileEntities.TILEENTITY_TYPE_REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
         MOD_DIMENSION.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -74,6 +73,7 @@ public class Suuuuuuuper_herbal_tea {
         Registered_Items.init();
         Registered_Fluids.init();
         Registered_Dimenisions.init();
+        Registered_Features.init();
     }
 
 }
