@@ -1,5 +1,6 @@
 package com.dbydd.suuuuuper_herbal_tea.Dimenisions.dim01_world_tea_tree;
 
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Blocks;
 import com.dbydd.suuuuuper_herbal_tea.utils.MathUtils;
 import com.dbydd.suuuuuper_herbal_tea.utils.RandomUtils;
 import net.minecraft.block.BlockState;
@@ -26,9 +27,9 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
 
     public World_Tea_Tree_ChunkGenerator(IWorld worldIn, BiomeProvider biomeProviderIn) {
         super(worldIn, biomeProviderIn, new World_Tea_Tree_GenerationSettings());
-        generate_Map.put(0.07, Blocks.GLOWSTONE.getDefaultState());
+        generate_Map.put(0.07, Registered_Blocks.WORLD_TEA_TREE_LEAVE_GLOW.getDefaultState());
         generate_Map.put(0.27, Blocks.OAK_WOOD.getDefaultState());
-        generate_Map.put(0.6, Blocks.OAK_LEAVES.getDefaultState());
+        generate_Map.put(0.6, Registered_Blocks.WORLD_TEA_TREE_LEAVE.getDefaultState());
     }
 
     @Override
