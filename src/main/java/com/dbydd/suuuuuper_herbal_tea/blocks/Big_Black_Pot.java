@@ -24,7 +24,7 @@ public class Big_Black_Pot extends Block {
     public static final VoxelShape shape = Block.makeCuboidShape(0, 0, 0, 16, 8, 16);
 
     public Big_Black_Pot() {
-        super(Properties.create(Material.IRON).hardnessAndResistance(4.5f).harvestLevel(2).harvestTool(ToolType.PICKAXE));
+        super(Properties.create(Material.IRON).hardnessAndResistance(4.5f).harvestLevel(2).harvestTool(ToolType.PICKAXE).notSolid());
         BlockRenderTypes.blockRenderTypeMap.put(this, RenderType.getTranslucent());
     }
 

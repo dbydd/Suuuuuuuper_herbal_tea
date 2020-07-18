@@ -4,13 +4,18 @@ import com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys.TileEarth_Stovetop;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.BlockRenderTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.FaceDirection;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -22,16 +27,18 @@ import javax.annotation.Nullable;
 
 public class Earth_Stovetop extends BlockBase {
     public static final BooleanProperty HAS_FIRE_WOOD = BooleanProperty.create("has_fire_wood");
+    public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 
     public Earth_Stovetop() {
         super(Properties.create(Material.ROCK).notSolid().hardnessAndResistance(3, 1.5f).harvestLevel(1).harvestTool(ToolType.PICKAXE), "earth_stovetop", RenderType.getTranslucent());
         BlockRenderTypes.blockRenderTypeMap.put(this, RenderType.getTranslucent());
-        this.setDefaultState(this.stateContainer.getBaseState().with(HAS_FIRE_WOOD, false));
+        this.setDefaultState(this.stateContainer.getBaseState().with(HAS_FIRE_WOOD, false).with(FACING, Direction.NORTH));
     }
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(HAS_FIRE_WOOD);
+        builder.add(FACING);
         super.fillStateContainer(builder);
     }
 

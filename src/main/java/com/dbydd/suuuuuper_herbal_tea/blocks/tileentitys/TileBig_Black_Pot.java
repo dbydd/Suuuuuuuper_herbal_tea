@@ -5,7 +5,9 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -46,4 +48,9 @@ public class TileBig_Black_Pot extends TileEntity {
         return super.write(compound);
     }
 
+    public FluidStack scooped(int amount, IFluidHandler.FluidAction action) {
+        FluidStack drain = tank.drain(amount, action);
+        markDirty();
+        return drain;
+    }
 }

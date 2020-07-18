@@ -86,6 +86,6 @@ class Tab extends ItemGroup {
 
     @Override
     public ItemStack createIcon() {
-        return new ItemStack(Registered_Items.TEA_LEAVE);
+        return new ItemStack(Registered_Items.WORLD_TEA_TREE_TEA_LEAVE);
     }
 }

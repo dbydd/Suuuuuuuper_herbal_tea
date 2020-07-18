@@ -23,11 +23,11 @@ import net.minecraft.world.gen.feature.template.*;
 import java.util.Random;
 
 public class TeaHouseStructurePiece extends TemplateStructurePiece {
-    private final ResourceLocation templateName = new ResourceLocation(Suuuuuuuper_herbal_tea.NAME, "tea_house");
     private Rotation rot;
 
     public TeaHouseStructurePiece(TemplateManager templateManagerIn, BlockPos pos, Random rand) {
         super(CommonSetupEvent.teaHouseStructurePieceType, 0);
+        ResourceLocation templateName = new ResourceLocation(Suuuuuuuper_herbal_tea.NAME, "tea_house");
         Template temp = templateManagerIn.getTemplate(templateName);
         this.rot = Rotation.randomRotation(rand);
         this.setup(temp, pos, new PlacementSettings().setRotation(rot));

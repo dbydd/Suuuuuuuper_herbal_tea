@@ -3,7 +3,6 @@ package com.dbydd.suuuuuper_herbal_tea.events;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Features;
 import com.dbydd.suuuuuper_herbal_tea.worldgen.biomes.World_Tea_Tree_Biome;
 import com.dbydd.suuuuuper_herbal_tea.worldgen.tea_house.TeaHouseStructurePiece;
-import com.dbydd.suuuuuper_herbal_tea.worldgen.tea_house.TeaHouseStructurePiece2;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;

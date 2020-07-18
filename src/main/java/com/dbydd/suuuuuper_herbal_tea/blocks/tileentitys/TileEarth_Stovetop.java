@@ -1,7 +1,9 @@
 package com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys;
 
+import com.dbydd.suuuuuper_herbal_tea.blocks.Earth_Stovetop;
 import com.dbydd.suuuuuper_herbal_tea.items.Big_Black_Pot_Item;
 import com.dbydd.suuuuuper_herbal_tea.interfaces.ITeaResource;
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Items;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_TileEntities;
 import com.dbydd.suuuuuper_herbal_tea.utils.IntegerContainer;
 import net.minecraft.entity.player.PlayerEntity;
@@ -10,17 +12,24 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
+import org.lwjgl.system.CallbackI;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntity {
     private boolean hasPot = false;
@@ -30,9 +39,21 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
     private IntegerContainer progress = new IntegerContainer(0, 200);
     private FluidTank tank = new FluidTank(2000);
     private IResourceItemHandler resources = new IResourceItemHandler(9);
+    private IResourceItemHandler effects = new IResourceItemHandler(9);
 
     public TileEarth_Stovetop() {
         super(Registered_TileEntities.TILE_EARTH_STOVETOP_TYPE.get());
+    }
+
+    @Nonnull
+    @Override
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            if (side == world.getBlockState(pos).get(Earth_Stovetop.FACING)) {
+                return LazyOptional.of(() -> fuel_ash_Handler).cast();
+            } else return LazyOptional.of(() -> resources).cast();
+        }
+        return super.getCapability(cap, side);
     }
 
     @Override
@@ -43,6 +64,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
         compound.put("temperature", temperature.serializeNBT());
         compound.put("resources", resources.serializeNBT());
         compound.put("progress", progress.serializeNBT());
+        compound.put("effects", effects.serializeNBT());
         tank.writeToNBT(compound);
         return super.write(compound);
     }
@@ -55,19 +77,41 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
         this.temperature.deserializeNBT(compound.getCompound("temperature"));
         this.tank.readFromNBT(compound);
         this.resources.deserializeNBT(compound.getCompound("resources"));
+        this.effects.deserializeNBT(compound.getCompound("effects"));
         this.progress.deserializeNBT(compound.getCompound("progress"));
         super.read(compound);
+    }
+
+    public CompoundNBT serializePotNBT() {
+        CompoundNBT compoundNBT = new CompoundNBT();
+        compoundNBT.put("resources", resources.serializeNBT());
+        compoundNBT.put("tank", tank.writeToNBT(new CompoundNBT()));
+        compoundNBT.put("effects", effects.serializeNBT());
+        return compoundNBT;
     }
 
     public void onBlockActived(World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         ItemStack heldItem = player.getHeldItem(handIn);
         if (heldItem.isEmpty()) {
-            ItemHandlerHelper.giveItemToPlayer(player, fuel_ash_Handler.getStackInSlot(1));
-            markDirty();
+            if (player.isSneaking()) {
+                if (hasPot) {
+                    ItemStack stack = new ItemStack(Registered_Items.BIG_BLACK_POT_ITEM);
+                    stack.setTag(serializePotNBT());
+                    ItemHandlerHelper.giveItemToPlayer(player, stack);
+                    takeAwayPot();
+                }
+            } else {
+                ItemHandlerHelper.giveItemToPlayer(player, fuel_ash_Handler.getStackInSlot(1));
+                markDirty();
+            }
         } else if (heldItem.getItem() instanceof Big_Black_Pot_Item) {
             if (!hasPot) {
-                this.resources.deserializeNBT(heldItem.getChildTag("BlockEntityTag").getCompound("resources"));
-                this.tank.readFromNBT(heldItem.getChildTag("BlockEntityTag").getCompound("tank"));
+                CompoundNBT compound = heldItem.getChildTag("BlockEntityTag");
+                if (compound != null) {
+                    this.resources.deserializeNBT(compound.getCompound("resources"));
+                    this.tank.readFromNBT(compound.getCompound("tank"));
+                    this.effects.deserializeNBT(compound.getCompound("effects"));
+                }
                 player.setHeldItem(handIn, ItemStack.EMPTY);
                 hasPot = true;
                 markDirty();
@@ -105,6 +149,22 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
                 markDirty();
             }
         }
+    }
+
+    public void takeAwayPot() {
+        this.hasPot = false;
+        this.effects = new IResourceItemHandler(9);
+        this.resources = new IResourceItemHandler(9);
+        this.tank = new FluidTank(2000);
+        markDirty();
+    }
+
+    public boolean hasPot() {
+        return hasPot;
+    }
+
+    public FluidTank getTank() {
+        return tank;
     }
 }
 
