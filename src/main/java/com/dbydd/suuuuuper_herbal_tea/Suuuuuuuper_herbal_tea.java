@@ -34,6 +34,7 @@ public class Suuuuuuuper_herbal_tea {
         Suuuuuuuper_herbal_tea.RegisteryItems(ItemBase.registeries);
         Suuuuuuuper_herbal_tea.RegisteryBlocks(BlockBase.registeries);
         Suuuuuuuper_herbal_tea.RegisterySingleBlock("big_black_pot", Registered_Blocks.BIG_BLACK_POT, Registered_Items.BIG_BLACK_POT_ITEM);
+        Suuuuuuuper_herbal_tea.RegisterySingleBlock("honeysuckle", Registered_Blocks.HONEYSUCKLE, Registered_Items.HONEY_SUCKLE_ITEM);
     }
 
     public Suuuuuuuper_herbal_tea() {
