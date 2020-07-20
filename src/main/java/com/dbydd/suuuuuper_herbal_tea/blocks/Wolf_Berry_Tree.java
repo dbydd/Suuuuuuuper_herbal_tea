@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -28,8 +29,9 @@ public class Wolf_Berry_Tree extends BlockBase implements IGrowable {
     protected static final IntegerProperty GROW_TIER = IntegerProperty.create("grow_tier", 0, 5);
     protected static final Properties default_properties = Properties.create(Material.PLANTS).hardnessAndResistance(3.0f).tickRandomly().notSolid().doesNotBlockMovement().sound(SoundType.PLANT);
 
-    public Wolf_Berry_Tree(Properties properties, String name, RenderType renderType) {
-        super(properties, name, renderType);
+    public Wolf_Berry_Tree() {
+        super(default_properties, "wolf_berry_tree", RenderType.getTranslucent());
+        this.setDefaultState(this.stateContainer.getBaseState().with(GROW_TIER, 0));
     }
 
     @Override
@@ -40,6 +42,12 @@ public class Wolf_Berry_Tree extends BlockBase implements IGrowable {
     @Override
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
         return true;
+    }
+
+    @Override
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(GROW_TIER);
+        super.fillStateContainer(builder);
     }
 
     @Override
@@ -73,7 +81,7 @@ public class Wolf_Berry_Tree extends BlockBase implements IGrowable {
 
     @Override
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-        if (rand.nextFloat() <= 0.35 && state.get(GROW_TIER) < 8)
+        if (rand.nextFloat() <= 0.35 && state.get(GROW_TIER) < 5)
             worldIn.setBlockState(pos, state.with(GROW_TIER, state.get(GROW_TIER) + 1));
     }
 }

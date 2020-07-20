@@ -31,42 +31,45 @@ public class Registered_Items {
     public static final Item MOUNTAIN_TEA_LEAVE = new Tea_Leaves("mountain_tea_leave", (world, playerEntity) -> {
         playerEntity.move(MoverType.PLAYER, new Vec3d(0, 128, 0));
         playerEntity.addPotionEffect(new EffectInstance(Effects.SLOW_FALLING, 2000, 2));
-    });
+        playerEntity.addPotionEffect(new EffectInstance(Effects.INSTANT_DAMAGE, 2000, 2));
+    }, new EffectInstance(Effects.INSTANT_DAMAGE, 100, 1));
     public static final Item PLAIN_TEA_LEAVE = new Tea_Leaves("plain_tea_leave", (world, playerEntity) -> {
         playerEntity.addPotionEffect(new EffectInstance(Effects.SPEED, 2000, 2));
         playerEntity.addPotionEffect(new EffectInstance(Effects.JUMP_BOOST, 2000, 2));
-    });
+    }, new EffectInstance(Effects.HASTE, 100, 2));
     public static final Item OCEAN_TEA_LEAVE = new Tea_Leaves("ocean_tea_leave", (world, playerEntity) -> {
-        playerEntity.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 2000, 1));
+        playerEntity.addPotionEffect(new EffectInstance(Effects.CONDUIT_POWER, 2000, 1));
         ItemHandlerHelper.giveItemToPlayer(playerEntity, new ItemStack(Items.TROPICAL_FISH));
-    });
+    }, new EffectInstance(Effects.WATER_BREATHING, 100, 1));
     public static final Item JUNGLE_TEA_LEAVE = new Tea_Leaves("jungle_tea_leave", (world, playerEntity) -> {
         playerEntity.addPotionEffect(new EffectInstance(Effects.LUCK, 2000, 2));
         EntityType.CAT.spawn(world.getWorld(), null, new StringTextComponent("your best friend"), playerEntity, playerEntity.getPosition(), SpawnReason.NATURAL, true, true);
-    });
+    }, new EffectInstance(Effects.NIGHT_VISION, 100, 1));
     public static final Item DESERT_TEA_LEAVE = new Tea_Leaves("desert_tea_leave", (world, playerEntity) -> {
         world.setBlockState(playerEntity.getPosition(), Blocks.WATER.getDefaultState(), 2);
-    });
+    }, new EffectInstance(Effects.LUCK, 100, 2));
     public static final Item TROPICAL_TEA_LEAVE = new Tea_Leaves("tropical_tea_leave", (world, playerEntity) -> {
         world.getWorld().setRainStrength(1.0f);
-    });
+    }, new EffectInstance(Effects.JUMP_BOOST, 100, 2));
     public static final Item CLAY_TEA_LEAVE = new Tea_Leaves("clay_tea_leave", (world, playerEntity) -> {
         world.getWorld().addEntity(new ItemEntity(world.getWorld(), playerEntity.getPosX(), playerEntity.getPosY() + 3, playerEntity.getPosZ(), new ItemStack(Items.DEAD_BUSH, 64)));
-    });
+    }, new EffectInstance(Effects.SATURATION, 100, 2));
     public static final Item SNOW_TEA_LEAVE = new Tea_Leaves("snow_land_tea_leave", (world, playerEntity) -> {
         playerEntity.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 2000, 2));
         BlockPos position = playerEntity.getPosition();
         for (int i = 0; i <= 1; i++) {
             world.setBlockState(new BlockPos(position.getX(), position.getY() + i, position.getZ()), Blocks.ICE.getDefaultState(), 2);
         }
-    });
+    }, new EffectInstance(Effects.FIRE_RESISTANCE, 100, 2));
     public static final Item SWAMP_TEA_LEAVE = new Tea_Leaves("swamp_tea_leave", (world, playerEntity) -> {
         for (int i = 0; i < 5; i++)
             EntityType.SLIME.spawn(world.getWorld(), null, new StringTextComponent("slime!"), playerEntity, playerEntity.getPosition(), SpawnReason.NATURAL, true, true);
-    });
+    }, new EffectInstance(Effects.STRENGTH, 100, 2));
     public static final Item WORLD_TEA_TREE_TEA_LEAVE = new Tea_Leaves("world_tea_tree_tea_leave", (world, playerEntity) -> {
         playerEntity.respawnPlayer();
-    });
+        World world1 = world.getWorld();
+        world1.setDayTime((world1.getDayTime() + 18000) % 36000);
+    }, new EffectInstance(Effects.RESISTANCE, 100, 5));
     public static final Item GREENDATE = new GreenDate("green_date", (world, playerEntity) -> {
         Collection<EffectInstance> activePotionEffects = playerEntity.getActivePotionEffects();
         Collection<EffectInstance> activePotionEffectsGive = playerEntity.getActivePotionEffects();
@@ -98,9 +101,9 @@ public class Registered_Items {
     });
     public static final Item HONEY_SUCKLE_ITEM = new HoneySuckle_Item((world, playerEntity) -> {
         World world1 = world.getWorld();
-        if(world1.isRaining()){
+        if (world1.isRaining()) {
             world1.setRainStrength(0);
-        }else world1.setRainStrength(1);
+        } else world1.setRainStrength(1);
         playerEntity.clearActivePotions();
     });
 

@@ -27,13 +27,13 @@ import org.lwjgl.system.CallbackI;
 
 import java.util.Random;
 
-public class DateTree extends BlockBase implements IGrowable {
+public class Jujuce_Tree extends BlockBase implements IGrowable {
 
     protected static final IntegerProperty GROW_TIER = IntegerProperty.create("grow_tier", 0, 5);
     protected static final Properties default_properties = Properties.create(Material.PLANTS).hardnessAndResistance(3.0f).tickRandomly().notSolid().doesNotBlockMovement().sound(SoundType.PLANT);
 
-    public DateTree() {
-        super(default_properties, "date_tree", RenderType.getTranslucent());
+    public Jujuce_Tree() {
+        super(default_properties, "jujuce_tree", RenderType.getTranslucent());
         this.setDefaultState(this.stateContainer.getBaseState().with(GROW_TIER, 0));
     }
 
@@ -83,7 +83,7 @@ public class DateTree extends BlockBase implements IGrowable {
 
     @Override
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-        if (rand.nextFloat() <= 0.35 && state.get(GROW_TIER) < 8)
+        if (rand.nextFloat() <= 0.35 && state.get(GROW_TIER) < 5)
             worldIn.setBlockState(pos, state.with(GROW_TIER, state.get(GROW_TIER) + 1));
     }
 

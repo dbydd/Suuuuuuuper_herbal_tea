@@ -18,7 +18,7 @@ public class GreenDate extends ItemBase implements ITeaResource {
     private BiConsumer<IWorld, PlayerEntity> effect;
 
     public GreenDate(String name, BiConsumer<IWorld, PlayerEntity> effect) {
-        super(new Properties().group(Suuuuuuuper_herbal_tea.TAB), name, new Food.Builder().setAlwaysEdible().hunger(4).saturation(8).effect(() -> new EffectInstance(Effects.HEALTH_BOOST, 50, 1), 0.7f).build());
+        super(new Properties().group(Suuuuuuuper_herbal_tea.TAB), name, new Food.Builder().setAlwaysEdible().hunger(4).saturation(8).effect(() -> new EffectInstance(Effects.STRENGTH, 100, 1), 0.7f).build());
         this.effect = effect;
     }
 
