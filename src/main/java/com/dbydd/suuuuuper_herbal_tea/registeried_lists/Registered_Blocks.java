@@ -18,6 +18,7 @@ public class Registered_Blocks {
     public static final Block WORLD_TEA_TREE_LEAVE = new World_Tea_Tree_Leave(Block.Properties.create(Material.LEAVES).notSolid().harvestTool(ToolType.AXE).hardnessAndResistance(0.5f), "world_tea_tree_leave_not_glow");
     public static final Block WORLD_TEA_TREE_LEAVE_GLOW = new World_Tea_Tree_Leave(Block.Properties.create(Material.LEAVES).notSolid().harvestTool(ToolType.AXE).hardnessAndResistance(0.5f).lightValue(12), "world_tea_tree_leave_glow");
     public static final Block HONEYSUCKLE = new HoneySuckle_Block(Block.Properties.create(Material.PLANTS).doesNotBlockMovement().hardnessAndResistance(0.5f).sound(SoundType.PLANT));
+    public static final Block STONE_TABLE = new Stone_Table();
 
     public static void init() {
     }

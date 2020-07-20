@@ -17,6 +17,7 @@ import javax.annotation.Nonnull;
 public class TileBig_Black_Pot extends TileEntity {
     private FluidTank tank = new FluidTank(2000);
     private ItemStackHandler resources = new ItemStackHandler(9);
+    private ItemStackHandler effects = new ItemStackHandler(9);
 
     public TileBig_Black_Pot() {
         super(Registered_TileEntities.TilE_BIG_BLACK_POT_TYPE.get());
@@ -38,6 +39,7 @@ public class TileBig_Black_Pot extends TileEntity {
     public void read(CompoundNBT compound) {
         tank.readFromNBT(compound.getCompound("tank"));
         resources.deserializeNBT(compound.getCompound("resources"));
+        effects.deserializeNBT(compound.getCompound("effects"));
         super.read(compound);
     }
 
@@ -45,6 +47,7 @@ public class TileBig_Black_Pot extends TileEntity {
     public CompoundNBT write(CompoundNBT compound) {
         compound.put("tank", tank.writeToNBT(new CompoundNBT()));
         compound.put("resources", resources.serializeNBT());
+        compound.put("effects",effects.serializeNBT());
         return super.write(compound);
     }
 

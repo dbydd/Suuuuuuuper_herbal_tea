@@ -148,7 +148,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
                 isCooking = true;
                 progress.self_add();
                 if (progress.atMaxValue()) {
-
+                    finishCook();
                 }
             }
 
@@ -202,6 +202,10 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
             effects.setStackInSlot(i,new ItemStack(item, count));
         }
         this.resources = new IResourceItemHandler(9);
+        this.isCooking = false;
+        this.isburning = false;
+        this.burnTime = 0;
+        this.maxBurnTime = 0;
     }
 
     public void takeAwayPot() {
