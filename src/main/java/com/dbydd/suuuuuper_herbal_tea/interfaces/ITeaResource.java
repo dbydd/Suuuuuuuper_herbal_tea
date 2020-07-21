@@ -8,5 +8,5 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
 public interface ITeaResource {
-    BiConsumer<IWorld, PlayerEntity> generateEffects();
+    ITeaEffects generateEffects();
 }

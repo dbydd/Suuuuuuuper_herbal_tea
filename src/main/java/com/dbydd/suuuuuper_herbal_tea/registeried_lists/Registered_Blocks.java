@@ -4,6 +4,7 @@ import com.dbydd.suuuuuper_herbal_tea.blocks.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.common.ToolType;
 
 public class Registered_Blocks {
@@ -12,7 +13,8 @@ public class Registered_Blocks {
 
     public static final Block EARTH_STOVETOP = new Earth_Stovetop();
     public static final Block BIG_BLACK_POT = new Big_Black_Pot();
-    public static final Block STONE_CHAIR = new Stone_Chair();
+    public static final Block TEA_CUP = new BlockTeaCup();
+    public static final Block STONE_CHAIR = new BlockBase(Block.Properties.create(Material.ROCK).notSolid().hardnessAndResistance(3.0f), "stone_chair", RenderType.getTranslucent());
     public static final Block WOLF_BERRY_TREE = new Wolf_Berry_Tree();
     public static final Block DATE_TREE = new Jujuce_Tree();
     public static final Block WORLD_TEA_TREE_LEAVE = new World_Tea_Tree_Leave(Block.Properties.create(Material.LEAVES).notSolid().harvestTool(ToolType.AXE).hardnessAndResistance(0.5f), "world_tea_tree_leave_not_glow");

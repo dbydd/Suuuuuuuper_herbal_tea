@@ -1,6 +1,7 @@
 package com.dbydd.suuuuuper_herbal_tea.items;
 
 import com.dbydd.suuuuuper_herbal_tea.Suuuuuuuper_herbal_tea;
+import com.dbydd.suuuuuper_herbal_tea.interfaces.ITeaEffects;
 import com.dbydd.suuuuuper_herbal_tea.interfaces.ITeaResource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Food;
@@ -17,16 +18,16 @@ import java.util.function.BiConsumer;
 
 public class Tea_Leaves extends ItemBase implements ITeaResource {
     public static Map<String, Tea_Leaves> leavesList = new HashMap<>();
-    private final BiConsumer<IWorld, PlayerEntity> effect;
+    private final ITeaEffects effect;
 
-    public Tea_Leaves(String name, BiConsumer<IWorld, PlayerEntity> effect, EffectInstance effectOnEat) {
+    public Tea_Leaves(String name, ITeaEffects effect, EffectInstance effectOnEat) {
         super(new Properties().group(Suuuuuuuper_herbal_tea.TAB), name, new Food.Builder().setAlwaysEdible().hunger(1).effect(()->effectOnEat, 0.5F).build());
         leavesList.put(name, this);
         this.effect = effect;
     }
 
     @Override
-    public BiConsumer<IWorld, PlayerEntity> generateEffects() {
+    public ITeaEffects generateEffects() {
         return effect;
     }
 

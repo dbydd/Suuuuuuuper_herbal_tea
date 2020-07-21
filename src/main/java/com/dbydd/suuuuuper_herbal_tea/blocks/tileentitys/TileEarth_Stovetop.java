@@ -5,6 +5,7 @@ import com.dbydd.suuuuuper_herbal_tea.items.Big_Black_Pot_Item;
 import com.dbydd.suuuuuper_herbal_tea.interfaces.ITeaResource;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Items;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_TileEntities;
+import com.dbydd.suuuuuper_herbal_tea.utils.IResourceItemHandler;
 import com.dbydd.suuuuuper_herbal_tea.utils.IntegerContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
@@ -104,10 +105,22 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
         if (heldItem.isEmpty()) {
             if (player.isSneaking()) {
                 if (hasPot) {
-                    ItemStack stack = new ItemStack(Registered_Items.BIG_BLACK_POT_ITEM);
-                    stack.setTag(serializePotNBT());
-                    ItemHandlerHelper.giveItemToPlayer(player, stack);
-                    takeAwayPot();
+                    boolean flag = true;
+                    for(int i = 0;i<resources.getSlots();i++){
+                        ItemStack stackInSlot = resources.getStackInSlot(i);
+                        if(!stackInSlot.isEmpty()){
+                            ItemHandlerHelper.giveItemToPlayer(player,resources.extractItem(i, stackInSlot.getCount(), false));
+                            markDirty();
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if(flag) {
+                        ItemStack stack = new ItemStack(Registered_Items.BIG_BLACK_POT_ITEM);
+                        stack.setTag(serializePotNBT());
+                        ItemHandlerHelper.giveItemToPlayer(player, stack);
+                        takeAwayPot();
+                    }
                 }
             } else {
                 ItemHandlerHelper.giveItemToPlayer(player, fuel_ash_Handler.getStackInSlot(1));
@@ -135,6 +148,12 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
                 player.setHeldItem(handIn, fuel_ash_Handler.insertItem(0, heldItem, false));
                 markDirty();
             }
+        } else {
+            if(hasPot) {
+                ItemStack itemStack = ItemHandlerHelper.insertItem(resources, heldItem, false);
+                player.setHeldItem(handIn, itemStack);
+                markDirty();
+            }
         }
 
     }
@@ -144,7 +163,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
         if (isburning) {
             temperature.self_add();
             burnTime++;
-            if (temperature.getCurrent() > 80 && tank.getFluidAmount()>=1000 && tank.getFluid().getFluid() == Fluids.WATER) {
+            if (temperature.getCurrent() > 80 && tank.getFluidAmount() >= 1000 && tank.getFluid().getFluid() == Fluids.WATER) {
                 isCooking = true;
                 progress.self_add();
                 if (progress.atMaxValue()) {
@@ -178,7 +197,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
         } else {
             Item item = stackInSlot.getItem();
             int burnTime = ForgeHooks.getBurnTime(new ItemStack(item));
-            if(burnTime != 0) {
+            if (burnTime != 0) {
                 fuel_ash_Handler.extractItem(0, 1, false);
                 this.maxBurnTime = burnTime;
                 this.burnTime = 0;
@@ -190,16 +209,16 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
         return false;
     }
 
-    private void finishCook(){
+    private void finishCook() {
         float waterAmount = tank.getFluidAmount();
         float tankCapacity = tank.getCapacity();
-        int value = Math.round(waterAmount/tankCapacity);
+        int value = Math.round(tankCapacity / waterAmount);
         int slots = this.resources.getSlots();
-        for(int i = 0;i<slots;i++){
+        for (int i = 0; i < slots; i++) {
             ItemStack stackInSlot = resources.getStackInSlot(i);
-            int count = stackInSlot.getCount()/value;
+            int count = stackInSlot.getCount() / value;
             Item item = stackInSlot.getItem();
-            effects.setStackInSlot(i,new ItemStack(item, count));
+            effects.setStackInSlot(i, new ItemStack(item, count));
         }
         this.resources = new IResourceItemHandler(9);
         this.isCooking = false;
@@ -225,25 +244,3 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
     }
 }
 
-class IResourceItemHandler extends ItemStackHandler {
-    public IResourceItemHandler(int i) {
-        super(i);
-    }
-
-    public IResourceItemHandler(NonNullList<ItemStack> stacks) {
-        super(stacks);
-    }
-
-    public IResourceItemHandler() {
-        super();
-    }
-
-    @Nonnull
-    @Override
-    public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-        if (stack.getItem() instanceof ITeaResource) {
-            return super.insertItem(slot, stack, simulate);
-        }
-        return stack;
-    }
-}

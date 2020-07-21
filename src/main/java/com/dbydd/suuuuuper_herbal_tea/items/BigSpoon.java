@@ -2,9 +2,12 @@ package com.dbydd.suuuuuper_herbal_tea.items;
 
 import com.dbydd.suuuuuper_herbal_tea.Suuuuuuuper_herbal_tea;
 import com.dbydd.suuuuuper_herbal_tea.blocks.Big_Black_Pot;
+import com.dbydd.suuuuuper_herbal_tea.blocks.BlockTeaCup;
 import com.dbydd.suuuuuper_herbal_tea.blocks.Earth_Stovetop;
 import com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys.TileBig_Black_Pot;
 import com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys.TileEarth_Stovetop;
+import com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys.TileTeaCup;
+import com.dbydd.suuuuuper_herbal_tea.utils.IResourceItemHandler;
 import com.dbydd.suuuuuper_herbal_tea.utils.IntegerContainer;
 import net.minecraft.block.Block;
 import net.minecraft.block.IBucketPickupHandler;
@@ -46,13 +49,13 @@ public class BigSpoon extends ItemBase {
         BlockPos targetPos = context.getPos();
         ItemStack spoon = context.getItem();
         CompoundNBT nbt = spoon.getTag();
-        ItemStackHandler effects = new ItemStackHandler();
-        ItemStackHandler currentEffects = new ItemStackHandler();
+        IResourceItemHandler effects = new IResourceItemHandler(9);
+        IResourceItemHandler currentEffects = new IResourceItemHandler(9);
         Block targetBlock = world.getBlockState(targetPos).getBlock();
+        FluidTank tank = new FluidTank(200);
 
         if (targetBlock instanceof Big_Black_Pot) {
             TileBig_Black_Pot black_pot = (TileBig_Black_Pot) world.getTileEntity(targetPos);
-            FluidTank tank = new FluidTank(200);
             tank = tank.readFromNBT(nbt.getCompound("tank"));
             currentEffects.deserializeNBT(nbt.getCompound("effects"));
             effects.deserializeNBT(black_pot.serializeNBT().getCompound("effects"));
@@ -68,7 +71,6 @@ public class BigSpoon extends ItemBase {
         } else if (targetBlock instanceof Earth_Stovetop) {
             TileEarth_Stovetop stovetop = (TileEarth_Stovetop) world.getTileEntity(targetPos);
             if (stovetop.hasPot()) {
-                FluidTank tank = new FluidTank(200);
                 tank = tank.readFromNBT(nbt.getCompound("tank"));
                 currentEffects.deserializeNBT(nbt.getCompound("effects"));
                 effects.deserializeNBT(stovetop.serializeNBT().getCompound("effects"));
@@ -81,6 +83,13 @@ public class BigSpoon extends ItemBase {
                     playSound(context.getPlayer());
                     return ActionResultType.SUCCESS;
                 }
+            }
+        }else if(targetBlock instanceof BlockTeaCup){
+            TileTeaCup tileTeaCup = (TileTeaCup) world.getTileEntity(targetPos);
+            if(tileTeaCup.canfill()){
+                currentEffects.deserializeNBT(nbt.getCompound("effects"));
+                tileTeaCup.fill(currentEffects, tank.readFromNBT(nbt.getCompound("tank")).getFluid());
+                return ActionResultType.SUCCESS;
             }
         }
 
