@@ -2,7 +2,6 @@ package com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys;
 
 import com.dbydd.suuuuuper_herbal_tea.blocks.Earth_Stovetop;
 import com.dbydd.suuuuuper_herbal_tea.items.Big_Black_Pot_Item;
-import com.dbydd.suuuuuper_herbal_tea.interfaces.ITeaResource;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Items;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_TileEntities;
 import com.dbydd.suuuuuper_herbal_tea.utils.IResourceItemHandler;
@@ -12,11 +11,12 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
@@ -24,9 +24,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -36,7 +34,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntity {
-    private boolean hasPot = false;
+    private boolean hasBlackPot = false;
     private boolean isburning = false;
     private boolean isCooking = false;
     private int burnTime = 0;
@@ -81,7 +79,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
 
     @Override
     public CompoundNBT write(CompoundNBT compound) {
-        compound.putBoolean("hasPot", hasPot);
+        compound.putBoolean("hasBlackPot", hasBlackPot);
         compound.put("fuel_and_ash", fuel_ash_Handler.serializeNBT());
         compound.putBoolean("isburning", isburning);
         compound.put("temperature", temperature.serializeNBT());
@@ -91,17 +89,17 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
         compound.putInt("burntime", burnTime);
         compound.putInt("maxburntime", maxBurnTime);
         compound.putBoolean("iscooking", isCooking);
-        tank.writeToNBT(compound);
+        compound.put("tank", tank.writeToNBT(new CompoundNBT()));
         return super.write(compound);
     }
 
     @Override
     public void read(CompoundNBT compound) {
-        this.hasPot = compound.getBoolean("haspot");
+        this.hasBlackPot = compound.getBoolean("hasBlackPot");
         this.fuel_ash_Handler.deserializeNBT(compound.getCompound("fuel_and_ash"));
         this.isburning = compound.getBoolean("isburning");
         this.temperature.deserializeNBT(compound.getCompound("temperature"));
-        this.tank.readFromNBT(compound);
+        this.tank.readFromNBT(compound.getCompound("tank"));
         this.resources.deserializeNBT(compound.getCompound("resources"));
         this.effects.deserializeNBT(compound.getCompound("effects"));
         this.progress.deserializeNBT(compound.getCompound("progress"));
@@ -120,67 +118,69 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
     }
 
     public void onBlockActived(World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        ItemStack heldItem = player.getHeldItem(handIn);
-        if (heldItem.isEmpty()) {
-            if (player.isSneaking()) {
-                if (hasPot) {
-                    boolean flag = true;
-                    for (int i = 0; i < resources.getSlots(); i++) {
-                        ItemStack stackInSlot = resources.getStackInSlot(i);
-                        if (!stackInSlot.isEmpty()) {
-                            ItemHandlerHelper.giveItemToPlayer(player, resources.extractItem(i, stackInSlot.getCount(), false));
-                            markDirty();
-                            flag = false;
-                            break;
+        if (!worldIn.isRemote) {
+            ItemStack heldItem = player.getHeldItem(handIn);
+            if (heldItem.isEmpty()) {
+                if (player.isSneaking()) {
+                    if (hasBlackPot) {
+                        boolean flag = true;
+                        for (int i = 0; i < resources.getSlots(); i++) {
+                            ItemStack stackInSlot = resources.getStackInSlot(i);
+                            if (!stackInSlot.isEmpty()) {
+                                ItemHandlerHelper.giveItemToPlayer(player, resources.extractItem(i, stackInSlot.getCount(), false));
+                                markDirty();
+                                flag = false;
+                                break;
+                            }
+                        }
+                        if (flag) {
+                            ItemStack stack = new ItemStack(Registered_Items.BIG_BLACK_POT_ITEM);
+                            stack.setTag(serializePotNBT());
+                            ItemHandlerHelper.giveItemToPlayer(player, stack);
+                            takeAwayPot();
                         }
                     }
-                    if (flag) {
-                        ItemStack stack = new ItemStack(Registered_Items.BIG_BLACK_POT_ITEM);
-                        stack.setTag(serializePotNBT());
-                        ItemHandlerHelper.giveItemToPlayer(player, stack);
-                        takeAwayPot();
+                } else {
+                    ItemHandlerHelper.giveItemToPlayer(player, fuel_ash_Handler.extractItem(0, fuel_ash_Handler.getStackInSlot(0).getCount(), false));
+                    markDirty();
+                }
+            } else if (heldItem.getItem() instanceof Big_Black_Pot_Item) {
+                if (!hasBlackPot) {
+                    CompoundNBT compound = heldItem.getChildTag("BlockEntityTag");
+                    if (compound != null) {
+                        this.resources.deserializeNBT(compound.getCompound("resources"));
+                        this.tank.readFromNBT(compound.getCompound("tank"));
+                        this.effects.deserializeNBT(compound.getCompound("effects"));
                     }
+                    player.setHeldItem(handIn, ItemStack.EMPTY);
+                    hasBlackPot = true;
+                    markDirty();
+                }
+            } else if (heldItem.getItem() instanceof BucketItem) {
+                BucketItem bucket = (BucketItem) heldItem.getItem();
+                Fluid fluid = bucket.getFluid();
+                if ((tank.getFluid().getFluid() == Fluids.WATER.getFluid() || tank.isEmpty()) && hasBlackPot) {
+                    tank.fill(new FluidStack(fluid, 1000), IFluidHandler.FluidAction.EXECUTE);
+                    ItemStack result = !player.abilities.isCreativeMode ? new ItemStack(Items.BUCKET) : heldItem;
+                    player.setHeldItem(handIn, result);
+                    markDirty();
+                }
+            } else if (heldItem.getItem() instanceof FlintAndSteelItem) {
+                this.isburning = true;
+                this.takeFuel();
+                heldItem.setDamage(1);
+                markDirty();
+            } else if (ForgeHooks.getBurnTime(heldItem) > 0) {
+                if (fuel_ash_Handler.getStackInSlot(0).isEmpty() || fuel_ash_Handler.getStackInSlot(0).getItem() == heldItem.getItem()) {
+                    player.setHeldItem(handIn, fuel_ash_Handler.insertItem(0, heldItem, false));
+                    markDirty();
                 }
             } else {
-                ItemHandlerHelper.giveItemToPlayer(player, fuel_ash_Handler.extractItem(0,fuel_ash_Handler.getStackInSlot(0).getCount(), false));
-                markDirty();
-            }
-        } else if (heldItem.getItem() instanceof Big_Black_Pot_Item) {
-            if (!hasPot) {
-                CompoundNBT compound = heldItem.getChildTag("BlockEntityTag");
-                if (compound != null) {
-                    this.resources.deserializeNBT(compound.getCompound("resources"));
-                    this.tank.readFromNBT(compound.getCompound("tank"));
-                    this.effects.deserializeNBT(compound.getCompound("effects"));
+                if (hasBlackPot) {
+                    ItemStack itemStack = ItemHandlerHelper.insertItem(resources, heldItem, false);
+                    player.setHeldItem(handIn, itemStack);
+                    markDirty();
                 }
-                player.setHeldItem(handIn, ItemStack.EMPTY);
-                hasPot = true;
-                markDirty();
-            }
-        } else if (heldItem.getItem() instanceof BucketItem) {
-            BucketItem bucket = (BucketItem) heldItem.getItem();
-            Fluid fluid = bucket.getFluid();
-            if (tank.getFluid().getFluid() == Fluids.WATER.getFluid() || tank.isEmpty()) {
-                tank.fill(new FluidStack(fluid, 1000), IFluidHandler.FluidAction.EXECUTE);
-                ItemStack result = !player.abilities.isCreativeMode ? new ItemStack(Items.BUCKET) : heldItem;
-                player.setHeldItem(handIn, result);
-                markDirty();
-            }
-        } else if (heldItem.getItem() instanceof FlintAndSteelItem) {
-            this.isburning = true;
-            this.takeFuel();
-            heldItem.setDamage(1);
-            markDirty();
-        } else if (ForgeHooks.getBurnTime(heldItem) > 0) {
-            if (fuel_ash_Handler.getStackInSlot(0).isEmpty() || fuel_ash_Handler.getStackInSlot(0).getItem() == heldItem.getItem()) {
-                player.setHeldItem(handIn, fuel_ash_Handler.insertItem(0, heldItem, false));
-                markDirty();
-            }
-        } else {
-            if (hasPot) {
-                ItemStack itemStack = ItemHandlerHelper.insertItem(resources, heldItem, false);
-                player.setHeldItem(handIn, itemStack);
-                markDirty();
             }
         }
 
@@ -205,7 +205,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
                     boolean b = takeFuel();
                     if (!b) {
                         isCooking = false;
-                    }else {
+                    } else {
                         isburning = true;
                     }
                 }
@@ -260,19 +260,46 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
     }
 
     public void takeAwayPot() {
-        this.hasPot = false;
+        this.hasBlackPot = false;
         this.effects = new IResourceItemHandler(9);
         this.resources = new IResourceItemHandler(9);
         this.tank = new FluidTank(2000);
         markDirty();
     }
 
-    public boolean hasPot() {
-        return hasPot;
+    public boolean hasBlackPot() {
+        return hasBlackPot;
     }
 
     public FluidTank getTank() {
         return tank;
+    }
+
+    @Nullable
+    @Override
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        return new SUpdateTileEntityPacket(pos, 1, getUpdateTag());
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+        handleUpdateTag(pkt.getNbtCompound());
+    }
+
+    @Override
+    public CompoundNBT getUpdateTag() {
+        return this.write(new CompoundNBT());
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundNBT tag) {
+        this.read(tag);
+    }
+
+    @Override
+    public void markDirty() {
+        world.notifyBlockUpdate(pos,world.getBlockState(pos), world.getBlockState(pos),2);
+        super.markDirty();
     }
 }
 

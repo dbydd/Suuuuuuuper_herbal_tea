@@ -70,7 +70,7 @@ public class BigSpoon extends ItemBase {
             }
         } else if (targetBlock instanceof Earth_Stovetop) {
             TileEarth_Stovetop stovetop = (TileEarth_Stovetop) world.getTileEntity(targetPos);
-            if (stovetop.hasPot()) {
+            if (stovetop.hasBlackPot()) {
                 tank = tank.readFromNBT(nbt.getCompound("tank"));
                 currentEffects.deserializeNBT(nbt.getCompound("effects"));
                 effects.deserializeNBT(stovetop.serializeNBT().getCompound("effects"));

@@ -1,7 +1,7 @@
 package com.dbydd.suuuuuper_herbal_tea.blocks;
 
 import com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys.TileStone_Table;
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.BlockRenderTypes;
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.RenderTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
@@ -26,7 +26,7 @@ public class Stone_Table extends Block {
 //todo finish it
     public Stone_Table() {
         super(Properties.create(Material.IRON).hardnessAndResistance(4.5f).harvestLevel(2).harvestTool(ToolType.PICKAXE).notSolid());
-        BlockRenderTypes.blockRenderTypeMap.put(this, RenderType.getTranslucent());
+        RenderTypes.blockRenderTypeMap.put(this, RenderType.getTranslucent());
     }
 
     @Override

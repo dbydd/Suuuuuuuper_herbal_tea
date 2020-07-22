@@ -7,7 +7,7 @@ import net.minecraft.util.SoundEvents;
 
 public class Registered_Fluids {
 
-    public static final Fluid_Base TEA_WATER = new Fluid_Base("tea", Block.Properties.create(Material.WATER).notSolid().hardnessAndResistance(100), builder -> builder.temperature(373).sound(SoundEvents.BLOCK_WATER_AMBIENT));
+    public static final Fluid_Base TEA_WATER = new Fluid_Base("tea_water", Block.Properties.create(Material.WATER).notSolid().hardnessAndResistance(100), builder -> builder.temperature(373).sound(SoundEvents.BLOCK_WATER_AMBIENT));
 
     public static void init(){
 

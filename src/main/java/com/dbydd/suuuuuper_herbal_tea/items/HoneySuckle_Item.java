@@ -8,6 +8,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Food;
 import net.minecraft.world.IWorld;
+import net.minecraftforge.common.ForgeInternalHandler;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.common.data.ForgeRecipeProvider;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.BiConsumer;
 

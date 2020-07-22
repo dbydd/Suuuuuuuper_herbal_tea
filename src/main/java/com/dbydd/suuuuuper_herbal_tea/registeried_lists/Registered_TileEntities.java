@@ -1,12 +1,10 @@
 package com.dbydd.suuuuuper_herbal_tea.registeried_lists;
 
 import com.dbydd.suuuuuper_herbal_tea.Suuuuuuuper_herbal_tea;
-
 import com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys.TileBig_Black_Pot;
 import com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys.TileEarth_Stovetop;
 import com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys.TileStone_Table;
 import com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys.TileTeaCup;
-import com.sun.deploy.cache.BaseLocalApplicationProperties;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;

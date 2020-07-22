@@ -39,7 +39,7 @@ public class Earth_Stovetop_TER extends TileEntityRenderer<TileEarth_Stovetop> {
     public void render(TileEarth_Stovetop tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
         IResourceItemHandler resources = tileEntityIn.getResources();
         ItemStackHandler fuel_ash_handler = tileEntityIn.getFuel_ash_Handler();
-        boolean haspot = tileEntityIn.hasPot();
+        boolean haspot = tileEntityIn.hasBlackPot();
         boolean isburning = tileEntityIn.isIsburning();
         boolean cooking = tileEntityIn.isCooking();
         FluidTank tank = tileEntityIn.getTank();
