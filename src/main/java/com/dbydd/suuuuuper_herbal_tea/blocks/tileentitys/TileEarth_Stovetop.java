@@ -8,10 +8,9 @@ import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_TileEntities;
 import com.dbydd.suuuuuper_herbal_tea.utils.IResourceItemHandler;
 import com.dbydd.suuuuuper_herbal_tea.utils.IntegerContainer;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.FlintAndSteelItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -24,6 +23,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -47,6 +50,22 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
 
     public TileEarth_Stovetop() {
         super(Registered_TileEntities.TILE_EARTH_STOVETOP_TYPE.get());
+    }
+
+    public boolean isCooking() {
+        return isCooking;
+    }
+
+    public boolean isIsburning() {
+        return isburning;
+    }
+
+    public ItemStackHandler getFuel_ash_Handler() {
+        return fuel_ash_Handler;
+    }
+
+    public IResourceItemHandler getResources() {
+        return resources;
     }
 
     @Nonnull
@@ -106,16 +125,16 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
             if (player.isSneaking()) {
                 if (hasPot) {
                     boolean flag = true;
-                    for(int i = 0;i<resources.getSlots();i++){
+                    for (int i = 0; i < resources.getSlots(); i++) {
                         ItemStack stackInSlot = resources.getStackInSlot(i);
-                        if(!stackInSlot.isEmpty()){
-                            ItemHandlerHelper.giveItemToPlayer(player,resources.extractItem(i, stackInSlot.getCount(), false));
+                        if (!stackInSlot.isEmpty()) {
+                            ItemHandlerHelper.giveItemToPlayer(player, resources.extractItem(i, stackInSlot.getCount(), false));
                             markDirty();
                             flag = false;
                             break;
                         }
                     }
-                    if(flag) {
+                    if (flag) {
                         ItemStack stack = new ItemStack(Registered_Items.BIG_BLACK_POT_ITEM);
                         stack.setTag(serializePotNBT());
                         ItemHandlerHelper.giveItemToPlayer(player, stack);
@@ -123,7 +142,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
                     }
                 }
             } else {
-                ItemHandlerHelper.giveItemToPlayer(player, fuel_ash_Handler.getStackInSlot(1));
+                ItemHandlerHelper.giveItemToPlayer(player, fuel_ash_Handler.extractItem(0,fuel_ash_Handler.getStackInSlot(0).getCount(), false));
                 markDirty();
             }
         } else if (heldItem.getItem() instanceof Big_Black_Pot_Item) {
@@ -138,6 +157,15 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
                 hasPot = true;
                 markDirty();
             }
+        } else if (heldItem.getItem() instanceof BucketItem) {
+            BucketItem bucket = (BucketItem) heldItem.getItem();
+            Fluid fluid = bucket.getFluid();
+            if (tank.getFluid().getFluid() == Fluids.WATER.getFluid() || tank.isEmpty()) {
+                tank.fill(new FluidStack(fluid, 1000), IFluidHandler.FluidAction.EXECUTE);
+                ItemStack result = !player.abilities.isCreativeMode ? new ItemStack(Items.BUCKET) : heldItem;
+                player.setHeldItem(handIn, result);
+                markDirty();
+            }
         } else if (heldItem.getItem() instanceof FlintAndSteelItem) {
             this.isburning = true;
             this.takeFuel();
@@ -149,7 +177,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
                 markDirty();
             }
         } else {
-            if(hasPot) {
+            if (hasPot) {
                 ItemStack itemStack = ItemHandlerHelper.insertItem(resources, heldItem, false);
                 player.setHeldItem(handIn, itemStack);
                 markDirty();
@@ -171,11 +199,15 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
                 }
             }
 
-            if (burnTime >= maxBurnTime && isCooking) {
-                boolean b = takeFuel();
-                if (!b) {
-                    isCooking = false;
-                    isburning = false;
+            if (burnTime >= maxBurnTime) {
+                isburning = false;
+                if (isCooking) {
+                    boolean b = takeFuel();
+                    if (!b) {
+                        isCooking = false;
+                    }else {
+                        isburning = true;
+                    }
                 }
             }
             markDirty();

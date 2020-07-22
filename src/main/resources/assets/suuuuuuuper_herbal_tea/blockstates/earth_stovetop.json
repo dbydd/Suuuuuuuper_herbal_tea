@@ -1,0 +1,20 @@
+{
+  "variants":
+  {
+    "facing=north": {
+      "model": "suuuuuuuper_herbal_tea:block/earth_stovetop"
+    },
+    "facing=east": {
+      "model": "suuuuuuuper_herbal_tea:block/earth_stovetop",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "suuuuuuuper_herbal_tea:block/earth_stovetop",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "suuuuuuuper_herbal_tea:block/earth_stovetop",
+      "y": 270
+    }
+  }
+}

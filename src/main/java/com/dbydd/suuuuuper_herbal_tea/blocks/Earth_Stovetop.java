@@ -8,7 +8,9 @@ import net.minecraft.block.HorizontalBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.FaceDirection;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.EnumProperty;
@@ -26,20 +28,24 @@ import net.minecraftforge.common.ToolType;
 import javax.annotation.Nullable;
 
 public class Earth_Stovetop extends BlockBase {
-    public static final BooleanProperty HAS_FIRE_WOOD = BooleanProperty.create("has_fire_wood");
     public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 
     public Earth_Stovetop() {
         super(Properties.create(Material.ROCK).notSolid().hardnessAndResistance(3, 1.5f).harvestLevel(1).harvestTool(ToolType.PICKAXE), "earth_stovetop", RenderType.getTranslucent());
         BlockRenderTypes.blockRenderTypeMap.put(this, RenderType.getTranslucent());
-        this.setDefaultState(this.stateContainer.getBaseState().with(HAS_FIRE_WOOD, false).with(FACING, Direction.NORTH));
+        this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
     }
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(HAS_FIRE_WOOD);
         builder.add(FACING);
         super.fillStateContainer(builder);
+    }
+
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        worldIn.setBlockState(pos, state.with(FACING, Direction.fromAngle(placer.getHorizontalFacing().getHorizontalAngle()-90)));
+        super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
     }
 
     @Override
