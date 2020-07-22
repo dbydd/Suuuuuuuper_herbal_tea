@@ -1,0 +1,22 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"1": "suuuuuuuper_herbal_tea:fluids/tea_water_still"
+	},
+	"elements": [
+		{
+			"from": [3, 3.5, 3],
+			"to": [13, 3.5, 13],
+			"rotation": {"angle": 0, "axis": "y", "origin": [11, 10, 11]},
+			"faces": {
+				"up": {"uv": [0, 0, 10, 10], "texture": "#1"}
+			}
+		}
+	],
+	"display": {
+		"gui": {
+			"rotation": [15, -35, -2],
+			"translation": [0, -2.25, 0]
+		}
+	}
+}
