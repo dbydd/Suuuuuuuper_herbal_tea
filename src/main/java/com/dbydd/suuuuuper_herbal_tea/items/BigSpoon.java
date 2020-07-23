@@ -43,74 +43,14 @@ public class BigSpoon extends ItemBase {
         super(new Properties().maxStackSize(1).group(Suuuuuuuper_herbal_tea.TAB), "spoon");
     }
 
-    @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-        World world = context.getWorld();
-        BlockPos targetPos = context.getPos();
-        ItemStack spoon = context.getItem();
-        CompoundNBT nbt = spoon.getTag();
-        IResourceItemHandler effects = new IResourceItemHandler(9);
-        IResourceItemHandler currentEffects = new IResourceItemHandler(9);
-        Block targetBlock = world.getBlockState(targetPos).getBlock();
-        FluidTank tank = new FluidTank(200);
-
-        if (targetBlock instanceof Big_Black_Pot) {
-            TileBig_Black_Pot black_pot = (TileBig_Black_Pot) world.getTileEntity(targetPos);
-            tank = tank.readFromNBT(nbt.getCompound("tank"));
-            currentEffects.deserializeNBT(nbt.getCompound("effects"));
-            effects.deserializeNBT(black_pot.serializeNBT().getCompound("effects"));
-            IFluidHandler iFluidHandler = black_pot.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).orElseGet(() -> new FluidTank(2000));
-            if (tank.getFluid().getFluid() == iFluidHandler.getFluidInTank(0).getFluid() && isItemHanderAContainsB(currentEffects, effects)) {
-                tank.fill(iFluidHandler.drain(tank.getSpace(), IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
-                black_pot.markDirty();
-                nbt.put("tank", tank.writeToNBT(new CompoundNBT()));
-                updateItemStackNBT(nbt);
-                playSound(context.getPlayer());
-                return ActionResultType.SUCCESS;
-            }
-        } else if (targetBlock instanceof Earth_Stovetop) {
-            TileEarth_Stovetop stovetop = (TileEarth_Stovetop) world.getTileEntity(targetPos);
-            if (stovetop.hasBlackPot()) {
-                tank = tank.readFromNBT(nbt.getCompound("tank"));
-                currentEffects.deserializeNBT(nbt.getCompound("effects"));
-                effects.deserializeNBT(stovetop.serializeNBT().getCompound("effects"));
-                IFluidHandler iFluidHandler = stovetop.getTank();
-                if (tank.getFluid().getFluid() == iFluidHandler.getFluidInTank(0).getFluid() && isItemHanderAContainsB(currentEffects, effects)) {
-                    tank.fill(iFluidHandler.drain(tank.getSpace(), IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
-                    stovetop.markDirty();
-                    nbt.put("tank", tank.writeToNBT(new CompoundNBT()));
-                    updateItemStackNBT(nbt);
-                    playSound(context.getPlayer());
-                    return ActionResultType.SUCCESS;
-                }
-            }
-        }else if(targetBlock instanceof BlockTeaCup){
-            TileTeaCup tileTeaCup = (TileTeaCup) world.getTileEntity(targetPos);
-            if(tileTeaCup.canfill()){
-                currentEffects.deserializeNBT(nbt.getCompound("effects"));
-                tileTeaCup.fill(currentEffects, tank.readFromNBT(nbt.getCompound("tank")).getFluid());
-                return ActionResultType.SUCCESS;
-            }
-        }
-
-        return ActionResultType.PASS;
+    public static CompoundNBT getEmptySpoon(){
+        CompoundNBT nbt = new CompoundNBT();
+        IResourceItemHandler spoonhandler = new IResourceItemHandler(9);
+        FluidTank spoontank = new FluidTank(200);
+        nbt.put("tank", spoontank.writeToNBT(new CompoundNBT()));
+        nbt.put("effects", spoonhandler.serializeNBT());
+        nbt.putBoolean("isempty", true);
+        return nbt;
     }
 
-    private boolean isItemHanderAContainsB(ItemStackHandler A, ItemStackHandler B) {
-        if (A.getSlots() == B.getSlots()) {
-            ArrayList<Item> ItemsInA = new ArrayList<>();
-            ArrayList<Item> ItemsInB = new ArrayList<>();
-            for (int i = 0; i < A.getSlots(); i++) {
-                ItemsInA.add(A.getStackInSlot(i).getItem());
-                ItemsInB.add(B.getStackInSlot(i).getItem());
-            }
-            return ItemsInA.containsAll(ItemsInB);
-        }
-        return false;
-    }
-
-    private void playSound(PlayerEntity playerIn){
-        SoundEvent soundevent = SoundEvents.ITEM_BUCKET_FILL;
-        playerIn.playSound(soundevent, 1.0F, 1.0F);
-    }
 }

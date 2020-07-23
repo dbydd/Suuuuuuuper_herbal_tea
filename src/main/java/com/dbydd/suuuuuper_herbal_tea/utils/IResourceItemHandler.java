@@ -32,9 +32,11 @@ public class IResourceItemHandler extends ItemStackHandler {
         int slots = this.getSlots();
         for(int i = 0;i<slots;i++){
             ItemStack stackInSlot = this.getStackInSlot(i);
-            ITeaResource resource = (ITeaResource) stackInSlot.getItem();
-            ITeaEffects effects = resource.generateEffects();
-            effects.generate(worldIn, (PlayerEntity) entityLiving, stackInSlot.getCount());
+            if(!stackInSlot.isEmpty()) {
+                ITeaResource resource = (ITeaResource) stackInSlot.getItem();
+                ITeaEffects effects = resource.generateEffects();
+                effects.generate(worldIn, (PlayerEntity) entityLiving, stackInSlot.getCount());
+            }
         }
     }
 

@@ -1,8 +1,11 @@
 package com.dbydd.suuuuuper_herbal_tea.registeried_lists;
 
+import com.dbydd.suuuuuper_herbal_tea.Dimenisions.DimensionRegisteryEventHandler;
 import com.dbydd.suuuuuper_herbal_tea.blocks.Big_Black_Pot;
+import com.dbydd.suuuuuper_herbal_tea.events.CommonSetupEvent;
 import com.dbydd.suuuuuper_herbal_tea.items.*;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MoverType;
@@ -15,16 +18,25 @@ import net.minecraft.item.Items;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.GameType;
+import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.Dimension;
+import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Collection;
+import java.util.function.Function;
 
 public class Registered_Items {
 
@@ -32,7 +44,7 @@ public class Registered_Items {
     public static final Item TEA_CUP = new TeaCupItem();
     public static final Item SPOON =new BigSpoon();
     public static final Item MOUNTAIN_TEA_LEAVE = new Tea_Leaves("mountain_tea_leave", (world, playerEntity, magnification) -> {
-        playerEntity.move(MoverType.PLAYER, new Vec3d(0, 128*magnification, 0));
+        playerEntity.setPositionAndUpdate(playerEntity.getPosX(), playerEntity.getPosY()+128*magnification,playerEntity.getPosZ());
         playerEntity.addPotionEffect(new EffectInstance(Effects.SLOW_FALLING, 2000*magnification, 2*magnification));
         playerEntity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 2000*magnification, 2*magnification));
     }, new EffectInstance(Effects.RESISTANCE, 100, 1));
@@ -69,9 +81,17 @@ public class Registered_Items {
             EntityType.SLIME.spawn(world.getWorld(), null, new StringTextComponent("slime!"), playerEntity, playerEntity.getPosition(), SpawnReason.NATURAL, true, true);
     }, new EffectInstance(Effects.STRENGTH, 100, 2));
     public static final Item WORLD_TEA_TREE_TEA_LEAVE = new Tea_Leaves("world_tea_tree_tea_leave", (world, playerEntity, magnification) -> {
-        playerEntity.respawnPlayer();
+        playerEntity.changeDimension(DimensionType.byName(DimensionRegisteryEventHandler.DIMENSION_ID), new ITeleporter() {
+            @Override
+            public Entity placeEntity(Entity entity, ServerWorld currentWorld, ServerWorld destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
+                entity = repositionEntity.apply(false);
+                entity.setPositionAndUpdate(0, 176,0);
+                //todo generate tea_house
+                return entity;
+            }
+        });
         World world1 = world.getWorld();
-        world1.setDayTime((world1.getDayTime() + 18000*magnification) % 36000);
+        world1.setDayTime((world1.getDayTime() + 9000*magnification)%36000);
     }, new EffectInstance(Effects.RESISTANCE, 100, 5));
     public static final Item GREENDATE = new GreenDate("green_date", (world, playerEntity, magnification) -> {
         Collection<EffectInstance> activePotionEffects = playerEntity.getActivePotionEffects();

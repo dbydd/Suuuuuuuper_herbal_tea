@@ -1,8 +1,17 @@
 package com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys;
 
+import com.dbydd.suuuuuper_herbal_tea.items.BigSpoon;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_TileEntities;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
@@ -51,9 +60,28 @@ public class TileBig_Black_Pot extends TileEntity {
         return super.write(compound);
     }
 
-    public FluidStack scooped(int amount, IFluidHandler.FluidAction action) {
-        FluidStack drain = tank.drain(amount, action);
+    public CompoundNBT serializeSpoonTag() {
+        CompoundNBT compoundNBT = new CompoundNBT();
+        FluidTank spoonTank = new FluidTank(200);
+        spoonTank.setFluid(tank.drain(200, IFluidHandler.FluidAction.EXECUTE));
+
         markDirty();
-        return drain;
+
+        compoundNBT.put("tank", spoonTank.writeToNBT(new CompoundNBT()));
+        compoundNBT.put("effects", effects.serializeNBT());
+        compoundNBT.putBoolean("isempty", false);
+        return compoundNBT;
+    }
+
+    public ActionResultType onBlockActived(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        ItemStack heldItem = player.getHeldItem(handIn);
+        if(heldItem.getItem() instanceof BigSpoon){
+            if (heldItem.getChildTag("spoonresources") != null || heldItem.getChildTag("spoonresources").getBoolean("isempty")) {
+                heldItem.setTagInfo("spoonresources", serializeSpoonTag());
+                player.setHeldItem(handIn, heldItem);
+                return ActionResultType.SUCCESS;
+            }
+        }
+        return ActionResultType.PASS;
     }
 }

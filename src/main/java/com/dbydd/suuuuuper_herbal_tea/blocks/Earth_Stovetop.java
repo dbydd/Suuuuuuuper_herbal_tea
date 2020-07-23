@@ -58,7 +58,8 @@ public class Earth_Stovetop extends BlockBase {
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-            ((TileEarth_Stovetop) worldIn.getTileEntity(pos)).onBlockActived(worldIn, pos, player, handIn, hit);
+        ((TileEarth_Stovetop) worldIn.getTileEntity(pos)).onBlockActived(worldIn, pos, player, handIn, hit);
         return ActionResultType.SUCCESS;
+
     }
 }

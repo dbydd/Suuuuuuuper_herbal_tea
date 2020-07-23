@@ -15,6 +15,8 @@ public class Registered_Blocks {
     public static final Block BIG_BLACK_POT = new Big_Black_Pot();
     public static final Block TEA_CUP = new BlockTeaCup();
     public static final Block STONE_CHAIR = new BlockBase(Block.Properties.create(Material.ROCK).notSolid().hardnessAndResistance(3.0f), "stone_chair", RenderType.getTranslucent());
+    public static final Block WATER_FACE = new BlockBase(Block.Properties.create(Material.AIR).notSolid().hardnessAndResistance(-1), "water_face", RenderType.getTranslucent());
+    public static final Block TEA_WATER_FACE = new BlockBase(Block.Properties.create(Material.AIR).notSolid().hardnessAndResistance(-1), "tea_water_face", RenderType.getTranslucent());
     public static final Block WOLF_BERRY_TREE = new Wolf_Berry_Tree();
     public static final Block DATE_TREE = new Jujuce_Tree();
     public static final Block WORLD_TEA_TREE_LEAVE = new World_Tea_Tree_Leave(Block.Properties.create(Material.LEAVES).notSolid().harvestTool(ToolType.AXE).hardnessAndResistance(0.5f), "world_tea_tree_leave_not_glow");

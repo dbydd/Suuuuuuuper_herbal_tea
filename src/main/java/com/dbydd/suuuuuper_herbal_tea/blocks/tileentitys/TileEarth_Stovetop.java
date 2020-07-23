@@ -1,7 +1,9 @@
 package com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys;
 
 import com.dbydd.suuuuuper_herbal_tea.blocks.Earth_Stovetop;
+import com.dbydd.suuuuuper_herbal_tea.items.BigSpoon;
 import com.dbydd.suuuuuper_herbal_tea.items.Big_Black_Pot_Item;
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Fluids;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Items;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_TileEntities;
 import com.dbydd.suuuuuper_herbal_tea.utils.IResourceItemHandler;
@@ -15,6 +17,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -111,9 +114,24 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
 
     public CompoundNBT serializePotNBT() {
         CompoundNBT compoundNBT = new CompoundNBT();
-        compoundNBT.put("resources", resources.serializeNBT());
-        compoundNBT.put("tank", tank.writeToNBT(new CompoundNBT()));
+        CompoundNBT nbt2 = new CompoundNBT();
+        nbt2.put("resources", resources.serializeNBT());
+        nbt2.put("tank", tank.writeToNBT(new CompoundNBT()));
+        nbt2.put("effects", effects.serializeNBT());
+        compoundNBT.put("BlockEntityTag", nbt2);
+        return compoundNBT;
+    }
+
+    public CompoundNBT serializeSpoonTag() {
+        CompoundNBT compoundNBT = new CompoundNBT();
+        FluidTank spoonTank = new FluidTank(200);
+        spoonTank.setFluid(tank.drain(200, IFluidHandler.FluidAction.EXECUTE));
+
+        markDirty();
+
+        compoundNBT.put("tank", spoonTank.writeToNBT(new CompoundNBT()));
         compoundNBT.put("effects", effects.serializeNBT());
+        compoundNBT.putBoolean("isempty", false);
         return compoundNBT;
     }
 
@@ -175,6 +193,11 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
                     player.setHeldItem(handIn, fuel_ash_Handler.insertItem(0, heldItem, false));
                     markDirty();
                 }
+            } else if (heldItem.getItem() instanceof BigSpoon) {
+                if (heldItem.getChildTag("spoonresources") == null || heldItem.getChildTag("spoonresources").getBoolean("isempty")) {
+                    heldItem.setTagInfo("spoonresources", serializeSpoonTag());
+                    player.setHeldItem(handIn, heldItem);
+                }
             } else {
                 if (hasBlackPot) {
                     ItemStack itemStack = ItemHandlerHelper.insertItem(resources, heldItem, false);
@@ -183,7 +206,6 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
                 }
             }
         }
-
     }
 
     @Override
@@ -251,6 +273,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
             int count = stackInSlot.getCount() / value;
             Item item = stackInSlot.getItem();
             effects.setStackInSlot(i, new ItemStack(item, count));
+            tank.setFluid(new FluidStack(Registered_Fluids.TEA_WATER.fluid.get().getFluid(), (int) waterAmount));
         }
         this.resources = new IResourceItemHandler(9);
         this.isCooking = false;
@@ -298,7 +321,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
 
     @Override
     public void markDirty() {
-        world.notifyBlockUpdate(pos,world.getBlockState(pos), world.getBlockState(pos),2);
+        world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
         super.markDirty();
     }
 }

@@ -2,33 +2,28 @@ package com.dbydd.suuuuuper_herbal_tea.tesr;
 
 import com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys.TileEarth_Stovetop;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Blocks;
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Fluids;
 import com.dbydd.suuuuuper_herbal_tea.utils.IResourceItemHandler;
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.VertexBuilderUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
-import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.BlockRendererDispatcher;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.Quaternion;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelDataManager;
 import net.minecraftforge.client.model.data.EmptyModelData;
-import net.minecraftforge.client.model.data.ModelDataMap;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class Earth_Stovetop_TER extends TileEntityRenderer<TileEarth_Stovetop> {
     public Earth_Stovetop_TER(TileEntityRendererDispatcher rendererDispatcherIn) {
@@ -84,12 +79,14 @@ public class Earth_Stovetop_TER extends TileEntityRenderer<TileEarth_Stovetop> {
 
         if (!tank.isEmpty()) {
             matrixStackIn.push();
-            int space = tank.getSpace();
-            int capacity = tank.getCapacity();
-            matrixStackIn.translate(0, 1, 0);
-            BlockState waterState = Blocks.ICE.getDefaultState();
-            bufferIn.getBuffer(RenderType.getTranslucent());
-            blockRenderer.renderBlock(waterState, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn, EmptyModelData.INSTANCE);
+            float amount = tank.getFluidAmount();
+            float capacity = tank.getCapacity();
+            matrixStackIn.translate(0, 0.5+(amount/capacity)/10, 0);
+            if(tank.getFluid().getFluid() == Fluids.WATER) {
+                blockRenderer.renderBlock(Registered_Blocks.WATER_FACE.getDefaultState(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn, EmptyModelData.INSTANCE);
+            }else if(tank.getFluid().getFluid() == Registered_Fluids.TEA_WATER.fluid.get().getFluid()){
+                blockRenderer.renderBlock(Registered_Blocks.TEA_WATER_FACE.getDefaultState(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn, EmptyModelData.INSTANCE);
+            }
             matrixStackIn.pop();
         }
 

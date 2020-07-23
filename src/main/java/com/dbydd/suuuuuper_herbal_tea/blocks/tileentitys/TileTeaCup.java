@@ -1,6 +1,7 @@
 package com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys;
 
 import com.dbydd.suuuuuper_herbal_tea.interfaces.IPutableItem;
+import com.dbydd.suuuuuper_herbal_tea.items.BigSpoon;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Items;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_TileEntities;
 import com.dbydd.suuuuuper_herbal_tea.utils.IResourceItemHandler;
@@ -46,11 +47,24 @@ public class TileTeaCup extends TileEntity {
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote()) {
             ItemStack heldItem = player.getHeldItem(handIn);
-            if (heldItem == ItemStack.EMPTY && player.isSneaking()) {
-                ItemStack itemStack = new ItemStack(Registered_Items.TEA_CUP);
-                itemStack.setTagInfo("BlockEntityTag", this.write(new CompoundNBT()));
-                ItemHandlerHelper.giveItemToPlayer(player, itemStack);
-                worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
+            if (heldItem == ItemStack.EMPTY) {
+                if (player.isSneaking()) {
+                    ItemStack itemStack = new ItemStack(Registered_Items.TEA_CUP);
+                    itemStack.setTagInfo("BlockEntityTag", this.write(new CompoundNBT()));
+                    ItemHandlerHelper.giveItemToPlayer(player, itemStack);
+                    worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
+                    return ActionResultType.SUCCESS;
+                }
+            } else if (heldItem.getItem() instanceof BigSpoon) {
+                CompoundNBT tag = heldItem.getChildTag("spoonresources");
+                if (tag!=null && !tag.getBoolean("isempty") && this.tank.getFluid().isEmpty() ) {
+                    this.tank.readFromNBT(tag.getCompound("tank"));
+                    this.handler.deserializeNBT(tag.getCompound("effects"));
+                    heldItem.setTagInfo("spoonresources", BigSpoon.getEmptySpoon());
+                    player.setHeldItem(handIn, heldItem);
+                    markDirty();
+                    return ActionResultType.SUCCESS;
+                }
             }
         }
         return ActionResultType.PASS;
@@ -60,7 +74,7 @@ public class TileTeaCup extends TileEntity {
         return tank.getFluidAmount() == 0;
     }
 
-    public void fill(IResourceItemHandler resources, FluidStack fluidStack){
+    public void fill(IResourceItemHandler resources, FluidStack fluidStack) {
         handler = resources;
         tank.setFluid(fluidStack);
         markDirty();
