@@ -38,6 +38,7 @@ public class TeaCupItem extends BlockItem implements IPutableItem {
                     effects.useResources(stack, worldIn, entityLiving);
                     blockEntityTag.put("effects", new IResourceItemHandler(9).serializeNBT());
                     blockEntityTag.put("tank", new FluidTank(200).writeToNBT(new CompoundNBT()));
+                    blockEntityTag.putBoolean("isempty", true);
                     stack.setTag(blockEntityTag);
                 }
                 return stack;

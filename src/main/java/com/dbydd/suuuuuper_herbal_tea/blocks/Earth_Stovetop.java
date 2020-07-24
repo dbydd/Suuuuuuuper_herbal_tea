@@ -18,25 +18,60 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
 
 public class Earth_Stovetop extends BlockBase {
     public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+    public static final VoxelShape shape_withpot = Block.makeCuboidShape(0, 0, 0, 16, 14, 16);
+    public static final VoxelShape shape = Block.makeCuboidShape(0, 0, 0, 16, 9, 16);
 
     public Earth_Stovetop() {
         super(Properties.create(Material.ROCK).notSolid().hardnessAndResistance(3, 1.5f).harvestLevel(1).harvestTool(ToolType.PICKAXE), "earth_stovetop", RenderType.getTranslucent());
         RenderTypes.blockRenderTypeMap.put(this, RenderType.getTranslucent());
         this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
     }
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if(tileEntity != null)
+            return ((TileEarth_Stovetop)tileEntity).hasBlackPot()?shape_withpot:shape;
+        return shape;
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if(tileEntity != null)
+        return ((TileEarth_Stovetop)tileEntity).hasBlackPot()?shape_withpot:shape;
+        return shape;
+    }
+
+    @Override
+    public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
+        return ((TileEarth_Stovetop)world.getTileEntity(pos)).isIsburning()?12:0;
+    }
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(FACING);
         super.fillStateContainer(builder);
+    }
+
+    @Override
+    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+        if(!worldIn.isRemote()) {
+            ItemStackHandler fuel_ash_handler = ((TileEarth_Stovetop) worldIn.getTileEntity(pos)).getFuel_ash_Handler();
+            ItemHandlerHelper.giveItemToPlayer(player,fuel_ash_handler.extractItem(0,fuel_ash_handler.getStackInSlot(0).getCount(), false));
+        }
+        super.onBlockHarvested(worldIn, pos, state, player);
     }
 
     @Override

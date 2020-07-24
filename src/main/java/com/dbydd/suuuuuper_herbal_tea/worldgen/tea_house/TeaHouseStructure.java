@@ -23,7 +23,7 @@ public class TeaHouseStructure extends Structure<NoFeatureConfig> {
 
     @Override
     public boolean canBeGenerated(BiomeManager biomeManagerIn, ChunkGenerator<?> generatorIn, Random randIn, int chunkX, int chunkZ, Biome biomeIn) {
-        return randIn.nextFloat() <= 0.007;
+        return randIn.nextFloat() <= 0.002;
     }
 
     @Override

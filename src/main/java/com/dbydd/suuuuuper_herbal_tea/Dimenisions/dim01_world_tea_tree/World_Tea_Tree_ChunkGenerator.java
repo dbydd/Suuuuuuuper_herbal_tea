@@ -1,10 +1,14 @@
 package com.dbydd.suuuuuper_herbal_tea.Dimenisions.dim01_world_tea_tree;
 
+import com.dbydd.suuuuuper_herbal_tea.Suuuuuuuper_herbal_tea;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Blocks;
 import com.dbydd.suuuuuper_herbal_tea.utils.MathUtils;
 import com.dbydd.suuuuuper_herbal_tea.utils.RandomUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.Minecraft;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
@@ -13,6 +17,11 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.*;
+import net.minecraft.world.gen.feature.template.PlacementSettings;
+import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.storage.SaveFormat;
+import net.minecraftforge.common.ForgeHooks;
 
 import java.util.*;
 
@@ -27,8 +36,8 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
 
     public World_Tea_Tree_ChunkGenerator(IWorld worldIn, BiomeProvider biomeProviderIn) {
         super(worldIn, biomeProviderIn, new World_Tea_Tree_GenerationSettings());
-        generate_Map.put(0.07, Registered_Blocks.WORLD_TEA_TREE_LEAVE_GLOW.getDefaultState());
-        generate_Map.put(0.27, Blocks.OAK_WOOD.getDefaultState());
+        generate_Map.put(0.1, Registered_Blocks.WORLD_TEA_TREE_LEAVE_GLOW.getDefaultState());
+        generate_Map.put(0.2, Blocks.OAK_WOOD.getDefaultState());
         generate_Map.put(0.6, Registered_Blocks.WORLD_TEA_TREE_LEAVE.getDefaultState());
     }
 
@@ -163,8 +172,11 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
         ChunkPos chunkPos = chunkIn.getPos();
         if (MathUtils.inCircle(chunkPos.x, chunkPos.z, MAIN_BRANCH_CHUNK_RANGE)) {
             generateMainBranch(worldIn);
-            if (chunkPos.x == 0 && chunkPos.z == 0) {
-
+            if (chunkPos.x == 0 && chunkPos.z == 0 && !worldIn.isRemote()) {
+                MinecraftServer server = worldIn.getWorld().getServer();
+                TemplateManager structureTemplateManager = server.getActiveAnvilConverter().getSaveLoader(server.getFolderName(), server).getStructureTemplateManager();
+                Template tea_pavilion = structureTemplateManager.getTemplate(new ResourceLocation(Suuuuuuuper_herbal_tea.NAME, "tea_pavilion"));
+                tea_pavilion.addBlocksToWorld(worldIn, new BlockPos(-5,175,-5), new PlacementSettings(), 2);
             }
         } else if (MathUtils.inCircle(chunkPos.x, chunkPos.z, LEAVE_CHUNK_RANGE)) {
             generateLeaves(worldIn, chunkIn, chunkPos);

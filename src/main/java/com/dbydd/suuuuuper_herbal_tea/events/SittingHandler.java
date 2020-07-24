@@ -22,7 +22,7 @@ public class SittingHandler {
             BlockPos pos = event.getPos();
             if (event.getWorld().getBlockState(pos).getBlock() == Registered_Blocks.STONE_CHAIR) {
                 event.setCanceled(true);
-                Vec3d vec = new Vec3d(pos.getX(), pos.getY() + 0.5, pos.getZ());
+                Vec3d vec = new Vec3d(pos.getX()+0.5, pos.getY() + 0.5, pos.getZ()+0.5);
 
                 final ArmorStandEntity dummy = new ArmorStandEntity(EntityType.ARMOR_STAND, event.getWorld());
                 dummy.getDataManager().set(ArmorStandEntity.STATUS, (byte) (1 | 8 | 16));

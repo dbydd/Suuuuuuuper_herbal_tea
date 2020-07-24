@@ -2,8 +2,10 @@ package com.dbydd.suuuuuper_herbal_tea.blocks;
 
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Items;
 import com.dbydd.suuuuuper_herbal_tea.utils.MathUtils;
+import com.dbydd.suuuuuper_herbal_tea.utils.RandomUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -24,9 +26,10 @@ public class World_Tea_Tree_Leave extends BlockBase{
     @Override
     public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
         Random random = worldIn.getRandom();
-        if(random.nextFloat()<=0.07f){
+        if(RandomUtils.outputBooleanByChance(random, 0.4d)){
             int count = random.nextInt(2);
-            ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Registered_Items.WORLD_TEA_TREE_TEA_LEAVE, count));
+            ItemEntity itemEntity = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Registered_Items.WORLD_TEA_TREE_TEA_LEAVE, count));
+            worldIn.addEntity(itemEntity);
         }
     }
 }
