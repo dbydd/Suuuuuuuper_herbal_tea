@@ -56,7 +56,10 @@ public class Earth_Stovetop extends BlockBase {
 
     @Override
     public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-        return ((TileEarth_Stovetop)world.getTileEntity(pos)).isIsburning()?12:0;
+        TileEntity tileEntity = world.getTileEntity(pos);
+        if(tileEntity != null)
+            return ((TileEarth_Stovetop)tileEntity).isIsburning()?12:0;
+        return 0;
     }
 
     @Override

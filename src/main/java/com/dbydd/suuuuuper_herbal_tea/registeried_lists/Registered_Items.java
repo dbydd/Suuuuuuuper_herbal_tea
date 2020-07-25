@@ -2,6 +2,8 @@ package com.dbydd.suuuuuper_herbal_tea.registeried_lists;
 
 import com.dbydd.suuuuuper_herbal_tea.Dimenisions.DimensionRegisteryEventHandler;
 import com.dbydd.suuuuuper_herbal_tea.blocks.Big_Black_Pot;
+import com.dbydd.suuuuuper_herbal_tea.blocks.Stone_Table;
+import com.dbydd.suuuuuper_herbal_tea.blocks.TeaTree;
 import com.dbydd.suuuuuper_herbal_tea.events.CommonSetupEvent;
 import com.dbydd.suuuuuper_herbal_tea.items.*;
 import com.dbydd.suuuuuper_herbal_tea.utils.RandomUtils;
@@ -22,6 +24,7 @@ import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.StringTextComponent;
@@ -95,17 +98,20 @@ public class Registered_Items {
             EntityType.SLIME.spawn(world.getWorld(), null, new StringTextComponent("slime!"), playerEntity, playerEntity.getPosition(), SpawnReason.NATURAL, true, true);
     }, new EffectInstance(Effects.STRENGTH, 100, 2));
     public static final Item WORLD_TEA_TREE_TEA_LEAVE = new Tea_Leaves("world_tea_tree_tea_leave", (world, playerEntity, magnification) -> {
-        playerEntity.changeDimension(DimensionType.byName(DimensionRegisteryEventHandler.DIMENSION_ID), new ITeleporter() {
-            @Override
-            public Entity placeEntity(Entity entity, ServerWorld currentWorld, ServerWorld destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
-                entity = repositionEntity.apply(false);
-                entity.setPositionAndUpdate(0, 176, 0);
-                //todo generate tea_house
-                return entity;
-            }
-        });
+        Direction horizontalFacing = playerEntity.getHorizontalFacing();
+        if (world.getBlockState(playerEntity.getPosition().offset(horizontalFacing, 2)).getBlock() instanceof TeaTree && playerEntity.getRidingEntity() != null && world.getBlockState(playerEntity.getPosition().offset(horizontalFacing)).getBlock() instanceof Stone_Table) {
+            playerEntity.changeDimension(DimensionType.byName(DimensionRegisteryEventHandler.DIMENSION_ID), new ITeleporter() {
+                @Override
+                public Entity placeEntity(Entity entity, ServerWorld currentWorld, ServerWorld destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
+                    entity = repositionEntity.apply(false);
+                    entity.stopRiding();
+                    entity.setPositionAndUpdate(0, 180, 0);
+                    return entity;
+                }
+            });
+        }
         World world1 = world.getWorld();
-        world1.setDayTime((world1.getDayTime() + 9000 * magnification) % 36000);
+        world1.setDayTime((world1.getDayTime() + 4321 * magnification) % 36000);
     }, new EffectInstance(Effects.RESISTANCE, 100, 5));
     public static final Item GREENDATE = new GreenDate("green_date", (world, playerEntity, magnification) -> {
         Collection<EffectInstance> activePotionEffects = playerEntity.getActivePotionEffects();

@@ -10,6 +10,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ActionResultType;
@@ -20,6 +22,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemHandlerHelper;
+
+import javax.annotation.Nullable;
 
 public class TileTeaCup extends TileEntity {
     private IResourceItemHandler handler = new IResourceItemHandler(9);
@@ -78,5 +82,32 @@ public class TileTeaCup extends TileEntity {
         handler = resources;
         tank.setFluid(fluidStack);
         markDirty();
+    }
+
+    @Nullable
+    @Override
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        return new SUpdateTileEntityPacket(pos, 1, getUpdateTag());
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+        handleUpdateTag(pkt.getNbtCompound());
+    }
+
+    @Override
+    public CompoundNBT getUpdateTag() {
+        return this.write(new CompoundNBT());
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundNBT tag) {
+        this.read(tag);
+    }
+
+    @Override
+    public void markDirty() {
+        world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
+        super.markDirty();
     }
 }

@@ -31,11 +31,11 @@ public class Suuuuuuuper_herbal_tea {
     static {
         InitElementsNeedToRegister();
 
-        Suuuuuuuper_herbal_tea.RegisterySingleBlock("big_black_pot", Registered_Blocks.BIG_BLACK_POT, Registered_Items.BIG_BLACK_POT_ITEM);
         Suuuuuuuper_herbal_tea.RegisterySingleBlock("tea_cup", Registered_Blocks.TEA_CUP, Registered_Items.TEA_CUP);
+        Suuuuuuuper_herbal_tea.RegisterySingleBlock("big_black_pot", Registered_Blocks.BIG_BLACK_POT, Registered_Items.BIG_BLACK_POT_ITEM);
+        Suuuuuuuper_herbal_tea.RegisteryBlocks(BlockBase.registeries);
         Suuuuuuuper_herbal_tea.RegisteryItems(ItemBase.registeries);
         Suuuuuuuper_herbal_tea.RegisterySingleBlock("honeysuckle", Registered_Blocks.HONEYSUCKLE, Registered_Items.HONEY_SUCKLE_ITEM);
-        Suuuuuuuper_herbal_tea.RegisteryBlocks(BlockBase.registeries);
     }
 
     public Suuuuuuuper_herbal_tea() {
