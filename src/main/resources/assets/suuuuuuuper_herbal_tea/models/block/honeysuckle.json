@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "suuuuuuuper_herba_tea:blocks/honeysuckle"
+    }
+}
