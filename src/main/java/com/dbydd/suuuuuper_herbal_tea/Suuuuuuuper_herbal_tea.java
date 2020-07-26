@@ -8,6 +8,7 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.item.*;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.FlowersFeature;
 import net.minecraftforge.common.ModDimension;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
@@ -42,9 +43,11 @@ public class Suuuuuuuper_herbal_tea {
         ITEM_REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
         BLOCK_REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
         FLUID_REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
+        Registered_ParticleTypes.PARTICLE_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
         Registered_Features.FEATURES_REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
         Registered_Biomes.BIOMES_REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
         Registered_TileEntities.TILEENTITY_TYPE_REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
+        Registered_Decorators.DECORATORS_REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
         MOD_DIMENSION.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 

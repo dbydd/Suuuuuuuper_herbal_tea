@@ -1,21 +1,31 @@
 package com.dbydd.suuuuuper_herbal_tea.items;
 
+import com.dbydd.suuuuuper_herbal_tea.Dimenisions.DimensionRegisteryEventHandler;
 import com.dbydd.suuuuuper_herbal_tea.Suuuuuuuper_herbal_tea;
+import com.dbydd.suuuuuper_herbal_tea.blocks.Stone_Table;
+import com.dbydd.suuuuuper_herbal_tea.blocks.TeaTree;
 import com.dbydd.suuuuuper_herbal_tea.interfaces.IPutableItem;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Blocks;
 import com.dbydd.suuuuuper_herbal_tea.utils.IResourceItemHandler;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+
+import java.util.function.Function;
 
 public class TeaCupItem extends BlockItem implements IPutableItem {
     public TeaCupItem() {
@@ -40,6 +50,18 @@ public class TeaCupItem extends BlockItem implements IPutableItem {
                     blockEntityTag.put("tank", new FluidTank(200).writeToNBT(new CompoundNBT()));
                     blockEntityTag.putBoolean("isempty", true);
                     stack.setTag(blockEntityTag);
+                    Direction horizontalFacing = entityLiving.getHorizontalFacing();
+                    if (worldIn.getBlockState(entityLiving.getPosition().offset(horizontalFacing, 2)).getBlock() instanceof TeaTree && entityLiving.getRidingEntity() != null && worldIn.getBlockState(entityLiving.getPosition().offset(horizontalFacing)).getBlock() instanceof Stone_Table) {
+                        entityLiving.changeDimension(DimensionType.byName(DimensionRegisteryEventHandler.DIMENSION_ID), new ITeleporter() {
+                            @Override
+                            public Entity placeEntity(Entity entity, ServerWorld currentWorld, ServerWorld destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
+                                entity = repositionEntity.apply(false);
+                                entity.stopRiding();
+                                entity.setPositionAndUpdate(0, 180, 0);
+                                return entity;
+                            }
+                        });
+                    }
                 }
                 return stack;
             }

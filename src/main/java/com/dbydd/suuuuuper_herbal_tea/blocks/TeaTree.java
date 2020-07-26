@@ -3,10 +3,7 @@ package com.dbydd.suuuuuper_herbal_tea.blocks;
 import com.dbydd.suuuuuper_herbal_tea.items.Tea_Leaves;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Biomes;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Items;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IGrowable;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,7 +27,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import java.util.*;
 
 public class TeaTree extends BlockBase implements IGrowable {
-    protected static final IntegerProperty GROW_TIER = IntegerProperty.create("grow_tier", 0, 5);
+    public static final IntegerProperty GROW_TIER = IntegerProperty.create("grow_tier", 0, 5);
     protected static final Properties default_properties = Properties.create(Material.PLANTS).hardnessAndResistance(3.0f).tickRandomly().notSolid().doesNotBlockMovement().sound(SoundType.PLANT);
 
     public TeaTree() {
@@ -97,7 +94,7 @@ public class TeaTree extends BlockBase implements IGrowable {
 
                 int count = worldIn.rand.nextInt(5);
                 Biome biome = worldIn.getBiome(pos);
-                if (Arrays.asList(Biomes.OCEAN, Biomes.COLD_OCEAN, Biomes.DEEP_COLD_OCEAN, Biomes.DEEP_FROZEN_OCEAN, Biomes.DEEP_LUKEWARM_OCEAN, Biomes.DEEP_OCEAN, Biomes.DEEP_WARM_OCEAN, Biomes.FROZEN_OCEAN, Biomes.LUKEWARM_OCEAN, Biomes.WARM_OCEAN).contains(biome)) {
+                if (Arrays.asList(Biomes.OCEAN, Biomes.COLD_OCEAN, Biomes.DEEP_COLD_OCEAN, Biomes.DEEP_FROZEN_OCEAN, Biomes.DEEP_LUKEWARM_OCEAN, Biomes.DEEP_OCEAN, Biomes.DEEP_WARM_OCEAN, Biomes.FROZEN_OCEAN, Biomes.LUKEWARM_OCEAN, Biomes.WARM_OCEAN, Biomes.BEACH).contains(biome)) {
                     ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Registered_Items.OCEAN_TEA_LEAVE, count));
                 } else if (Arrays.asList(Biomes.SNOWY_TAIGA, Biomes.SNOWY_TUNDRA, Biomes.SNOWY_BEACH, Biomes.SNOWY_MOUNTAINS, Biomes.SNOWY_TAIGA_HILLS).contains(biome)) {
                     ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Registered_Items.SNOW_TEA_LEAVE, count));
@@ -122,5 +119,13 @@ public class TeaTree extends BlockBase implements IGrowable {
             }
         }
         return ActionResultType.SUCCESS;
+    }
+
+    @Override
+    public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+        if(worldIn.getBlockState(new BlockPos(pos.getX(), pos.getY()-1,pos.getZ())).getBlock() == Blocks.AIR){
+            worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
+        }
+        super.randomTick(state, worldIn, pos, random);
     }
 }

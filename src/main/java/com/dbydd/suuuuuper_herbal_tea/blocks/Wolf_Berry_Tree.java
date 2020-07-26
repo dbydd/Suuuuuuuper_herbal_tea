@@ -1,10 +1,7 @@
 package com.dbydd.suuuuuper_herbal_tea.blocks;
 
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Items;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IGrowable;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -26,7 +23,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import java.util.Random;
 
 public class Wolf_Berry_Tree extends BlockBase implements IGrowable {
-    protected static final IntegerProperty GROW_TIER = IntegerProperty.create("grow_tier", 0, 5);
+    public static final IntegerProperty GROW_TIER = IntegerProperty.create("grow_tier", 0, 5);
     protected static final Properties default_properties = Properties.create(Material.PLANTS).hardnessAndResistance(3.0f).tickRandomly().notSolid().doesNotBlockMovement().sound(SoundType.PLANT);
 
     public Wolf_Berry_Tree() {
@@ -83,5 +80,18 @@ public class Wolf_Berry_Tree extends BlockBase implements IGrowable {
     public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
         if (rand.nextFloat() <= 0.35 && state.get(GROW_TIER) < 5)
             worldIn.setBlockState(pos, state.with(GROW_TIER, state.get(GROW_TIER) + 1));
+    }
+
+    @Override
+    public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+        if(worldIn.getBlockState(new BlockPos(pos.getX(), pos.getY()-1,pos.getZ())).getBlock() == Blocks.AIR){
+            worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
+        }
+        super.randomTick(state, worldIn, pos, random);
+    }
+
+    @Override
+    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
+        grow(worldIn, rand, pos, state);
     }
 }

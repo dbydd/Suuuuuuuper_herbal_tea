@@ -3,7 +3,8 @@
 	"textures": {
 		"0": "minecraft:block/log_oak",
 		"1": "minecraft:block/stone",
-		"2": "minecraft:block/stone"
+		"2": "minecraft:block/stone",
+		"particle": "minecraft:block/log_oak"
 	},
 	"elements": [
 		{

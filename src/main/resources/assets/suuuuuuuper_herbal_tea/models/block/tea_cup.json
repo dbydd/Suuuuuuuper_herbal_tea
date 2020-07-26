@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "suuuuuuuper_herbal_tea:blocks/bowl",
-		"particle": "suuuuuuuper_herbal_tea:blocks/bowl"
+		"0": "suuuuuuuper_herbal_tea:blocks/tea_cup",
+		"particle": "suuuuuuuper_herbal_tea:blocks/tea_cup"
 	},
 	"elements": [
 		{
