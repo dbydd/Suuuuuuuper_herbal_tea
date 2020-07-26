@@ -1,0 +1,22 @@
+{
+  "parent": "suuuuuuuper_herbal_tea:block/bowl",
+  "display": {
+    "thirdperson": {
+      "rotation": [
+        10,
+        -45,
+        170
+      ],
+      "translation": [
+        0,
+        1.5,
+        0
+      ],
+      "scale": [
+        0.375,
+        0.375,
+        0.375
+      ]
+    }
+  }
+}
