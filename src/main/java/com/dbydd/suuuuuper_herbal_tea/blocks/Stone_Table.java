@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 public class Stone_Table extends BlockBase {
     public static final String name = "stone_table";
     public static final VoxelShape shape = Block.makeCuboidShape(0, 0, 0, 16, 11, 16);
-//todo finish it
+//todo tesr
     public Stone_Table() {
         super(Properties.create(Material.IRON).hardnessAndResistance(4.5f).harvestLevel(2).harvestTool(ToolType.PICKAXE).notSolid(), name, RenderType.getTranslucent());
         RenderTypes.blockRenderTypeMap.put(this, RenderType.getTranslucent());

@@ -61,7 +61,6 @@ public class World_Tea_Tree_Fruit extends BlockBase {
 
     @Override
     public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-        //todo 特效
         for (int i = 0; i <= random.nextInt(8) + 1; i++) {
             worldIn.spawnParticle(new World_Tea_Tree_Fruit_ParticleData(new Vec3d(8 - random.nextInt(16), 8 - random.nextInt(16), 8 - random.nextInt(16)), new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256), random.nextInt(256)), random.nextFloat()), (double) pos.getX() + 8 - random.nextInt(16), (double) pos.getY() + 8 - random.nextInt(16), (double) pos.getZ() + 8 - random.nextInt(16), random.nextInt(8) + 8, 0.5 - random.nextDouble(), 0.5 - random.nextDouble(), 0.5 - random.nextDouble(), 0.5 - random.nextDouble());
         }
