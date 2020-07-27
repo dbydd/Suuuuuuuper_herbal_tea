@@ -41,6 +41,10 @@ public class TileTeaCup extends TileEntity {
         return super.write(compound);
     }
 
+    public FluidTank getTank() {
+        return tank;
+    }
+
     @Override
     public void read(CompoundNBT compound) {
         handler.deserializeNBT(compound.getCompound("resources"));
@@ -82,6 +86,11 @@ public class TileTeaCup extends TileEntity {
         handler = resources;
         tank.setFluid(fluidStack);
         markDirty();
+    }
+
+    public TileTeaCup(TileEntityType<?> tileEntityTypeIn, FluidTank tank) {
+        super(tileEntityTypeIn);
+        this.tank = tank;
     }
 
     @Nullable
