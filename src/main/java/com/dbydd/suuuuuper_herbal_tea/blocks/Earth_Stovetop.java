@@ -1,7 +1,6 @@
 package com.dbydd.suuuuuper_herbal_tea.blocks;
 
 import com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys.TileEarth_Stovetop;
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.RenderTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
@@ -38,8 +37,7 @@ public class Earth_Stovetop extends BlockBase {
     public static final VoxelShape shape = Block.makeCuboidShape(0, 0, 0, 16, 9, 16);
 
     public Earth_Stovetop() {
-        super(Properties.create(Material.ROCK).notSolid().hardnessAndResistance(3, 1.5f).harvestLevel(1).harvestTool(ToolType.PICKAXE), "earth_stovetop", RenderType.getTranslucent());
-        RenderTypes.blockRenderTypeMap.put(this, RenderType.getTranslucent());
+        super(Properties.create(Material.ROCK).notSolid().hardnessAndResistance(3, 1.5f).harvestLevel(1).harvestTool(ToolType.PICKAXE), "earth_stovetop");
         this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
     }
     @Override

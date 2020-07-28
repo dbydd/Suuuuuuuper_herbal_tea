@@ -2,9 +2,6 @@ package com.dbydd.suuuuuper_herbal_tea.blocks;
 
 import com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys.TileStone_Table;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Blocks;
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Items;
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.RenderTypes;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.RenderType;
@@ -16,8 +13,6 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
@@ -28,8 +23,7 @@ public class Stone_Table extends BlockBase {
     public static final String name = "stone_table";
 //todo tesr
     public Stone_Table() {
-        super(Properties.create(Material.IRON).hardnessAndResistance(4.5f).harvestLevel(2).harvestTool(ToolType.PICKAXE).notSolid(), name, RenderType.getTranslucent());
-        RenderTypes.blockRenderTypeMap.put(this, RenderType.getTranslucent());
+        super(Properties.create(Material.IRON).hardnessAndResistance(4.5f).harvestLevel(2).harvestTool(ToolType.PICKAXE).notSolid(), name);
     }
 
     @Override

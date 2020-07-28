@@ -29,7 +29,7 @@ public class Wolf_Berry_Tree extends BlockBase implements IGrowable {
     protected static final Properties default_properties = Properties.create(Material.PLANTS).hardnessAndResistance(3.0f).tickRandomly().notSolid().doesNotBlockMovement().sound(SoundType.PLANT);
 
     public Wolf_Berry_Tree() {
-        super(default_properties, "wolf_berry_tree", RenderType.getTranslucent());
+        super(default_properties, "wolf_berry_tree");
         this.setDefaultState(this.stateContainer.getBaseState().with(GROW_TIER, 0));
     }
 

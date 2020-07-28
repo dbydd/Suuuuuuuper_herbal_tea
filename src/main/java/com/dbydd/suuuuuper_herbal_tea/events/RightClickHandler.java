@@ -46,7 +46,7 @@ public class RightClickHandler {
                 dummy.entityCollisionReduction = 1F;
                 dummy.setNoGravity(true);
                 dummy.setInvulnerable(true);
-                dummy.lookAt(EntityAnchorArgument.Type.FEET, new Vec3d(player.getHorizontalFacing().toVector3f()));
+                dummy.lookAt(EntityAnchorArgument.Type.FEET, player.getLookVec());
                 dummy.setPosition(vec.x, vec.y, vec.z);
                 event.getWorld().addEntity(dummy);
                 event.getPlayer().startRiding(dummy);

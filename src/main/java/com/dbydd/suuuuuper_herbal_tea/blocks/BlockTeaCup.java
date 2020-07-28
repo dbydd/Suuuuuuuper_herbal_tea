@@ -1,7 +1,6 @@
 package com.dbydd.suuuuuper_herbal_tea.blocks;
 
 import com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys.TileTeaCup;
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.RenderTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
@@ -24,7 +23,6 @@ public class BlockTeaCup extends Block {
 
     public BlockTeaCup() {
         super(Properties.create(Material.GLASS).hardnessAndResistance(2).notSolid());
-        RenderTypes.blockRenderTypeMap.put(this, RenderType.getTranslucent());
     }
 
     @Override

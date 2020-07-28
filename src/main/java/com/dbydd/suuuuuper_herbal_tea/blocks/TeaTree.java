@@ -33,7 +33,7 @@ public class TeaTree extends BlockBase implements IGrowable {
     protected static final Properties default_properties = Properties.create(Material.PLANTS).hardnessAndResistance(3.0f).tickRandomly().notSolid().doesNotBlockMovement().sound(SoundType.PLANT);
 
     public TeaTree() {
-        super(default_properties, "tea_tree", RenderType.getCutoutMipped());
+        super(default_properties, "tea_tree");
         this.setDefaultState(this.stateContainer.getBaseState().with(GROW_TIER, 0));
     }
 

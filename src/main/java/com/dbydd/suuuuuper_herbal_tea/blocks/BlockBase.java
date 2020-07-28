@@ -1,23 +1,23 @@
 package com.dbydd.suuuuuper_herbal_tea.blocks;
 
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.RenderTypes;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderType;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Supplier;
 
 public class BlockBase extends Block {
     public static Map<String, Supplier<Block>> registeries = new TreeMap<>();
+    public static Map<Block, RenderType> renderTypeMap = new HashMap<>();
 
-    public BlockBase(Properties properties, String name, RenderType renderType) {
+    public BlockBase(Properties properties, String name) {
         super(properties);
         registeries.put(name, () -> this);
-        RenderTypes.blockRenderTypeMap.put(this, renderType);
     }
-    public BlockBase(Properties properties, String name, RenderType renderType, boolean register) {
+
+    public BlockBase(Properties properties, String name, boolean bool) {
         super(properties);
-        RenderTypes.blockRenderTypeMap.put(this, renderType);
     }
 }

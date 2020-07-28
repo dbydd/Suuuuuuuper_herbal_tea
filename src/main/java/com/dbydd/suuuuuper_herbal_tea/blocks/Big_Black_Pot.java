@@ -2,7 +2,6 @@ package com.dbydd.suuuuuper_herbal_tea.blocks;
 
 import com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys.TileBig_Black_Pot;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Items;
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.RenderTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
@@ -30,7 +29,6 @@ public class Big_Black_Pot extends Block {
 
     public Big_Black_Pot() {
         super(Properties.create(Material.IRON).hardnessAndResistance(4.5f).harvestLevel(2).harvestTool(ToolType.PICKAXE).notSolid());
-        RenderTypes.blockRenderTypeMap.put(this, RenderType.getTranslucent());
     }
 
     @Override

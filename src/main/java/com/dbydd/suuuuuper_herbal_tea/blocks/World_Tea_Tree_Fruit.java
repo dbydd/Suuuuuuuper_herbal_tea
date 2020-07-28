@@ -33,7 +33,7 @@ import java.util.function.Function;
 public class World_Tea_Tree_Fruit extends BlockBase {
 
     public World_Tea_Tree_Fruit() {
-        super(Properties.create(Material.PLANTS).hardnessAndResistance(-1.0f).notSolid().lightValue(12).harvestLevel(3).sound(SoundType.PLANT).tickRandomly(), "world_tea_tree_fruit", RenderType.getTranslucent());
+        super(Properties.create(Material.PLANTS).hardnessAndResistance(-1.0f).notSolid().lightValue(12).harvestLevel(3).sound(SoundType.PLANT).tickRandomly(), "world_tea_tree_fruit");
     }
 
     @Override

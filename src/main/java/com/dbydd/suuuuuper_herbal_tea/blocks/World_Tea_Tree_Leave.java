@@ -22,7 +22,7 @@ import java.util.Random;
 
 public class World_Tea_Tree_Leave extends BlockBase{
     public World_Tea_Tree_Leave(Properties properties, String name) {
-        super(properties.tickRandomly(), name, RenderType.getTranslucent());
+        super(properties.tickRandomly(), name);
     }
 
     @Override
