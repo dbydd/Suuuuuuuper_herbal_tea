@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "lll",
+    " l ",
+    "lll"
+  ],
+  "key": {
+    "l": {
+      "tag": "suuuuuuuper_herbal_tea:suuuuuuuper_herbal_tea_stones2"
+    }
+  },
+  "result": {
+    "item": "suuuuuuuper_herbal_tea:stone_chair",
+    "count": 1
+  }
+}

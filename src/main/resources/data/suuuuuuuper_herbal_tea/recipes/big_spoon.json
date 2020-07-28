@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  w",
+    " w ",
+    "b  "
+  ],
+  "key": {
+    "b": {
+      "item": "minecraft:bowl"
+    },
+    "w": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "item": "suuuuuuuper_herbal_tea:spoon",
+    "count": 1
+  }
+}

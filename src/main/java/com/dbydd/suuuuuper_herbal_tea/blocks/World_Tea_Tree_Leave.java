@@ -27,12 +27,15 @@ public class World_Tea_Tree_Leave extends BlockBase{
 
     @Override
     public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
-        Random random = worldIn.getRandom();
-        if(RandomUtils.outputBooleanByChance(random, 0.4d)){
-            int count = random.nextInt(2);
-            ItemEntity itemEntity = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Registered_Items.WORLD_TEA_TREE_TEA_LEAVE, count));
-            worldIn.addEntity(itemEntity);
+        if(!worldIn.isRemote()) {
+            Random random = worldIn.getRandom();
+            if (RandomUtils.outputBooleanByChance(random, 0.4d)) {
+                int count = random.nextInt(2);
+                ItemEntity itemEntity = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Registered_Items.WORLD_TEA_TREE_TEA_LEAVE, count));
+                worldIn.addEntity(itemEntity);
+            }
         }
+        super.harvestBlock(worldIn, player, pos, state, te, stack);
     }
 
 }

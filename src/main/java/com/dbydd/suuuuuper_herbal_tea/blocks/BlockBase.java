@@ -16,4 +16,8 @@ public class BlockBase extends Block {
         registeries.put(name, () -> this);
         RenderTypes.blockRenderTypeMap.put(this, renderType);
     }
+    public BlockBase(Properties properties, String name, RenderType renderType, boolean register) {
+        super(properties);
+        RenderTypes.blockRenderTypeMap.put(this, renderType);
+    }
 }

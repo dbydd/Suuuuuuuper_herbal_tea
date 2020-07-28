@@ -2,10 +2,12 @@ package com.dbydd.suuuuuper_herbal_tea.blocks;
 
 import com.dbydd.suuuuuper_herbal_tea.items.Tea_Leaves;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Biomes;
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Blocks;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Items;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
@@ -127,5 +129,14 @@ public class TeaTree extends BlockBase implements IGrowable {
             worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
         }
         super.randomTick(state, worldIn, pos, random);
+    }
+
+    @Override
+    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+        if(!worldIn.isRemote()) {
+            ItemEntity itemEntity = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Registered_Blocks.TEA_TREE));
+            worldIn.addEntity(itemEntity);
+        }
+        super.onBlockHarvested(worldIn, pos, state, player);
     }
 }

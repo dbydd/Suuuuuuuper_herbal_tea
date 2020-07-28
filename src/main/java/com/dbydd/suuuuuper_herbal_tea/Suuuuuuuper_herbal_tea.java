@@ -34,6 +34,8 @@ public class Suuuuuuuper_herbal_tea {
 
         Suuuuuuuper_herbal_tea.RegisterySingleBlock("tea_cup", Registered_Blocks.TEA_CUP, Registered_Items.TEA_CUP);
         Suuuuuuuper_herbal_tea.RegisterySingleBlock("big_black_pot", Registered_Blocks.BIG_BLACK_POT, Registered_Items.BIG_BLACK_POT_ITEM);
+        Suuuuuuuper_herbal_tea.RegisterySingleBlockNoItem("tea_water_face", Registered_Blocks.TEA_WATER_FACE);
+        Suuuuuuuper_herbal_tea.RegisterySingleBlockNoItem("water_face", Registered_Blocks.WATER_FACE);
         Suuuuuuuper_herbal_tea.RegisteryBlocks(BlockBase.registeries);
         Suuuuuuuper_herbal_tea.RegisteryItems(ItemBase.registeries);
         Suuuuuuuper_herbal_tea.RegisterySingleBlock("honeysuckle", Registered_Blocks.HONEYSUCKLE, Registered_Items.HONEY_SUCKLE_ITEM);
@@ -67,6 +69,10 @@ public class Suuuuuuuper_herbal_tea {
     public static void RegisterySingleBlock(String name, Block block, Item item) {
         BLOCK_REGISTER.register(name, () -> block);
         ITEM_REGISTER.register(name, () -> item);
+    }
+
+    public static void RegisterySingleBlockNoItem(String name, Block block) {
+        BLOCK_REGISTER.register(name, () -> block);
     }
 
     public static RegistryObject<ModDimension> RegisteryDimenision(String name, ModDimension dimension) {

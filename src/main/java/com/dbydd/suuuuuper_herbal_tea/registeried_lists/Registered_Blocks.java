@@ -17,9 +17,9 @@ public class Registered_Blocks {
     public static final Block STONE_TABLE = new Stone_Table();
     public static final Block WORLD_TEA_TREE_LEAVE = new World_Tea_Tree_Leave(Block.Properties.create(Material.LEAVES).notSolid().harvestTool(ToolType.AXE).sound(SoundType.PLANT).hardnessAndResistance(0.5f), "world_tea_tree_leave_not_glow");
     public static final Block WORLD_TEA_TREE_LEAVE_GLOW = new World_Tea_Tree_Leave(Block.Properties.create(Material.LEAVES).notSolid().harvestTool(ToolType.AXE).hardnessAndResistance(0.5f).sound(SoundType.PLANT).lightValue(12), "world_tea_tree_leave_glow");
+    public static final Block WATER_FACE = new BlockBase(Block.Properties.create(Material.AIR).notSolid().hardnessAndResistance(-1), "water_face", RenderType.getTranslucent(), false);
+    public static final Block TEA_WATER_FACE = new BlockBase(Block.Properties.create(Material.AIR).notSolid().hardnessAndResistance(-1), "tea_water_face", RenderType.getTranslucent(), false);
     public static final Block WORLD_TEA_TREE_FRUIT = new World_Tea_Tree_Fruit();
-    public static final Block WATER_FACE = new BlockBase(Block.Properties.create(Material.AIR).notSolid().hardnessAndResistance(-1), "water_face", RenderType.getTranslucent());
-    public static final Block TEA_WATER_FACE = new BlockBase(Block.Properties.create(Material.AIR).notSolid().hardnessAndResistance(-1), "tea_water_face", RenderType.getTranslucent());
     public static final Block WOLF_BERRY_TREE = new Wolf_Berry_Tree();
     public static final Block JUJUCE_TREE_TREE = new Jujuce_Tree();
     public static final Block TEA_TREE = new TeaTree();

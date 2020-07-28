@@ -1,9 +1,11 @@
 package com.dbydd.suuuuuper_herbal_tea.blocks;
 
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Blocks;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Items;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
@@ -93,5 +95,14 @@ public class Wolf_Berry_Tree extends BlockBase implements IGrowable {
     @Override
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
         grow(worldIn, rand, pos, state);
+    }
+
+    @Override
+    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+        if(!worldIn.isRemote()) {
+            ItemEntity itemEntity = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Registered_Blocks.WOLF_BERRY_TREE));
+            worldIn.addEntity(itemEntity);
+        }
+        super.onBlockHarvested(worldIn, pos, state, player);
     }
 }

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "s s",
+    "c c",
+    " s "
+  ],
+  "key": {
+    "c": {
+      "tag": "suuuuuuuper_herbal_tea:suuuuuuuper_herbal_tea_chiseled_stones"
+    },
+    "s": {
+      "tag": "suuuuuuuper_herbal_tea:suuuuuuuper_herbal_tea_stones"
+    }
+  },
+  "result": {
+    "item": "suuuuuuuper_herbal_tea:tea_cup",
+    "count": 1
+  }
+}

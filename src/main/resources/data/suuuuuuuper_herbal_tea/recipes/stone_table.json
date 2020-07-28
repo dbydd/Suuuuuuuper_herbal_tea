@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sls",
+    "sas",
+    "p p"
+  ],
+  "key": {
+    "s": {
+      "tag": "suuuuuuuper_herbal_tea:suuuuuuuper_herbal_tea_stones"
+    },
+    "p": {
+      "tag": "minecraft:walls"
+    },
+    "a": {
+      "tag": "suuuuuuuper_herbal_tea:suuuuuuuper_herbal_tea_chiseled_stones"
+    },
+    "l": {
+      "tag": "minecraft:slabs"
+    }
+  },
+  "result": {
+    "item": "suuuuuuuper_herbal_tea:stone_table",
+    "count": 1
+  }
+}
