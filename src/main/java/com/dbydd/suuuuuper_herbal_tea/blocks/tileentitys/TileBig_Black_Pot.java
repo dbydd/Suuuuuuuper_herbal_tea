@@ -16,7 +16,6 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
@@ -68,7 +67,7 @@ public class TileBig_Black_Pot extends TileEntity {
         FluidTank spoonTank = new FluidTank(200);
         spoonTank.setFluid(tank.drain(200, IFluidHandler.FluidAction.EXECUTE));
 
-        markDirty();
+        markDirty2();
 
         compoundNBT.put("tank", spoonTank.writeToNBT(new CompoundNBT()));
         compoundNBT.put("effects", effects.serializeNBT());
@@ -117,8 +116,7 @@ public class TileBig_Black_Pot extends TileEntity {
         this.read(tag);
     }
 
-    @Override
-    public void markDirty() {
+    public void markDirty2() {
         world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
         super.markDirty();
     }

@@ -31,7 +31,7 @@ public class BiomeFeatureRegistry {
             if (!(biome instanceof World_Tea_Tree_Biome)) {
                 biome.addStructure(Registered_Features.TEA_HOUSE_FEATURE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
                 biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Registered_Features.TEA_HOUSE_FEATURE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
-                biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Registered_Features.TEA_RESOURCE_GENERATION_OVERWORLD.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Registered_Decorators.TEA_REOURCE_DECORATOR.get().configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
+                biome.addFeature(GenerationStage.Decoration.TOP_LAYER_MODIFICATION, Registered_Features.TEA_RESOURCE_GENERATION_OVERWORLD.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Registered_Decorators.TEA_REOURCE_DECORATOR.get().configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
             }
         }
     }

@@ -48,7 +48,7 @@ public class TeaHouseStructure extends Structure<NoFeatureConfig> {
 
         @Override
         public void init(ChunkGenerator<?> generator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn) {
-            TeaHouseStructurePiece teaHouseStructurePiece = new TeaHouseStructurePiece(templateManagerIn, new BlockPos(chunkX*16, generator.getGroundHeight(), chunkZ*16), rand);
+            TeaHouseStructurePiece teaHouseStructurePiece = new TeaHouseStructurePiece(templateManagerIn, new BlockPos(chunkX*16, generator.getGroundHeight()-1, chunkZ*16), rand);
             this.components.add(teaHouseStructurePiece);
             this.recalculateStructureSize();
         }

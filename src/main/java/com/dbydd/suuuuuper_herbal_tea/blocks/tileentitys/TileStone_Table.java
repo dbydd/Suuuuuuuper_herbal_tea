@@ -9,7 +9,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -18,7 +17,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class TileStone_Table extends TileEntity {
@@ -48,21 +46,21 @@ public class TileStone_Table extends TileEntity {
                 if (itemOnTable.getStackInSlot(0) == ItemStack.EMPTY) {
                     itemOnTable.setStackInSlot(0, heldItem);
                     player.setHeldItem(handIn, ItemStack.EMPTY);
-                    markDirty();
+                    markDirty2();
                     return ActionResultType.SUCCESS;
                 } else if (itemOnTable.getStackInSlot(1) == ItemStack.EMPTY) {
                     itemOnTable.setStackInSlot(1, heldItem);
                     player.setHeldItem(handIn, ItemStack.EMPTY);
-                    markDirty();
+                    markDirty2();
                     return ActionResultType.SUCCESS;
                 }
             } else if (heldItem == ItemStack.EMPTY) {
                 if (itemOnTable.getStackInSlot(0) != ItemStack.EMPTY) {
                     ItemHandlerHelper.giveItemToPlayer(player, itemOnTable.extractItem(0, itemOnTable.getStackInSlot(0).getCount(), false));
-                    markDirty();
+                    markDirty2();
                 } else {
                     ItemHandlerHelper.giveItemToPlayer(player, itemOnTable.extractItem(1, itemOnTable.getStackInSlot(1).getCount(), false));
-                    markDirty();
+                    markDirty2();
                 }
                 return ActionResultType.SUCCESS;
             }
@@ -95,9 +93,8 @@ public class TileStone_Table extends TileEntity {
         this.read(tag);
     }
 
-    @Override
-    public void markDirty() {
-        world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
+    public void markDirty2() {
+        world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
         super.markDirty();
     }
 }

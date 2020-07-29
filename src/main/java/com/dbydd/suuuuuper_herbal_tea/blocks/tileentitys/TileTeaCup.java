@@ -1,6 +1,5 @@
 package com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys;
 
-import com.dbydd.suuuuuper_herbal_tea.interfaces.IPutableItem;
 import com.dbydd.suuuuuper_herbal_tea.items.BigSpoon;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Items;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_TileEntities;
@@ -70,7 +69,7 @@ public class TileTeaCup extends TileEntity {
                     this.handler.deserializeNBT(tag.getCompound("effects"));
                     heldItem.setTagInfo("spoonresources", BigSpoon.getEmptySpoon());
                     player.setHeldItem(handIn, heldItem);
-                    markDirty();
+                    markDirty2();
                     return ActionResultType.SUCCESS;
                 }
             }
@@ -85,7 +84,7 @@ public class TileTeaCup extends TileEntity {
     public void fill(IResourceItemHandler resources, FluidStack fluidStack) {
         handler = resources;
         tank.setFluid(fluidStack);
-        markDirty();
+        markDirty2();
     }
 
     public TileTeaCup(TileEntityType<?> tileEntityTypeIn, FluidTank tank) {
@@ -114,8 +113,7 @@ public class TileTeaCup extends TileEntity {
         this.read(tag);
     }
 
-    @Override
-    public void markDirty() {
+    public void markDirty2() {
         world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
         super.markDirty();
     }

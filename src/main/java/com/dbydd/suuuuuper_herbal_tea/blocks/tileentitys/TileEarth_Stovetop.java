@@ -17,7 +17,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -75,7 +74,9 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             if (side == world.getBlockState(pos).get(Earth_Stovetop.FACING)) {
                 return LazyOptional.of(() -> fuel_ash_Handler).cast();
-            } else return LazyOptional.of(() -> resources).cast();
+            } else {
+                return LazyOptional.of(() -> resources).cast();
+            }
         }
         return super.getCapability(cap, side);
     }
@@ -127,7 +128,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
         FluidTank spoonTank = new FluidTank(200);
         spoonTank.setFluid(tank.drain(200, IFluidHandler.FluidAction.EXECUTE));
 
-        markDirty();
+        markDirty2();
 
         compoundNBT.put("tank", spoonTank.writeToNBT(new CompoundNBT()));
         compoundNBT.put("effects", effects.serializeNBT());
@@ -146,7 +147,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
                             ItemStack stackInSlot = resources.getStackInSlot(i);
                             if (!stackInSlot.isEmpty()) {
                                 ItemHandlerHelper.giveItemToPlayer(player, resources.extractItem(i, stackInSlot.getCount(), false));
-                                markDirty();
+                                markDirty2();
                                 flag = false;
                                 break;
                             }
@@ -160,7 +161,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
                     }
                 } else {
                     ItemHandlerHelper.giveItemToPlayer(player, fuel_ash_Handler.extractItem(0, fuel_ash_Handler.getStackInSlot(0).getCount(), false));
-                    markDirty();
+                    markDirty2();
                 }
             } else if (heldItem.getItem() instanceof Big_Black_Pot_Item) {
                 if (!hasBlackPot) {
@@ -172,7 +173,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
                     }
                     player.setHeldItem(handIn, ItemStack.EMPTY);
                     hasBlackPot = true;
-                    markDirty();
+                    markDirty2();
                 }
             } else if (heldItem.getItem() instanceof BucketItem) {
                 BucketItem bucket = (BucketItem) heldItem.getItem();
@@ -181,17 +182,17 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
                     tank.fill(new FluidStack(fluid, 1000), IFluidHandler.FluidAction.EXECUTE);
                     ItemStack result = !player.abilities.isCreativeMode ? new ItemStack(Items.BUCKET) : heldItem;
                     player.setHeldItem(handIn, result);
-                    markDirty();
+                    markDirty2();
                 }
             } else if (heldItem.getItem() instanceof FlintAndSteelItem) {
                 this.isburning = true;
                 this.takeFuel();
                 heldItem.setDamage(1);
-                markDirty();
+                markDirty2();
             } else if (ForgeHooks.getBurnTime(heldItem) > 0) {
                 if (fuel_ash_Handler.getStackInSlot(0).isEmpty() || fuel_ash_Handler.getStackInSlot(0).getItem() == heldItem.getItem()) {
                     player.setHeldItem(handIn, fuel_ash_Handler.insertItem(0, heldItem, false));
-                    markDirty();
+                    markDirty2();
                 }
             } else if (heldItem.getItem() instanceof BigSpoon) {
                 if (heldItem.getChildTag("spoonresources") == null || heldItem.getChildTag("spoonresources").getBoolean("isempty")) {
@@ -202,7 +203,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
                 if (hasBlackPot) {
                     ItemStack itemStack = ItemHandlerHelper.insertItem(resources, heldItem, false);
                     player.setHeldItem(handIn, itemStack);
-                    markDirty();
+                    markDirty2();
                 }
             }
         }
@@ -232,14 +233,14 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
                     }
                 }
             }
-            markDirty();
+            markDirty2();
         } else {
             if (temperature.getCurrent() > world.getBiome(pos).getTemperature(pos)) {
                 temperature.self_substract();
-                markDirty();
+                markDirty2();
             } else if (temperature.getCurrent() < world.getBiome(pos).getTemperature(pos)) {
                 temperature.self_add();
-                markDirty();
+                markDirty2();
             }
         }
     }
@@ -256,7 +257,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
                 this.maxBurnTime = burnTime;
                 this.burnTime = 0;
                 this.isburning = true;
-                markDirty();
+                markDirty2();
                 return true;
             }
         }
@@ -287,7 +288,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
         this.effects = new IResourceItemHandler(9);
         this.resources = new IResourceItemHandler(9);
         this.tank = new FluidTank(2000);
-        markDirty();
+        markDirty2();
     }
 
     public boolean hasBlackPot() {
@@ -319,8 +320,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
         this.read(tag);
     }
 
-    @Override
-    public void markDirty() {
+    public void markDirty2() {
         world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
         super.markDirty();
     }
