@@ -1,0 +1,18 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "suuuuuuuper_herbal_tea:items/spoon"
+    },
+	"overrides":[
+		{"perdicate":{
+			"isempty" : 0
+		},
+		"model":"suuuuuuuper_herbal_tea:items/spoon_empty"
+		},
+		{"perdicate":{
+			"isempty" : 1
+		},
+		"model":"suuuuuuuper_herbal_tea:items/spoon_full"
+		}
+	]
+}
