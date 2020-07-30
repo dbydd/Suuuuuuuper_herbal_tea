@@ -12,17 +12,11 @@ import com.dbydd.suuuuuper_herbal_tea.utils.IntegerContainer;
 import net.minecraft.block.Block;
 import net.minecraft.block.IBucketPickupHandler;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.item.ToolItem;
+import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
@@ -41,9 +35,16 @@ public class BigSpoon extends ItemBase {
 
     public BigSpoon() {
         super(new Properties().maxStackSize(1).group(Suuuuuuuper_herbal_tea.TAB), "spoon");
+        this.addPropertyOverride(new ResourceLocation("isempty"), (p_call_1_, p_call_2_, p_call_3_) -> {
+            CompoundNBT spoonresources = p_call_1_.getChildTag("spoonresources");
+            if (spoonresources != null){
+                return spoonresources.getBoolean("isempty")?0:1;
+            }
+            return 0;
+        });
     }
 
-    public static CompoundNBT getEmptySpoon(){
+    public static CompoundNBT getEmptySpoon() {
         CompoundNBT nbt = new CompoundNBT();
         IResourceItemHandler spoonhandler = new IResourceItemHandler(9);
         FluidTank spoontank = new FluidTank(200);
