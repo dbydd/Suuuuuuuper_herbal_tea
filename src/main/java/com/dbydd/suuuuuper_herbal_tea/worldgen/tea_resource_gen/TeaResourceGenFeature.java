@@ -38,7 +38,7 @@ public class TeaResourceGenFeature extends FlowersFeature<NoFeatureConfig> {
 
     @Override
     public BlockState getFlowerToPlace(Random random, BlockPos pos, NoFeatureConfig p_225562_3_) {
-        if (RandomUtils.outputBooleanByChance(random, 0.35)) {
+        if (RandomUtils.outputBooleanByChance(random, 0.12)) {
             List<BlockState> blocks = Arrays.asList(Registered_Blocks.JUJUCE_TREE_TREE.getDefaultState().with(Jujuce_Tree.GROW_TIER, random.nextInt(5)), Registered_Blocks.TEA_TREE.getDefaultState().with(TeaTree.GROW_TIER, random.nextInt(5)), Registered_Blocks.WOLF_BERRY_TREE.getDefaultState().with(Wolf_Berry_Tree.GROW_TIER, random.nextInt(5)), Registered_Blocks.HONEYSUCKLE.getDefaultState());
               return blocks.get(random.nextInt(blocks.size()));
         }

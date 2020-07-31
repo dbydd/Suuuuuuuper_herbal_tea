@@ -39,7 +39,7 @@ public class RightClickHandler {
             ItemStack main_hand = player.getHeldItem(Hand.MAIN_HAND);
             if (block == Registered_Blocks.CHAIR) {
                 event.setCanceled(true);
-                Vec3d vec = new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+                Vec3d vec = new Vec3d(pos.getX() + 0.5, pos.getY() + 0.2, pos.getZ() + 0.5);
                 final ArmorStandEntity dummy = new ArmorStandEntity(EntityType.ARMOR_STAND, event.getWorld());
                 dummy.getDataManager().set(ArmorStandEntity.STATUS, (byte) (1 | 8 | 16));
                 dummy.setInvisible(true);

@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 public class BlockTeaCup extends Block {
-    public static final VoxelShape shape = Block.makeCuboidShape(5, 0, 5, 12, 6, 12);
+    public static final VoxelShape shape = Block.makeCuboidShape(4, 0, 4, 12, 5, 12);
 
     public BlockTeaCup() {
         super(Properties.create(Material.GLASS).hardnessAndResistance(2).notSolid());

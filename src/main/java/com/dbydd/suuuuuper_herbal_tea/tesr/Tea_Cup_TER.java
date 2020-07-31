@@ -27,7 +27,7 @@ public class Tea_Cup_TER extends TileEntityRenderer<TileTeaCup> {
             Fluid fluid = tank.getFluid().getFluid();
 
             matrixStackIn.push();
-            matrixStackIn.translate(0.15,0.24,0.15);
+            matrixStackIn.translate(0.14,0.24,0.14);
             matrixStackIn.scale(0.7f,0,0.7f);
             if (tank.getFluid().getFluid() == Registered_Fluids.TEA_WATER.fluid.get().getFluid()) {
                 blockRenderer.renderBlock(Registered_Blocks.TEA_WATER_FACE.getDefaultState(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn, EmptyModelData.INSTANCE);

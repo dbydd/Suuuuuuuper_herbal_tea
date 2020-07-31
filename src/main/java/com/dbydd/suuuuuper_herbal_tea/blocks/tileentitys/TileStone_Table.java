@@ -1,6 +1,8 @@
 package com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys;
 
 import com.dbydd.suuuuuper_herbal_tea.interfaces.IPutableItem;
+import com.dbydd.suuuuuper_herbal_tea.items.BigSpoon;
+import com.dbydd.suuuuuper_herbal_tea.items.TeaCupItem;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_TileEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -41,28 +43,53 @@ public class TileStone_Table extends TileEntity {
 
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote()) {
-            ItemStack heldItem = player.getHeldItem(handIn);
-            if (heldItem.getItem() instanceof IPutableItem) {
-                if (itemOnTable.getStackInSlot(0) == ItemStack.EMPTY) {
-                    itemOnTable.setStackInSlot(0, heldItem);
-                    player.setHeldItem(handIn, ItemStack.EMPTY);
-                    markDirty2();
-                    return ActionResultType.SUCCESS;
-                } else if (itemOnTable.getStackInSlot(1) == ItemStack.EMPTY) {
-                    itemOnTable.setStackInSlot(1, heldItem);
-                    player.setHeldItem(handIn, ItemStack.EMPTY);
-                    markDirty2();
-                    return ActionResultType.SUCCESS;
+            if(handIn == Hand.MAIN_HAND) {
+                ItemStack heldItem = player.getHeldItem(handIn);
+                if (heldItem.getItem() instanceof IPutableItem) {
+                    if (itemOnTable.getStackInSlot(0) == ItemStack.EMPTY) {
+                        itemOnTable.setStackInSlot(0, heldItem);
+                        player.setHeldItem(handIn, ItemStack.EMPTY);
+                        markDirty2();
+                        return ActionResultType.SUCCESS;
+                    } else if (itemOnTable.getStackInSlot(1) == ItemStack.EMPTY) {
+                        itemOnTable.setStackInSlot(1, heldItem);
+                        player.setHeldItem(handIn, ItemStack.EMPTY);
+                        markDirty2();
+                        return ActionResultType.SUCCESS;
+                    }
+                } else if (heldItem.getItem() instanceof BigSpoon) {
+                    if (itemOnTable.getStackInSlot(0).getItem() instanceof TeaCupItem) {
+                        ItemStack stackInSlot0 = itemOnTable.getStackInSlot(0);
+                        CompoundNBT spoonresources = heldItem.getChildTag("spoonresources");
+                        CompoundNBT childTag = stackInSlot0.getChildTag("BlockEntityTag");
+                        if ((childTag == null || childTag.getBoolean("isempty")) && spoonresources != null && !spoonresources.getBoolean("isempty")) {
+                            if (childTag == null) {
+                                childTag = new CompoundNBT();
+                            }
+                            childTag.put("effects", spoonresources.get("effects"));
+                            childTag.put("tank", spoonresources.get("tank"));
+                            childTag.putBoolean("isempty", spoonresources.getBoolean("isempty"));
+                            heldItem.setTagInfo("spoonresources", BigSpoon.getEmptySpoon());
+                            player.setHeldItem(handIn, heldItem);
+                            stackInSlot0.setTagInfo("BlockEntityTag", childTag);
+                            itemOnTable.setStackInSlot(0, stackInSlot0);
+                            markDirty2();
+                            return ActionResultType.SUCCESS;
+                        }
+                    }
+                } else if (heldItem.isEmpty()) {
+                    if (itemOnTable.getStackInSlot(0) != ItemStack.EMPTY) {
+                        ItemHandlerHelper.giveItemToPlayer(player, itemOnTable.extractItem(0, itemOnTable.getStackInSlot(0).getCount(), false));
+                        markDirty2();
+                        return ActionResultType.SUCCESS;
+                    } else {
+                        if (itemOnTable.getStackInSlot(1) != ItemStack.EMPTY) {
+                            ItemHandlerHelper.giveItemToPlayer(player, itemOnTable.extractItem(1, itemOnTable.getStackInSlot(1).getCount(), false));
+                            markDirty2();
+                            return ActionResultType.SUCCESS;
+                        }
+                    }
                 }
-            } else if (heldItem == ItemStack.EMPTY) {
-                if (itemOnTable.getStackInSlot(0) != ItemStack.EMPTY) {
-                    ItemHandlerHelper.giveItemToPlayer(player, itemOnTable.extractItem(0, itemOnTable.getStackInSlot(0).getCount(), false));
-                    markDirty2();
-                } else {
-                    ItemHandlerHelper.giveItemToPlayer(player, itemOnTable.extractItem(1, itemOnTable.getStackInSlot(1).getCount(), false));
-                    markDirty2();
-                }
-                return ActionResultType.SUCCESS;
             }
         }
         return ActionResultType.PASS;

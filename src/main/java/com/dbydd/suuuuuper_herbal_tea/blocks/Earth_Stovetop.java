@@ -43,24 +43,27 @@ public class Earth_Stovetop extends BlockBase {
     @Override
     public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
-        if(tileEntity != null)
+        if(tileEntity != null) {
             return ((TileEarth_Stovetop)tileEntity).hasBlackPot()?shape_withpot:shape;
+        }
         return shape;
     }
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
-        if(tileEntity != null)
-        return ((TileEarth_Stovetop)tileEntity).hasBlackPot()?shape_withpot:shape;
+        if(tileEntity != null) {
+            return ((TileEarth_Stovetop)tileEntity).hasBlackPot()?shape_withpot:shape;
+        }
         return shape;
     }
 
     @Override
     public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
         TileEntity tileEntity = world.getTileEntity(pos);
-        if(tileEntity != null)
+        if(tileEntity instanceof TileEarth_Stovetop) {
             return ((TileEarth_Stovetop)tileEntity).isIsburning()?12:0;
+        }
         return 0;
     }
 

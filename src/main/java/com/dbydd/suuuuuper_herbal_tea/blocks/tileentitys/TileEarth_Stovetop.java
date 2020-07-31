@@ -43,7 +43,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
     private int maxBurnTime = 0;
     private ItemStackHandler fuel_ash_Handler = new ItemStackHandler(2);
     private IntegerContainer temperature = new IntegerContainer(0, 100);
-    private IntegerContainer progress = new IntegerContainer(0, 200);
+    private IntegerContainer progress = new IntegerContainer(0, 440);
     private FluidTank tank = new FluidTank(2000);
     private IResourceItemHandler resources = new IResourceItemHandler(9);
     private IResourceItemHandler effects = new IResourceItemHandler(9);
@@ -132,7 +132,7 @@ public class TileEarth_Stovetop extends TileEntity implements ITickableTileEntit
 
         compoundNBT.put("tank", spoonTank.writeToNBT(new CompoundNBT()));
         compoundNBT.put("effects", effects.serializeNBT());
-        compoundNBT.putBoolean("isempty", false);
+        compoundNBT.putBoolean("isempty", spoonTank.isEmpty());
         return compoundNBT;
     }
 

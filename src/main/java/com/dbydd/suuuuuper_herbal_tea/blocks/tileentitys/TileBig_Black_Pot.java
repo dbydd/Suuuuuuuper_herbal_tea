@@ -71,14 +71,14 @@ public class TileBig_Black_Pot extends TileEntity {
 
         compoundNBT.put("tank", spoonTank.writeToNBT(new CompoundNBT()));
         compoundNBT.put("effects", effects.serializeNBT());
-        compoundNBT.putBoolean("isempty", false);
+        compoundNBT.putBoolean("isempty", spoonTank.isEmpty());
         return compoundNBT;
     }
 
     public ActionResultType onBlockActived(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         ItemStack heldItem = player.getHeldItem(handIn);
         if(heldItem.getItem() instanceof BigSpoon){
-            if (heldItem.getChildTag("spoonresources") != null || heldItem.getChildTag("spoonresources").getBoolean("isempty")) {
+            if (heldItem.getChildTag("spoonresources") == null || heldItem.getChildTag("spoonresources").getBoolean("isempty")) {
                 heldItem.setTagInfo("spoonresources", serializeSpoonTag());
                 player.setHeldItem(handIn, heldItem);
                 return ActionResultType.SUCCESS;
