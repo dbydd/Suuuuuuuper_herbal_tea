@@ -20,6 +20,7 @@ import net.minecraft.world.gen.*;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.SaveFormat;
 import net.minecraftforge.common.ForgeHooks;
 
@@ -31,8 +32,8 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
     private static final int MAIN_BRANCH_HEIGHT = 175;
     private static final int LEAVE_BLOCK_RANGE = MAIN_BRANCH_BLOCK_RANGE << 5;
     private static final int LEAVE_CHUNK_RANGE = LEAVE_BLOCK_RANGE >> 4;
-    private static Map<Double, BlockState> generate_Map = new HashMap<>();
     private static final BlockState BRANCH_DEFAULT_STATE = Blocks.OAK_LOG.getDefaultState();
+    private static Map<Double, BlockState> generate_Map = new HashMap<>();
 
     public World_Tea_Tree_ChunkGenerator(IWorld worldIn, BiomeProvider biomeProviderIn) {
         super(worldIn, biomeProviderIn, new World_Tea_Tree_GenerationSettings());
@@ -47,7 +48,6 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
     }
 
     private void generateRandomBranch(IWorld world, IChunk iChunk, ChunkPos chunkPos, BlockPos pos, Random rand) {
-        if (MathUtils.inCircle(pos.getX(), pos.getZ(), 400)) {
             BlockPos currentPos = pos;
             int currentx;
             int currentz;
@@ -65,15 +65,19 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
 
                 if (currentPos.getX() < 0) {
                     currentx = currentPos.getX() + 1;
-                } else currentx = currentPos.getX() - 1;
+                } else {
+                    currentx = currentPos.getX() - 1;
+                }
 
                 if (currentPos.getZ() < 0) {
                     currentz = currentPos.getZ() + 1;
-                } else currentz = currentPos.getZ() - 1;
+                } else {
+                    currentz = currentPos.getZ() - 1;
+                }
 
                 currentPos = new BlockPos(currentx, currentPos.getY() - 1, currentz);
             }
-            while (currentPos.getY() > 0){
+            while (currentPos.getY() > 0) {
                 for (int x = -branchwidth; x < branchwidth; x++) {
                     for (int z = -branchwidth; z < branchwidth; z++) {
 
@@ -85,17 +89,15 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
 
                 currentPos = new BlockPos(currentPos.getX(), currentPos.getY() - 1, currentPos.getZ());
             }
-        }
 
     }
-
 
     private void generateLeaves(IWorld world, IChunk iChunk, ChunkPos chunkPos) {
         int beginx = (chunkPos.getXStart() + chunkPos.getXEnd()) / 2;
         int beginz = (chunkPos.getZStart() + chunkPos.getZEnd()) / 2;
         Random rand = world.getRandom();
         int stratum = rand.nextInt(7) + 1;
-        int currentHeight = 60+rand.nextInt(8);
+        int currentHeight = 60 + rand.nextInt(8);
         for (int currentStratum = 1; currentStratum <= stratum; currentStratum++) {
             int stratumHeight = rand.nextInt(16);
             if (RandomUtils.outputBooleanByChance(rand, 0.57)) {
@@ -112,10 +114,15 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
                         for (int z = -radius; z < radius; z++) {
 
                             if (Math.sqrt(Math.pow(x, 2) + Math.pow(z, 2)) <= radius) {
-                                BlockPos blockPos = new BlockPos(beginx + x, currentHeightEachStratum + currentHeight, beginz + z);
+                                BlockPos blockPos = new BlockPos(beginx + x, currentHeight, beginz + z);
 
-                                if (world.getBlockState(blockPos).getBlock() == Blocks.AIR)
+                                if (world.getBlockState(blockPos).getBlock() == Blocks.AIR) {
                                     world.setBlockState(blockPos, RandomUtils.outputRandmonBlockByList(rand, generate_Map), 3);
+                                    if (RandomUtils.outputBooleanByChance(rand, 0.001)) {
+                                        world.setBlockState(new BlockPos(blockPos.getX(), blockPos.getY() + 1, blockPos.getZ()), Registered_Blocks.WORLD_TEA_TREE_FRUIT.getDefaultState(), 3);
+                                    }
+                                }
+
 
                             }
                         }
@@ -173,10 +180,9 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
         if (MathUtils.inCircle(chunkPos.x, chunkPos.z, MAIN_BRANCH_CHUNK_RANGE)) {
             generateMainBranch(worldIn);
             if (chunkPos.x == 0 && chunkPos.z == 0 && !worldIn.isRemote()) {
-                MinecraftServer server = worldIn.getWorld().getServer();
-                TemplateManager structureTemplateManager = server.getActiveAnvilConverter().getSaveLoader(server.getFolderName(), server).getStructureTemplateManager();
+                TemplateManager structureTemplateManager = ((ServerWorld) worldIn.getWorld()).getStructureTemplateManager();
                 Template tea_pavilion = structureTemplateManager.getTemplate(new ResourceLocation(Suuuuuuuper_herbal_tea.NAME, "tea_pavilion"));
-                tea_pavilion.addBlocksToWorld(worldIn, new BlockPos(-5,175,-5), new PlacementSettings(), 2);
+                tea_pavilion.addBlocksToWorld(worldIn, new BlockPos(-5, 175, -5), new PlacementSettings(), 3);
             }
         } else if (MathUtils.inCircle(chunkPos.x, chunkPos.z, LEAVE_CHUNK_RANGE)) {
             generateLeaves(worldIn, chunkIn, chunkPos);
