@@ -8,7 +8,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 public class Stone_Chair extends BlockBase{
-    public static final VoxelShape SHAPE = Block.makeCuboidShape(4, 0, 4, 12, 5, 12);
+    public static final VoxelShape SHAPE = Block.makeCuboidShape(4, 0, 4, 12, 6, 12);
 
     public Stone_Chair(Properties properties) {
         super(properties, "stone_chair");

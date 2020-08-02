@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -20,6 +21,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
@@ -125,7 +127,8 @@ public class TeaTree extends BlockBase implements IGrowable {
 
     @Override
     public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-        if(worldIn.getBlockState(new BlockPos(pos.getX(), pos.getY()-1,pos.getZ())).getBlock() == Blocks.AIR){
+        BlockState blockState = worldIn.getBlockState(pos.offset(Direction.DOWN));
+        if (blockState.isAir(worldIn, pos) || blockState.getBlock() instanceof FlowingFluidBlock) {
             worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
         }
         super.randomTick(state, worldIn, pos, random);
@@ -133,10 +136,26 @@ public class TeaTree extends BlockBase implements IGrowable {
 
     @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
-        if(!worldIn.isRemote()) {
+        if (!worldIn.isRemote()) {
             ItemEntity itemEntity = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Registered_Blocks.TEA_TREE));
             worldIn.addEntity(itemEntity);
         }
         super.onBlockHarvested(worldIn, pos, state, player);
+    }
+
+    @Override
+    public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+        BlockPos blockPos = new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ());
+        BlockState blockState = worldIn.getBlockState(blockPos);
+        if(blockState.isAir(worldIn, blockPos) || blockState.getBlock() instanceof FlowingFluidBlock || blockState.getBlock() instanceof BushBlock) {
+            worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
+        }
+        super.onBlockAdded(state, worldIn, pos, oldState, isMoving);
+    }
+
+    @Override
+    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
+        BlockState blockState = worldIn.getBlockState(pos.offset(Direction.DOWN));
+        return !(blockState.isAir(worldIn, pos) || blockState.getBlock() instanceof FlowingFluidBlock || blockState.getBlock() instanceof BushBlock);
     }
 }

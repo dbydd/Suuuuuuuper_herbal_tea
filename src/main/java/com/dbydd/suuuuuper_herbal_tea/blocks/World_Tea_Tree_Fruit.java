@@ -50,7 +50,7 @@ public class World_Tea_Tree_Fruit extends BlockBase {
                 public Entity placeEntity(Entity entity, ServerWorld currentWorld, ServerWorld destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
                     Random random = worldIn.getRandom();
                     entity = repositionEntity.apply(false);
-                    entity.setPositionAndUpdate(pos.getX() + random.nextInt(16), 64 + (192 - random.nextInt(96)), pos.getZ() + random.nextInt(16));
+                    entity.setPositionAndUpdate(pos.getX() + random.nextInt(16), pos.getY()+8-random.nextInt(16), pos.getZ() + random.nextInt(16));
                     return entity;
                 }
             });
