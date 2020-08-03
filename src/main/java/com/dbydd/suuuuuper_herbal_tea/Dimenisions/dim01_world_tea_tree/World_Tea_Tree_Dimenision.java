@@ -1,5 +1,7 @@
 package com.dbydd.suuuuuper_herbal_tea.Dimenisions.dim01_world_tea_tree;
 
+import net.minecraft.client.renderer.entity.AreaEffectCloudRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;

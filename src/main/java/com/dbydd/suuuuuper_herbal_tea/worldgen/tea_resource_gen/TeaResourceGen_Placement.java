@@ -1,6 +1,8 @@
 package com.dbydd.suuuuuper_herbal_tea.worldgen.tea_resource_gen;
 
 import com.mojang.datafixers.Dynamic;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.BushBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
@@ -29,12 +31,13 @@ public class TeaResourceGen_Placement extends Placement<NoPlacementConfig> {
             int k = random.nextInt(16) + pos.getZ();
             int l = worldIn.getHeight(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, j, k);
             if (l > 0) {
-                int i1 = l - 1;
-                BlockPos blockPos = new BlockPos(j, i1, k);
-                Material material = worldIn.getBlockState(blockPos).getMaterial();
-                if (material == Material.EARTH || material == Material.SAND || material == Material.SNOW_BLOCK) {
+                BlockPos blockPos = new BlockPos(j, l-1, k);
+                BlockState blockState = worldIn.getBlockState(blockPos);
+                if (!blockState.isAir(worldIn, blockPos) && !(blockState.getBlock() instanceof BushBlock)) {
                     return blockPos;
-                } else return null;
+                } else {
+                    return null;
+                }
             } else {
                 return null;
             }
