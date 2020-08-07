@@ -17,7 +17,7 @@ public class BlockBase extends Block {
         registeries.put(name, () -> this);
     }
 
-    public BlockBase(Properties properties, String name, boolean bool) {
+    public BlockBase(Properties properties) {
         super(properties);
     }
 }
