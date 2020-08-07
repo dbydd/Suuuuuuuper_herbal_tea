@@ -6,9 +6,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
@@ -47,8 +47,10 @@ public class BlockSink extends BlockBase {
 
                     if (isempty) {
                         iFluidHandlerItem.fill(new FluidStack(Fluids.WATER, Integer.MAX_VALUE), IFluidHandler.FluidAction.EXECUTE);
+                        player.playSound(SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS, 1, 1);
                     } else {
                         iFluidHandlerItem.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.EXECUTE);
+                        player.playSound(SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1, 1);
                     }
                     player.setHeldItem(handIn, iFluidHandlerItem.getContainer());
                 });
