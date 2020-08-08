@@ -31,6 +31,7 @@ public class RenderTypes {
             RenderTypeLookup.setRenderLayer(Registered_Blocks.CHAIR, RenderType.getTranslucent());
             RenderTypeLookup.setRenderLayer(Registered_Blocks.WATER_FACE, RenderType.getTranslucent());
             RenderTypeLookup.setRenderLayer(Registered_Blocks.TEA_WATER_FACE, RenderType.getTranslucent());
+            RenderTypeLookup.setRenderLayer(Registered_Blocks.SINK, RenderType.getTranslucent());
     }
 
     @SubscribeEvent

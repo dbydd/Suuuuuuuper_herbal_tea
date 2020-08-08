@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class BlockSink extends BlockBase {
     public BlockSink() {
-        super(Properties.create(Material.ROCK).notSolid().hardnessAndResistance(3));
+        super(Properties.create(Material.ROCK).notSolid().hardnessAndResistance(3).lightValue(1));
     }
 
     @Override
