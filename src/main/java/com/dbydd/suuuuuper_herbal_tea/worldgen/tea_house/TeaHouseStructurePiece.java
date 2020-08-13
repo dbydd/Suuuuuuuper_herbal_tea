@@ -49,12 +49,12 @@ public class TeaHouseStructurePiece extends TemplateStructurePiece {
 
     @Override
     protected void handleDataMarker(String function, BlockPos pos, IWorld worldIn, Random rand, MutableBoundingBox sbb) {
-        if("barrel".equals(function)){
+        if ("barrel".equals(function)) {
             BlockPos offset = pos.offset(rot.rotate(Direction.NORTH));
             worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
             TileEntity tileentity = worldIn.getTileEntity(offset);
             if (tileentity instanceof BarrelTileEntity) {
-                ((BarrelTileEntity)tileentity).setLootTable(new ResourceLocation("teahouse_barrel_loottable"), rand.nextLong());
+                ((BarrelTileEntity) tileentity).setLootTable(new ResourceLocation("teahouse_barrel_loottable"), rand.nextLong());
             }
         }
     }

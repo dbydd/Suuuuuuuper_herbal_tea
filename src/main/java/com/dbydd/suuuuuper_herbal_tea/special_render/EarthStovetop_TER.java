@@ -1,4 +1,4 @@
-package com.dbydd.suuuuuper_herbal_tea.tesr;
+package com.dbydd.suuuuuper_herbal_tea.special_render;
 
 import com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys.TileEarth_Stovetop;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Blocks;
@@ -25,8 +25,8 @@ import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class Earth_Stovetop_TER extends TileEntityRenderer<TileEarth_Stovetop> {
-    public Earth_Stovetop_TER(TileEntityRendererDispatcher rendererDispatcherIn) {
+public class EarthStovetop_TER extends TileEntityRenderer<TileEarth_Stovetop> {
+    public EarthStovetop_TER(TileEntityRendererDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
     }
 

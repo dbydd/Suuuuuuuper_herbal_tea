@@ -1,9 +1,8 @@
-package com.dbydd.suuuuuper_herbal_tea.tesr;
+package com.dbydd.suuuuuper_herbal_tea.special_render;
 
 import com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys.TileBig_Black_Pot;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Blocks;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Fluids;
-import com.dbydd.suuuuuper_herbal_tea.utils.IResourceItemHandler;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;

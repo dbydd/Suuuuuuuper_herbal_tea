@@ -9,6 +9,8 @@ import net.minecraft.command.arguments.EntityAnchorArgument;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ArmorStandEntity;
+import net.minecraft.entity.item.BoatEntity;
+import net.minecraft.entity.item.minecart.MinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -40,7 +42,7 @@ public class RightClickHandler {
             if (block == Registered_Blocks.CHAIR) {
                 event.setCanceled(true);
                 Vec3d vec = new Vec3d(pos.getX() + 0.5, pos.getY() + 0.2, pos.getZ() + 0.5);
-                final ArmorStandEntity dummy = new ArmorStandEntity(EntityType.ARMOR_STAND, event.getWorld());
+                final ArmorStandEntity dummy = new ArmorStandEntity(EntityType.ARMOR_STAND, world);
                 dummy.getDataManager().set(ArmorStandEntity.STATUS, (byte) (1 | 8 | 16));
                 dummy.setInvisible(true);
                 dummy.entityCollisionReduction = 1F;
@@ -49,7 +51,7 @@ public class RightClickHandler {
                 dummy.lookAt(EntityAnchorArgument.Type.FEET, player.getLookVec());
                 dummy.setPosition(vec.x, vec.y, vec.z);
                 event.getWorld().addEntity(dummy);
-                event.getPlayer().startRiding(dummy);
+                player.startRiding(dummy);
             } else if (off_hand.getToolTypes().contains(ToolType.SHOVEL) && player.isSneaking() && main_hand.getItem() == Items.CLAY_BALL && block == Blocks.BRICKS) {
                 world.setBlockState(pos, Registered_Blocks.EARTH_STOVETOP.getDefaultState().with(Earth_Stovetop.FACING, Direction.fromAngle(player.getHorizontalFacing().getOpposite().getHorizontalAngle() + 90)));
                 off_hand.setDamage(off_hand.getDamage() + 1);

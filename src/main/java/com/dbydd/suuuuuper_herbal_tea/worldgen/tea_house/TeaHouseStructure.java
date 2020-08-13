@@ -2,11 +2,14 @@ package com.dbydd.suuuuuper_herbal_tea.worldgen.tea_house;
 
 import com.mojang.datafixers.Dynamic;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeManager;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureStart;
@@ -24,6 +27,11 @@ public class TeaHouseStructure extends Structure<NoFeatureConfig> {
     @Override
     public boolean canBeGenerated(BiomeManager biomeManagerIn, ChunkGenerator<?> generatorIn, Random randIn, int chunkX, int chunkZ, Biome biomeIn) {
         return randIn.nextFloat() <= 0.002;
+    }
+
+    @Override
+    protected ChunkPos getStartPositionForPosition(ChunkGenerator<?> chunkGenerator, Random random, int x, int z, int spacingOffsetsX, int spacingOffsetsZ) {
+        return super.getStartPositionForPosition(chunkGenerator, random, x, z, spacingOffsetsX, spacingOffsetsZ);
     }
 
     @Override

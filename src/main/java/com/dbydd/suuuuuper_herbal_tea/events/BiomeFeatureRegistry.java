@@ -6,7 +6,9 @@ import com.dbydd.suuuuuper_herbal_tea.worldgen.biomes.World_Tea_Tree_Biome;
 import com.dbydd.suuuuuper_herbal_tea.worldgen.tea_house.TeaHouseStructurePiece;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.NetherBiome;
 import net.minecraft.world.biome.OceanBiome;
+import net.minecraft.world.biome.TheEndBiome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.feature.structure.IStructurePieceType;
@@ -28,7 +30,7 @@ public class BiomeFeatureRegistry {
             if (!(biome instanceof World_Tea_Tree_Biome)) {
                 biome.addStructure(Registered_Features.TEA_HOUSE_FEATURE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
                 biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Registered_Features.TEA_HOUSE_FEATURE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
-                if (!(biome instanceof OceanBiome)) {
+                if (!(biome instanceof OceanBiome || biome instanceof NetherBiome || biome instanceof TheEndBiome)) {
                     biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Registered_Features.TEA_RESOURCE_GENERATION_OVERWORLD.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Registered_Decorators.TEA_REOURCE_DECORATOR.get().configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
                 }
             }

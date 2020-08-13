@@ -17,8 +17,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
@@ -104,8 +102,9 @@ public class TeaCupItem extends BlockItem implements IPutableItem {
 
     @Override
     protected boolean canPlace(BlockItemUseContext p_195944_1_, BlockState p_195944_2_) {
-        if (!p_195944_1_.getWorld().isRemote())
+        if (!p_195944_1_.getWorld().isRemote()) {
             return p_195944_1_.getPlayer().isSneaking();
+        }
         return false;
     }
 

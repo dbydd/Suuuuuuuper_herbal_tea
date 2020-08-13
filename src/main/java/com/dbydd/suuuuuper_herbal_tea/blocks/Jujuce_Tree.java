@@ -139,4 +139,15 @@ public class Jujuce_Tree extends BlockBase implements IGrowable {
         return !(blockState.isAir(worldIn, pos) || blockState.getBlock() instanceof FlowingFluidBlock || blockState.getBlock() instanceof BushBlock);
     }
 
+
+    @Override
+    public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor) {
+        if(!world.isRemote()) {
+            if (world.getBlockState(pos.offset(Direction.DOWN)).isAir(world, pos.offset(Direction.DOWN))) {
+                if (world instanceof World) {
+                    ((World) world).setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
+                }
+            }
+        }
+    }
 }

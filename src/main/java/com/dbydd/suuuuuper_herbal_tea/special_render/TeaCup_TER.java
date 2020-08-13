@@ -1,4 +1,4 @@
-package com.dbydd.suuuuuper_herbal_tea.tesr;
+package com.dbydd.suuuuuper_herbal_tea.special_render;
 
 import com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys.TileTeaCup;
 import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Blocks;
@@ -10,12 +10,11 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
 import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
-public class Tea_Cup_TER extends TileEntityRenderer<TileTeaCup> {
-    public Tea_Cup_TER(TileEntityRendererDispatcher rendererDispatcherIn) {
+public class TeaCup_TER extends TileEntityRenderer<TileTeaCup> {
+    public TeaCup_TER(TileEntityRendererDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
     }
 

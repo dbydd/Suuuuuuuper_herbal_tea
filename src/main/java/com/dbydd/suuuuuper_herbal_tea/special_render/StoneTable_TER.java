@@ -1,4 +1,4 @@
-package com.dbydd.suuuuuper_herbal_tea.tesr;
+package com.dbydd.suuuuuper_herbal_tea.special_render;
 
 import com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys.TileStone_Table;
 import com.dbydd.suuuuuper_herbal_tea.items.TeaCupItem;
@@ -10,8 +10,6 @@ import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Vector3f;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.fluid.Fluid;
@@ -22,9 +20,9 @@ import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class Stone_Table_TER extends TileEntityRenderer<TileStone_Table> {
+public class StoneTable_TER extends TileEntityRenderer<TileStone_Table> {
 
-    public Stone_Table_TER(TileEntityRendererDispatcher rendererDispatcherIn) {
+    public StoneTable_TER(TileEntityRendererDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
     }
 
