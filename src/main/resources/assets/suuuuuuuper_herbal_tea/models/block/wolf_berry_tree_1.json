@@ -1,7 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "suuuuuuuper_herbal_tea:blocks/wolf_berry_tree"
+		"0": "suuuuuuuper_herbal_tea:blocks/wolf_berry_tree",
+		"particle": "suuuuuuuper_herbal_tea:blocks/wolf_berry_tree"
 	},
 	"elements": [
 		{

@@ -2,7 +2,8 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"1": "suuuuuuuper_herbal_tea:items/log_oak_top",
-		"2": "minecraft:block/stone"
+		"2": "minecraft:block/stone",
+		"particle": "minecraft:block/stone"
 	},
 	"elements": [
 		{
