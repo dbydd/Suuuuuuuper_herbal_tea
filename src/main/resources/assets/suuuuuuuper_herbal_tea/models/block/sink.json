@@ -2,7 +2,8 @@
   "ambientocclusion": false,
   "textures": {
     "0": "minecraft:block/water_still",
-    "1": "suuuuuuuper_herbal_tea:blocks/brick"
+    "1": "suuuuuuuper_herbal_tea:blocks/brick",
+    "particle": "suuuuuuuper_herbal_tea:blocks/brick"
   },
   "elements": [
     {

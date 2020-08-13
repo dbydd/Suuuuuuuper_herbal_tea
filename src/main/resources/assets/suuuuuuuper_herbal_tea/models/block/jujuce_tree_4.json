@@ -1,7 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "suuuuuuuper_herbal_tea:blocks/jujuce_tree"
+		"0": "suuuuuuuper_herbal_tea:blocks/jujuce_tree",
+		"particle": "suuuuuuuper_herbal_tea:blocks/jujuce_tree"
 	},
 	"elements": [
 		{

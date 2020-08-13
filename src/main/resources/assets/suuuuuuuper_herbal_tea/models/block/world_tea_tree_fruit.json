@@ -1,6 +1,7 @@
 {
 	"textures": {
-		"2": "suuuuuuuper_herbal_tea:blocks/world_tea_tree_fruit"
+		"2": "suuuuuuuper_herbal_tea:blocks/world_tea_tree_fruit",
+		"particle": "suuuuuuuper_herbal_tea:blocks/world_tea_tree_fruit"
 	},
 	"elements": [
 		{
