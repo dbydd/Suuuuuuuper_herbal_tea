@@ -77,7 +77,7 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
 
                 currentPos = new BlockPos(currentx, currentPos.getY() - 1, currentz);
             }
-            while (!(currentPos.getY() <= 0 || world.getBlockState(currentPos).isAir())) {
+            while (!(currentPos.getY() <= 0 || world.getBlockState(currentPos).isAir()) && !MathUtils.inCircle(currentPos.getX(), currentPos.getZ(), MAIN_BRANCH_BLOCK_RANGE)) {
                 for (int x = -branchwidth; x < branchwidth; x++) {
                     for (int z = -branchwidth; z < branchwidth; z++) {
 
