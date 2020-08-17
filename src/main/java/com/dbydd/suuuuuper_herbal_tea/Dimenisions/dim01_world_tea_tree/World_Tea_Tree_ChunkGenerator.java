@@ -48,47 +48,47 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
     }
 
     private void generateRandomBranch(IWorld world, IChunk iChunk, ChunkPos chunkPos, BlockPos pos, Random rand) {
-            BlockPos currentPos = pos;
-            int currentx;
-            int currentz;
-            int branchwidth = Math.round((float) (rand.nextInt(7) + 1) / 2.0f);
-            while (currentPos.getY() >= pos.getY() - 60) {
+        BlockPos currentPos = pos;
+        int currentx;
+        int currentz;
+        int branchwidth = Math.round((float) (rand.nextInt(7) + 1) / 2.0f);
+        while (currentPos.getY() >= pos.getY() - 60) {
 
-                for (int x = -branchwidth; x < branchwidth; x++) {
-                    for (int z = -branchwidth; z < branchwidth; z++) {
+            for (int x = -branchwidth; x < branchwidth; x++) {
+                for (int z = -branchwidth; z < branchwidth; z++) {
 
-                        if (MathUtils.inCircle(x, z, branchwidth)) {
-                            world.setBlockState(new BlockPos(currentPos.getX() + x, currentPos.getY(), currentPos.getZ() + z), BRANCH_DEFAULT_STATE, 3);
-                        }
+                    if (MathUtils.inCircle(x, z, branchwidth)) {
+                        world.setBlockState(new BlockPos(currentPos.getX() + x, currentPos.getY(), currentPos.getZ() + z), BRANCH_DEFAULT_STATE, 3);
                     }
                 }
-
-                if (currentPos.getX() < 0) {
-                    currentx = currentPos.getX() + 1;
-                } else {
-                    currentx = currentPos.getX() - 1;
-                }
-
-                if (currentPos.getZ() < 0) {
-                    currentz = currentPos.getZ() + 1;
-                } else {
-                    currentz = currentPos.getZ() - 1;
-                }
-
-                currentPos = new BlockPos(currentx, currentPos.getY() - 1, currentz);
             }
-            while (!(currentPos.getY() <= 0 || world.getBlockState(currentPos).isAir()) && !MathUtils.inCircle(currentPos.getX(), currentPos.getZ(), MAIN_BRANCH_BLOCK_RANGE)) {
-                for (int x = -branchwidth; x < branchwidth; x++) {
-                    for (int z = -branchwidth; z < branchwidth; z++) {
 
-                        if (MathUtils.inCircle(x, z, branchwidth)) {
-                            world.setBlockState(new BlockPos(currentPos.getX() + x, currentPos.getY(), currentPos.getZ() + z), BRANCH_DEFAULT_STATE, 3);
-                        }
+            if (currentPos.getX() < 0) {
+                currentx = currentPos.getX() + 1;
+            } else {
+                currentx = currentPos.getX() - 1;
+            }
+
+            if (currentPos.getZ() < 0) {
+                currentz = currentPos.getZ() + 1;
+            } else {
+                currentz = currentPos.getZ() - 1;
+            }
+
+            currentPos = new BlockPos(currentx, currentPos.getY() - 1, currentz);
+        }
+        while (!(currentPos.getY() <= 0 || world.getBlockState(currentPos).isAir()) && !MathUtils.inCircle(currentPos.getX(), currentPos.getZ(), MAIN_BRANCH_BLOCK_RANGE << 1)) {
+            for (int x = -branchwidth; x < branchwidth; x++) {
+                for (int z = -branchwidth; z < branchwidth; z++) {
+
+                    if (MathUtils.inCircle(x, z, branchwidth)) {
+                        world.setBlockState(new BlockPos(currentPos.getX() + x, currentPos.getY(), currentPos.getZ() + z), BRANCH_DEFAULT_STATE, 3);
                     }
                 }
-
-                currentPos = new BlockPos(currentPos.getX(), currentPos.getY() - 1, currentPos.getZ());
             }
+
+            currentPos = new BlockPos(currentPos.getX(), currentPos.getY() - 1, currentPos.getZ());
+        }
 
     }
 
