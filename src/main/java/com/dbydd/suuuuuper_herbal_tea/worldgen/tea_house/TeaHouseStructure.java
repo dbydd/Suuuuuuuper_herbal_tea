@@ -30,11 +30,6 @@ public class TeaHouseStructure extends Structure<NoFeatureConfig> {
     }
 
     @Override
-    protected ChunkPos getStartPositionForPosition(ChunkGenerator<?> chunkGenerator, Random random, int x, int z, int spacingOffsetsX, int spacingOffsetsZ) {
-        return super.getStartPositionForPosition(chunkGenerator, random, x, z, spacingOffsetsX, spacingOffsetsZ);
-    }
-
-    @Override
     public IStartFactory getStartFactory() {
         return Start::new;
     }
@@ -56,7 +51,7 @@ public class TeaHouseStructure extends Structure<NoFeatureConfig> {
 
         @Override
         public void init(ChunkGenerator<?> generator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn) {
-            TeaHouseStructurePiece teaHouseStructurePiece = new TeaHouseStructurePiece(templateManagerIn, new BlockPos(chunkX*16, generator.getGroundHeight()-1, chunkZ*16), rand);
+            TeaHouseStructurePiece teaHouseStructurePiece = new TeaHouseStructurePiece(templateManagerIn, new BlockPos(chunkX*16, generator.func_222531_c(chunkX, chunkZ, Heightmap.Type.WORLD_SURFACE_WG), chunkZ*16), rand);
             this.components.add(teaHouseStructurePiece);
             this.recalculateStructureSize();
         }
