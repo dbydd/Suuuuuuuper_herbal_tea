@@ -96,7 +96,7 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
         int beginx = (chunkPos.getXStart() + chunkPos.getXEnd()) / 2;
         int beginz = (chunkPos.getZStart() + chunkPos.getZEnd()) / 2;
         Random rand = world.getRandom();
-        int stratum = rand.nextInt(14) + 2;
+        int stratum = rand.nextInt(10) + 2;
         int currentHeight = 60 + rand.nextInt(8);
         for (int currentStratum = 1; currentStratum <= stratum; currentStratum++) {
             int stratumHeight = rand.nextInt(16);
