@@ -23,9 +23,6 @@ public class TeaHouseStructure extends Structure<NoFeatureConfig> {
 
     @Override
     public boolean canBeGenerated(BiomeManager biomeManagerIn, ChunkGenerator<?> generatorIn, Random randIn, int chunkX, int chunkZ, Biome biomeIn) {
-        if(biomeIn == Registered_Biomes.TEA_VILLA.get()){
-            return randIn.nextFloat() <= 0.25;
-        }
         return randIn.nextFloat() <= 0.002;
     }
 
@@ -51,7 +48,7 @@ public class TeaHouseStructure extends Structure<NoFeatureConfig> {
 
         @Override
         public void init(ChunkGenerator<?> generator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn) {
-            TeaHouseStructurePiece teaHouseStructurePiece = new TeaHouseStructurePiece(templateManagerIn, new BlockPos(chunkX*16, generator.func_222531_c(chunkX, chunkZ, Heightmap.Type.WORLD_SURFACE_WG), chunkZ*16), rand);
+            TeaHouseStructurePiece teaHouseStructurePiece = new TeaHouseStructurePiece(templateManagerIn, new BlockPos(chunkX*16, generator.func_222531_c(chunkX, chunkZ, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES), chunkZ*16), rand);
             this.components.add(teaHouseStructurePiece);
             this.recalculateStructureSize();
         }
