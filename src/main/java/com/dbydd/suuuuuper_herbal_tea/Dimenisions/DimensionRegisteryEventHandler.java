@@ -22,7 +22,7 @@ public class DimensionRegisteryEventHandler {
         if (DimensionType.byName(WORLD_TEA_TREE_ID) == null) {
             WORLD_TEA_TREE = DimensionManager.registerDimension(WORLD_TEA_TREE_ID, Registered_Dimenisions.WORLD_TEA_TREE.get(), null, true);
         }
-        if(DimensionType.byName(TEA_VILLA_ID) == null) {
+        if (DimensionType.byName(TEA_VILLA_ID) == null) {
             TEA_VILLA = DimensionManager.registerDimension(TEA_VILLA_ID, Registered_Dimenisions.TEA_VILLA.get(), null, true);
         }
     }

@@ -6,6 +6,7 @@ import com.mojang.datafixers.types.DynamicOps;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.util.Direction;
@@ -28,8 +29,8 @@ public class TeaVillaBlockPlacer extends net.minecraft.world.gen.blockplacer.Blo
     @Override
     public void func_225567_a_(IWorld world, BlockPos blockPos, BlockState blockState, Random random) {
         Block block = blockState.getBlock();
-        int randX = 8+random.nextInt(8);
-        int randZ = 8+random.nextInt(8);
+        int randX = 8 + random.nextInt(8);
+        int randZ = 8 + random.nextInt(8);
         double randOfNull = random.nextDouble();
         int beginX = blockPos.getX();
         int beginZ = blockPos.getZ();
@@ -40,8 +41,11 @@ public class TeaVillaBlockPlacer extends net.minecraft.world.gen.blockplacer.Blo
                     int currentX = beginX + xAdd;
                     int currentZ = beginZ + zAdd;
                     int currentY = world.getHeight(Heightmap.Type.WORLD_SURFACE_WG, currentX, currentZ);
-                    BlockPos currentPos = new BlockPos(currentX, currentY-1, currentZ);
-                    world.setBlockState(currentPos, blockState, 3);
+                    BlockPos currentPos = new BlockPos(currentX, currentY - 1, currentZ);
+                    BlockState blockState1 = world.getBlockState(currentPos);
+                    if (canplace(blockState1)) {
+                        world.setBlockState(currentPos, blockState, 3);
+                    }
                 }
             }
         } else {
@@ -50,20 +54,27 @@ public class TeaVillaBlockPlacer extends net.minecraft.world.gen.blockplacer.Blo
                 list.add(random.nextInt(randX));
             }
             for (int xAdd = 0; xAdd <= randX; xAdd++) {
-                if(random.nextDouble() <= randOfNull){continue;}
+                if (random.nextDouble() <= randOfNull) {
+                    continue;
+                }
                 for (int zAdd = 0; zAdd <= randZ; zAdd++) {
-                    if(list.contains(zAdd))continue;
+                    if (list.contains(zAdd)) continue;
                     int currentX = beginX + xAdd;
                     int currentZ = beginZ + zAdd;
                     int currentY = world.getHeight(Heightmap.Type.WORLD_SURFACE, currentX, currentZ);
                     BlockPos currentPos = new BlockPos(currentX, currentY, currentZ);
-                    if (world.getBlockState(currentPos.offset(Direction.DOWN)).isSolid()) {
+                    BlockState blockState1 = world.getBlockState(currentPos.offset(Direction.DOWN));
+                    if (canplace(blockState1)) {
                         world.setBlockState(currentPos, blockState, 3);
                     }
 
                 }
             }
         }
+    }
+
+    private boolean canplace(BlockState blockState) {
+        return blockState.isSolid() && !(blockState.getBlock() instanceof FlowingFluidBlock) && (blockState.getBlock() == Blocks.DIRT || blockState.getBlock() == Blocks.COARSE_DIRT || blockState.getBlock() == Blocks.GRASS_BLOCK);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.dbydd.suuuuuper_herbal_tea.worldgen.tea_house;
 
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Biomes;
 import com.mojang.datafixers.Dynamic;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;

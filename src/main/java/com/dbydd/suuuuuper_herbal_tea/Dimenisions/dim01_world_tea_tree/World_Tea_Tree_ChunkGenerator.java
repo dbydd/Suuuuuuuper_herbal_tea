@@ -33,7 +33,7 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
     private static final int LEAVE_BLOCK_RANGE = MAIN_BRANCH_BLOCK_RANGE << 5;
     private static final int LEAVE_CHUNK_RANGE = LEAVE_BLOCK_RANGE >> 4;
     private static final BlockState BRANCH_DEFAULT_STATE = Blocks.OAK_LOG.getDefaultState();
-    private static Map<Double, BlockState> generate_Map = new HashMap<>();
+    private static final Map<Double, BlockState> generate_Map = new HashMap<>();
 
     public World_Tea_Tree_ChunkGenerator(IWorld worldIn, BiomeProvider biomeProviderIn) {
         super(worldIn, biomeProviderIn, new World_Tea_Tree_GenerationSettings());
@@ -102,7 +102,7 @@ public class World_Tea_Tree_ChunkGenerator extends ChunkGenerator<GenerationSett
             int stratumHeight = rand.nextInt(16);
             if (RandomUtils.outputBooleanByChance(rand, 0.57)) {
 
-                if (RandomUtils.outputBooleanByChance(rand, 0.35) && !MathUtils.inCircle(beginx,beginz, MAIN_BRANCH_BLOCK_RANGE << 1)) {
+                if (RandomUtils.outputBooleanByChance(rand, 0.35) && !MathUtils.inCircle(beginx, beginz, MAIN_BRANCH_BLOCK_RANGE << 1)) {
                     generateRandomBranch(world, iChunk, chunkPos, new BlockPos(beginx, currentHeight, beginz), rand);
                 }
 
