@@ -37,7 +37,9 @@ public class TeaHouseStructurePiece extends TemplateStructurePiece {
 
     public TeaHouseStructurePiece(TemplateManager templateManager, CompoundNBT compoundNBT) {
         super(BiomeFeatureRegistry.teaHouseStructurePieceType, 0);
-        Template temp = templateManager.func_227458_a_(compoundNBT);
+//        Template temp = templateManager.func_227458_a_(compoundNBT);
+        ResourceLocation templateName = new ResourceLocation(Suuuuuuuper_herbal_tea.NAME, "tea_house");
+        Template temp = templateManager.getTemplate(templateName);
         this.setup(temp, this.templatePosition, new PlacementSettings().setRotation(Rotation.valueOf(compoundNBT.getString("rot"))));
     }
 

@@ -18,6 +18,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BiomeFeatureRegistry {
     public static IStructurePieceType teaHouseStructurePieceType;
@@ -30,7 +34,8 @@ public class BiomeFeatureRegistry {
             if (!(biome instanceof World_Tea_Tree_Biome)) {
                 biome.addStructure(Registered_Features.TEA_HOUSE_FEATURE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
                 biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Registered_Features.TEA_HOUSE_FEATURE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
-                if (!(biome instanceof OceanBiome || biome instanceof NetherBiome || biome instanceof TheEndBiome)) {
+                List<Biome> biomeDenies = new ArrayList<>(ForgeRegistries.BIOMES.getValues().stream().filter(biome1 -> biome1.getRegistryName().getPath().contains("ocean")).collect(Collectors.toList()));
+                if (!(biomeDenies.contains(biome) || biome instanceof NetherBiome || biome instanceof TheEndBiome)) {
                     biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Registered_Features.TEA_RESOURCE_GENERATION_OVERWORLD.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Registered_Decorators.TEA_REOURCE_DECORATOR.get().configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
                 }
             }
