@@ -34,8 +34,11 @@ public class BiomeFeatureRegistry {
             if (!(biome instanceof World_Tea_Tree_Biome)) {
                 biome.addStructure(Registered_Features.TEA_HOUSE_FEATURE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
                 biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Registered_Features.TEA_HOUSE_FEATURE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
-                List<Biome> biomeDenies = new ArrayList<>(ForgeRegistries.BIOMES.getValues().stream().filter(biome1 -> biome1.getRegistryName().getPath().contains("ocean")).collect(Collectors.toList()));
-                if (!(biomeDenies.contains(biome) || biome instanceof NetherBiome || biome instanceof TheEndBiome)) {
+                List<Biome> biomeDenies = new ArrayList<>(ForgeRegistries.BIOMES.getValues().stream().filter(biome1 -> {
+                    String path = biome1.getRegistryName().getPath();
+                    return path.contains("ocean") || path.contains("nether") || path.contains("end");
+                }).collect(Collectors.toList()));
+                if (!biomeDenies.contains(biome)) {
                     biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Registered_Features.TEA_RESOURCE_GENERATION_OVERWORLD.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Registered_Decorators.TEA_REOURCE_DECORATOR.get().configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
                 }
             }
