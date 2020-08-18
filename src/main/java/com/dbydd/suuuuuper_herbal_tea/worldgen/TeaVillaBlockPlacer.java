@@ -44,7 +44,7 @@ public class TeaVillaBlockPlacer extends net.minecraft.world.gen.blockplacer.Blo
                     BlockPos currentPos = new BlockPos(currentX, currentY - 1, currentZ);
                     BlockState blockState1 = world.getBlockState(currentPos);
                     if (canplace(blockState1)) {
-                        world.setBlockState(currentPos, blockState, 3);
+                        world.setBlockState(currentPos, blockState, 1);
                     }
                 }
             }
@@ -65,7 +65,7 @@ public class TeaVillaBlockPlacer extends net.minecraft.world.gen.blockplacer.Blo
                     BlockPos currentPos = new BlockPos(currentX, currentY, currentZ);
                     BlockState blockState1 = world.getBlockState(currentPos.offset(Direction.DOWN));
                     if (canplace(blockState1)) {
-                        world.setBlockState(currentPos, blockState, 3);
+                        world.setBlockState(currentPos, blockState, 1);
                     }
 
                 }
