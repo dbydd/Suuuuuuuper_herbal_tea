@@ -1,5 +1,6 @@
 package com.dbydd.suuuuuper_herbal_tea.worldgen.tea_house;
 
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Biomes;
 import com.mojang.datafixers.Dynamic;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
@@ -22,6 +23,9 @@ public class TeaHouseStructure extends Structure<NoFeatureConfig> {
 
     @Override
     public boolean canBeGenerated(BiomeManager biomeManagerIn, ChunkGenerator<?> generatorIn, Random randIn, int chunkX, int chunkZ, Biome biomeIn) {
+        if(biomeIn == Registered_Biomes.TEA_VILLA.get()){
+            return randIn.nextFloat() <= 0.25;
+        }
         return randIn.nextFloat() <= 0.002;
     }
 

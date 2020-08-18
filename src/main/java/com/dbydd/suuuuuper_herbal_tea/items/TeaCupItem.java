@@ -50,7 +50,7 @@ public class TeaCupItem extends BlockItem implements IPutableItem {
                     stack.setTag(blockEntityTag);
                     Direction horizontalFacing = entityLiving.getHorizontalFacing();
                     if (worldIn.getBlockState(entityLiving.getPosition().offset(horizontalFacing, 2)).getBlock() instanceof TeaTree && entityLiving.getRidingEntity() != null && worldIn.getBlockState(entityLiving.getPosition().offset(horizontalFacing)).getBlock() instanceof Stone_Table) {
-                        entityLiving.changeDimension(DimensionType.byName(DimensionRegisteryEventHandler.DIMENSION_ID), new ITeleporter() {
+                        entityLiving.changeDimension(DimensionType.byName(DimensionRegisteryEventHandler.WORLD_TEA_TREE_ID), new ITeleporter() {
                             @Override
                             public Entity placeEntity(Entity entity, ServerWorld currentWorld, ServerWorld destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
                                 entity = repositionEntity.apply(false);

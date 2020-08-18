@@ -4,7 +4,6 @@ import com.dbydd.suuuuuper_herbal_tea.Dimenisions.DimensionRegisteryEventHandler
 import com.dbydd.suuuuuper_herbal_tea.items.*;
 import com.dbydd.suuuuuper_herbal_tea.utils.RandomUtils;
 import com.dbydd.suuuuuper_herbal_tea.utils.StructureUtils;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -23,7 +22,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.WorldInfo;
-import net.minecraft.world.storage.loot.conditions.WeatherCheck;
 import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.items.ItemHandlerHelper;
 
@@ -81,7 +79,7 @@ public class Registered_Items {
         }
     }, new EffectInstance(Effects.STRENGTH, 100, 2));
     public static final Item WORLD_TEA_TREE_TEA_LEAVE = new Tea_Leaves("world_tea_tree_tea_leave", (world, playerEntity, magnification) -> {
-        playerEntity.changeDimension(DimensionType.byName(DimensionRegisteryEventHandler.DIMENSION_ID), new ITeleporter() {
+        playerEntity.changeDimension(DimensionType.byName(DimensionRegisteryEventHandler.WORLD_TEA_TREE_ID), new ITeleporter() {
             @Override
             public Entity placeEntity(Entity entity, ServerWorld currentWorld, ServerWorld destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
                 entity = repositionEntity.apply(false);
