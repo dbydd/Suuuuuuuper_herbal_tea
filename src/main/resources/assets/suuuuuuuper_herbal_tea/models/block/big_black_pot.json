@@ -68,7 +68,7 @@
 	"display": {
 		"gui": {
 			"rotation": [15, -35, -2],
-			"translation": [0, -2.25, 0]
+			"translation": [0, 1, 0]
 		}
 	},
 	"groups": [
