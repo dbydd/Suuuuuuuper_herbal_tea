@@ -37,17 +37,17 @@ public class BiomeFeatureRegistry {
 
         for (Biome biome : ForgeRegistries.BIOMES) {
             if (!(biome instanceof World_Tea_Tree_Biome)) {
-                biome.addStructure(Registered_Features.TEA_HOUSE_FEATURE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
-                biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Registered_Features.TEA_HOUSE_FEATURE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
                 List<Biome> biomeDenies = new ArrayList<>(ForgeRegistries.BIOMES.getValues().stream().filter(biome1 -> {
                     String path = biome1.getRegistryName().getPath();
                     return path.contains("ocean") || path.contains("nether") || path.contains("end");
                 }).collect(Collectors.toList()));
                 if (!biomeDenies.contains(biome)) {
+                    biome.addStructure(Registered_Features.TEA_HOUSE_FEATURE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
+                    biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Registered_Features.TEA_HOUSE_FEATURE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
                     biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Registered_Features.TEA_RESOURCE_GENERATION_OVERWORLD.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Registered_Decorators.TEA_REOURCE_DECORATOR.get().configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
                 }
             }
-            if(biome instanceof Tea_Villa_Biome){
+            if (biome instanceof Tea_Villa_Biome) {
                 biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Registered_Features.TEA_VILLA_RESOURCE_GEN.get().withConfiguration(new BlockClusterFeatureConfig.Builder(new TeaVillaStateProvider(), new TeaVillaBlockPlacer()).build()).withPlacement(Registered_Decorators.TEA_VILLA_RESOURCE_GEN_DECORATOR.get().configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
             }
         }

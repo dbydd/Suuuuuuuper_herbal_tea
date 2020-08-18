@@ -33,6 +33,7 @@ public class TeaHouseStructurePiece extends TemplateStructurePiece {
         Template temp = templateManagerIn.getTemplate(templateName);
         this.templatePosition = pos;
         this.rot = Rotation.randomRotation(rand);
+        if(temp != null && templatePosition!= null)
         this.setup(temp, pos, new PlacementSettings().setRotation(rot));
     }
 
@@ -41,7 +42,8 @@ public class TeaHouseStructurePiece extends TemplateStructurePiece {
 //        Template temp = templateManager.func_227458_a_(compoundNBT);
         ResourceLocation templateName = new ResourceLocation(Suuuuuuuper_herbal_tea.NAME, "tea_house");
         Template temp = templateManager.getTemplate(templateName);
-        this.setup(temp, this.templatePosition, new PlacementSettings().setRotation(Rotation.valueOf(compoundNBT.getString("rot"))));
+        if (temp != null && templatePosition != null)
+            this.setup(temp, this.templatePosition, new PlacementSettings().setRotation(Rotation.valueOf(compoundNBT.getString("rot"))));
     }
 
     @Override
