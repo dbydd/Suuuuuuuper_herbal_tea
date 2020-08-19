@@ -31,6 +31,7 @@ public class TeaHouseStructurePiece extends TemplateStructurePiece {
         this.rot = Rotation.randomRotation(rand);
         if (temp != null && templatePosition != null) {
             PlacementSettings placementSettings = new PlacementSettings().setRotation(rot);
+            this.boundingBox = temp.getMutableBoundingBox(placementSettings, templatePosition);
             this.setup(temp, pos, placementSettings);
         }
     }
@@ -42,6 +43,7 @@ public class TeaHouseStructurePiece extends TemplateStructurePiece {
         Template temp = templateManager.getTemplate(templateName);
         if (temp != null && templatePosition != null) {
             PlacementSettings placementSettings = new PlacementSettings().setRotation(rot);
+            this.boundingBox = temp.getMutableBoundingBox(placementSettings, templatePosition);
             this.setup(temp, templatePosition, placementSettings);
         }
     }

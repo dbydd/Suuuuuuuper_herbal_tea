@@ -39,7 +39,7 @@ public class BiomeFeatureRegistry {
             if (!(biome instanceof World_Tea_Tree_Biome)) {
                 List<Biome> biomeDenies = new ArrayList<>(ForgeRegistries.BIOMES.getValues().stream().filter(biome1 -> {
                     String path = biome1.getRegistryName().getPath();
-                    return path.contains("ocean") || path.contains("nether") || path.contains("end")|| path.contains("tea_villa");
+                    return path.contains("ocean") || path.contains("nether") || path.contains("end");
                 }).collect(Collectors.toList()));
                 if (!biomeDenies.contains(biome)) {
                     biome.addStructure(Registered_Features.TEA_HOUSE_FEATURE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
