@@ -12,7 +12,6 @@ public class Tea_Villa_Biome extends Biome {
         DefaultBiomeFeatures.addDenseGrass(this);
         DefaultBiomeFeatures.addExtraDefaultFlowers(this);
         DefaultBiomeFeatures.addTaigaRocks(this);
-        DefaultBiomeFeatures.addStructures(this);
         DefaultBiomeFeatures.addLakes(this);
         DefaultBiomeFeatures.addOres(this);
         DefaultBiomeFeatures.addSwampClayDisks(this);
