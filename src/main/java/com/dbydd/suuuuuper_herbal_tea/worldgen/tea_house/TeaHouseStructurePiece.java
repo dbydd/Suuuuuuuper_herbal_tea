@@ -2,6 +2,7 @@ package com.dbydd.suuuuuper_herbal_tea.worldgen.tea_house;
 
 import com.dbydd.suuuuuper_herbal_tea.Suuuuuuuper_herbal_tea;
 import com.dbydd.suuuuuper_herbal_tea.events.BiomeFeatureRegistry;
+import javafx.geometry.BoundingBox;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.BarrelTileEntity;
@@ -28,8 +29,10 @@ public class TeaHouseStructurePiece extends TemplateStructurePiece {
         Template temp = templateManagerIn.getTemplate(templateName);
         this.templatePosition = pos;
         this.rot = Rotation.randomRotation(rand);
-        if(temp != null && templatePosition!= null)
-        this.setup(temp, pos, new PlacementSettings().setRotation(rot));
+        if (temp != null && templatePosition != null) {
+            PlacementSettings placementSettings = new PlacementSettings().setRotation(rot);
+            this.setup(temp, pos, placementSettings);
+        }
     }
 
     public TeaHouseStructurePiece(TemplateManager templateManager, CompoundNBT compoundNBT) {
@@ -37,8 +40,10 @@ public class TeaHouseStructurePiece extends TemplateStructurePiece {
 //        Template temp = templateManager.func_227458_a_(compoundNBT);
         ResourceLocation templateName = new ResourceLocation(Suuuuuuuper_herbal_tea.NAME, "tea_house");
         Template temp = templateManager.getTemplate(templateName);
-        if (temp != null && templatePosition != null)
-            this.setup(temp, this.templatePosition, (new PlacementSettings()).setRotation(this.rot));
+        if (temp != null && templatePosition != null) {
+            PlacementSettings placementSettings = new PlacementSettings().setRotation(rot);
+            this.setup(temp, templatePosition, placementSettings);
+        }
     }
 
     @Override
