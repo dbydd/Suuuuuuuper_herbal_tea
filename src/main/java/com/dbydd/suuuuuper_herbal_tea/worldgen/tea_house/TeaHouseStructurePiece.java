@@ -2,7 +2,6 @@ package com.dbydd.suuuuuper_herbal_tea.worldgen.tea_house;
 
 import com.dbydd.suuuuuper_herbal_tea.Suuuuuuuper_herbal_tea;
 import com.dbydd.suuuuuper_herbal_tea.events.BiomeFeatureRegistry;
-import javafx.geometry.BoundingBox;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.BarrelTileEntity;
