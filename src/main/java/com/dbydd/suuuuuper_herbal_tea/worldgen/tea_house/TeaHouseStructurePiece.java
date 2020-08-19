@@ -38,12 +38,12 @@ public class TeaHouseStructurePiece extends TemplateStructurePiece {
         ResourceLocation templateName = new ResourceLocation(Suuuuuuuper_herbal_tea.NAME, "tea_house");
         Template temp = templateManager.getTemplate(templateName);
         if (temp != null && templatePosition != null)
-            this.setup(temp, this.templatePosition, new PlacementSettings().setRotation(Rotation.valueOf(compoundNBT.getString("rot"))));
+            this.setup(temp, this.templatePosition, (new PlacementSettings()).setRotation(this.rot));
     }
 
     @Override
     protected void readAdditional(CompoundNBT tagCompound) {
-        tagCompound.putString("rot", rot.toString());
+        tagCompound.putString("Rot", rot.name());
         super.readAdditional(tagCompound);
     }
 
