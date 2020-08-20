@@ -130,9 +130,8 @@ public class Registered_Items {
         World world1 = world.getWorld();
         if (!world.isRemote()) {
             WorldInfo worldInfo = world1.getWorldInfo();
-            if (world1.isRaining()) {
+            if (worldInfo.isRaining()) {
                 worldInfo.setRaining(false);
-                world1.setRainStrength(0);
                 if(worldInfo.isThundering()) {
                     worldInfo.setThundering(false);
                     worldInfo.setThunderTime(0);
@@ -142,8 +141,6 @@ public class Registered_Items {
                 worldInfo.setRainTime(1000 * (int) Math.sqrt(magnification));
                 worldInfo.setThundering(true);
                 worldInfo.setThunderTime(1000 * (int) Math.sqrt(magnification));
-                world1.rainingStrength = (int) Math.sqrt(magnification);
-                world1.thunderingStrength = ((int) Math.sqrt(magnification));
             }
         }
         playerEntity.clearActivePotions();
