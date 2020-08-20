@@ -54,7 +54,13 @@ public class Registered_Items {
         world.setBlockState(playerEntity.getPosition(), Blocks.WATER.getDefaultState(), 2);
     }, new EffectInstance(Effects.LUCK, 100, 2));
     public static final Item TROPICAL_TEA_LEAVE = new Tea_Leaves("tropical_tea_leave", (world, playerEntity, magnification) -> {
-        world.getWorld().setRainStrength(1.0f * magnification);
+        WorldInfo worldInfo = world.getWorldInfo();
+        if(worldInfo.isRaining()){
+        worldInfo.setRaining(false);
+        worldInfo.setRainTime(1);}else {
+            worldInfo.setRaining(true);
+            worldInfo.setRainTime((int) (1.0f * magnification));
+        }
     }, new EffectInstance(Effects.JUMP_BOOST, 100, 2));
     public static final Item CLAY_TEA_LEAVE = new Tea_Leaves("clay_tea_leave", (world, playerEntity, magnification) -> {
         ItemHandlerHelper.giveItemToPlayer(playerEntity, new ItemStack(Items.DEAD_BUSH, (int) Math.sqrt(magnification) + 1));
