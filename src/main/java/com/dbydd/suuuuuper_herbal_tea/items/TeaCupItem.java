@@ -17,6 +17,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
@@ -38,7 +39,8 @@ public class TeaCupItem extends BlockItem implements IPutableItem {
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
         if (!worldIn.isRemote()) {
-            if (entityLiving instanceof PlayerEntity) {
+            BlockPos position = entityLiving.getPosition();
+            if (entityLiving instanceof PlayerEntity && worldIn.chunkExists(position.getX()>>4, position.getZ()>>4)) {
                 CompoundNBT blockEntityTag = stack.getChildTag("BlockEntityTag");
                 IResourceItemHandler effects = new IResourceItemHandler(9);
                 if (!blockEntityTag.getBoolean("isempty")) {
