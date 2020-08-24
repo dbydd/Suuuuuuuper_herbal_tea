@@ -17,4 +17,9 @@ public class Tea_Villa_Dimension extends OverworldDimension {
     public ChunkGenerator<? extends GenerationSettings> createChunkGenerator() {
         return new OverworldChunkGenerator(world, new Tea_Villa_BiomeProvider(), new OverworldGenSettings());
     }
+
+    @Override
+    public boolean canRespawnHere() {
+        return false;
+    }
 }
