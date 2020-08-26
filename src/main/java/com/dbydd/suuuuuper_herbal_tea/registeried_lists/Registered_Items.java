@@ -51,7 +51,7 @@ public class Registered_Items {
         EntityType.CAT.spawn(world.getWorld(), null, new StringTextComponent("your best friend"), playerEntity, playerEntity.getPosition(), SpawnReason.NATURAL, true, true);
     }, new EffectInstance(Effects.NIGHT_VISION, 100, 1));
     public static final Item DESERT_TEA_LEAVE = new Tea_Leaves("desert_tea_leave", (world, playerEntity, magnification) -> {
-        world.setBlockState(playerEntity.getPosition(), Blocks.WATER.getDefaultState(), 2);
+//        world.setBlockState(playerEntity.getPosition(), Blocks.WATER.getDefaultState(), 2);
     }, new EffectInstance(Effects.LUCK, 100, 2));
     public static final Item TROPICAL_TEA_LEAVE = new Tea_Leaves("tropical_tea_leave", (world, playerEntity, magnification) -> {
         WorldInfo worldInfo = world.getWorldInfo();
