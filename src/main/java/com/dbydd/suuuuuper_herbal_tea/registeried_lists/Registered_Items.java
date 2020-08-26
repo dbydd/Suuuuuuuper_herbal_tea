@@ -99,7 +99,7 @@ public class Registered_Items {
     }, new EffectInstance(Effects.RESISTANCE, 100, 5));
     public static final Item GREENDATE = new GreenDate("green_date", (world, playerEntity, magnification) -> {
         Collection<EffectInstance> activePotionEffects = playerEntity.getActivePotionEffects();
-        Collection<EffectInstance> activePotionEffectsGive = playerEntity.getActivePotionEffects();
+        Collection<EffectInstance> activePotionEffectsGive = new ArrayList<>();
         for (EffectInstance activePotionEffect : activePotionEffects) {
             int duration = activePotionEffect.getDuration();
             int amplifier = activePotionEffect.getAmplifier();
