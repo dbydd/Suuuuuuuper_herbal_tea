@@ -27,7 +27,7 @@ public class TileSink extends TileEntity implements IFluidTank {
         if(cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY){
             return LazyOptional.of(()->this).cast();
         }
-        return super.getCapability(cap);
+        return LazyOptional.empty();
     }
 
     @Nonnull
