@@ -1,18 +1,14 @@
 package com.dbydd.suuuuuper_herbal_tea.events;
 
-import com.dbydd.suuuuuper_herbal_tea.blocks.Earth_Stovetop;
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Blocks;
+import com.dbydd.suuuuuper_herbal_tea.blocks.EarthStovetop;
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.RegisteredBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.command.arguments.EntityAnchorArgument;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ArmorStandEntity;
-import net.minecraft.entity.item.BoatEntity;
-import net.minecraft.entity.item.minecart.MinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Direction;
@@ -39,7 +35,7 @@ public class RightClickHandler {
             PlayerEntity player = event.getPlayer();
             ItemStack off_hand = player.getHeldItem(Hand.OFF_HAND);
             ItemStack main_hand = player.getHeldItem(Hand.MAIN_HAND);
-            if (block == Registered_Blocks.CHAIR) {
+            if (block == RegisteredBlocks.CHAIR) {
                 event.setCanceled(true);
                 Vec3d vec = new Vec3d(pos.getX() + 0.5, pos.getY() + 0.2, pos.getZ() + 0.5);
                 final ArmorStandEntity dummy = new ArmorStandEntity(EntityType.ARMOR_STAND, world);
@@ -53,7 +49,7 @@ public class RightClickHandler {
                 event.getWorld().addEntity(dummy);
                 player.startRiding(dummy);
             } else if (off_hand.getToolTypes().contains(ToolType.SHOVEL) && player.isSneaking() && main_hand.getItem() == Items.CLAY_BALL && block == Blocks.BRICKS) {
-                world.setBlockState(pos, Registered_Blocks.EARTH_STOVETOP.getDefaultState().with(Earth_Stovetop.FACING, Direction.fromAngle(player.getHorizontalFacing().getOpposite().getHorizontalAngle() + 90)));
+                world.setBlockState(pos, RegisteredBlocks.EARTH_STOVETOP.getDefaultState().with(EarthStovetop.FACING, Direction.fromAngle(player.getHorizontalFacing().getOpposite().getHorizontalAngle() + 90)));
                 off_hand.setDamage(off_hand.getDamage() + 1);
                 main_hand.shrink(1);
                 player.setHeldItem(Hand.OFF_HAND, off_hand);
@@ -66,7 +62,7 @@ public class RightClickHandler {
     public static void stand(EntityMountEvent event) {
         if (event.isDismounting() && event.getEntityBeingMounted() instanceof ArmorStandEntity) {
             Entity entityBeingMounted = event.getEntityBeingMounted();
-            if (event.getWorldObj().getBlockState(entityBeingMounted.getPosition()).getBlock() == Registered_Blocks.CHAIR && entityBeingMounted.isInvisible()) {
+            if (event.getWorldObj().getBlockState(entityBeingMounted.getPosition()).getBlock() == RegisteredBlocks.CHAIR && entityBeingMounted.isInvisible()) {
                 entityBeingMounted.remove();
             }
         }

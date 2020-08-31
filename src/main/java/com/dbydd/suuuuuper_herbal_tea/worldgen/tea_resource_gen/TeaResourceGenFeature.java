@@ -1,15 +1,14 @@
 package com.dbydd.suuuuuper_herbal_tea.worldgen.tea_resource_gen;
 
-import com.dbydd.suuuuuper_herbal_tea.blocks.Jujuce_Tree;
+import com.dbydd.suuuuuper_herbal_tea.blocks.JujuceTree;
 import com.dbydd.suuuuuper_herbal_tea.blocks.TeaTree;
-import com.dbydd.suuuuuper_herbal_tea.blocks.Wolf_Berry_Tree;
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Blocks;
+import com.dbydd.suuuuuper_herbal_tea.blocks.WolfBerryTree;
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.RegisteredBlocks;
 import com.dbydd.suuuuuper_herbal_tea.utils.RandomUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.gen.feature.BlockClusterFeatureConfig;
 import net.minecraft.world.gen.feature.FlowersFeature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 
@@ -40,7 +39,7 @@ public class TeaResourceGenFeature extends FlowersFeature<NoFeatureConfig> {
     @Override
     public BlockState getFlowerToPlace(Random random, BlockPos pos, NoFeatureConfig p_225562_3_) {
         if (RandomUtils.outputBooleanByChance(random, 0.12)) {
-            List<BlockState> blocks = Arrays.asList(Registered_Blocks.JUJUCE_TREE_TREE.getDefaultState().with(Jujuce_Tree.GROW_TIER, random.nextInt(5)), Registered_Blocks.TEA_TREE.getDefaultState().with(TeaTree.GROW_TIER, random.nextInt(5)), Registered_Blocks.WOLF_BERRY_TREE.getDefaultState().with(Wolf_Berry_Tree.GROW_TIER, random.nextInt(5)), Registered_Blocks.HONEYSUCKLE.getDefaultState());
+            List<BlockState> blocks = Arrays.asList(RegisteredBlocks.JUJUCE_TREE_TREE.getDefaultState().with(JujuceTree.GROW_TIER, random.nextInt(5)), RegisteredBlocks.TEA_TREE.getDefaultState().with(TeaTree.GROW_TIER, random.nextInt(5)), RegisteredBlocks.WOLF_BERRY_TREE.getDefaultState().with(WolfBerryTree.GROW_TIER, random.nextInt(5)), RegisteredBlocks.HONEYSUCKLE.getDefaultState());
               return blocks.get(random.nextInt(blocks.size()));
         }
         return Blocks.AIR.getDefaultState();

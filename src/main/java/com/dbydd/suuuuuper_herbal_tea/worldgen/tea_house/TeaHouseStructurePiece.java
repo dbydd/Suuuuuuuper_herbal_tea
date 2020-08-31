@@ -1,6 +1,6 @@
 //package com.dbydd.suuuuuper_herbal_tea.worldgen.tea_house;
 //
-//import com.dbydd.suuuuuper_herbal_tea.Suuuuuuuper_herbal_tea;
+//import com.dbydd.suuuuuper_herbal_tea.SuuuuuuuperHerbalTea;
 //import com.dbydd.suuuuuper_herbal_tea.events.BiomeFeatureRegistry;
 //import net.minecraft.block.Blocks;
 //import net.minecraft.nbt.CompoundNBT;
@@ -26,7 +26,7 @@
 //
 //    public TeaHouseStructurePiece(TemplateManager templateManagerIn, BlockPos pos, Random rand) {
 //        super(BiomeFeatureRegistry.teaHouseStructurePieceType, 0);
-//        ResourceLocation templateName = new ResourceLocation(Suuuuuuuper_herbal_tea.NAME, "tea_house");
+//        ResourceLocation templateName = new ResourceLocation(SuuuuuuuperHerbalTea.NAME, "tea_house");
 //        Template temp = templateManagerIn.getTemplate(templateName);
 //        this.templatePosition = pos;
 //        this.rot = Rotation.randomRotation(rand);
@@ -39,7 +39,7 @@
 //
 //    public TeaHouseStructurePiece(TemplateManager templateManager, CompoundNBT compoundNBT) {
 //        super(BiomeFeatureRegistry.teaHouseStructurePieceType, 0);
-//        ResourceLocation templateName = new ResourceLocation(Suuuuuuuper_herbal_tea.NAME, "tea_house");
+//        ResourceLocation templateName = new ResourceLocation(SuuuuuuuperHerbalTea.NAME, "tea_house");
 //        Template temp = templateManager.getTemplate(templateName);
 //        this.rot = Rotation.valueOf(compoundNBT.getString("Rot"));
 //        if (temp != null && templatePosition != null) {

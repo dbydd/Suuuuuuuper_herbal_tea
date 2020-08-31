@@ -1,8 +1,8 @@
 package com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys;
 
 import com.dbydd.suuuuuper_herbal_tea.items.BigSpoon;
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Items;
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_TileEntities;
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.RegisteredItems;
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.RegisteredTileEntities;
 import com.dbydd.suuuuuper_herbal_tea.utils.IResourceItemHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -30,7 +30,7 @@ public class TileTeaCup extends TileEntity {
 
 
     public TileTeaCup() {
-        super(Registered_TileEntities.TEA_CUP.get());
+        super(RegisteredTileEntities.TEA_CUP.get());
     }
 
     @Override
@@ -56,7 +56,7 @@ public class TileTeaCup extends TileEntity {
             ItemStack heldItem = player.getHeldItem(handIn);
             if (heldItem == ItemStack.EMPTY) {
                 if (player.isSneaking()) {
-                    ItemStack itemStack = new ItemStack(Registered_Items.TEA_CUP);
+                    ItemStack itemStack = new ItemStack(RegisteredItems.TEA_CUP);
                     itemStack.setTagInfo("BlockEntityTag", this.write(new CompoundNBT()));
                     ItemHandlerHelper.giveItemToPlayer(player, itemStack);
                     worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());

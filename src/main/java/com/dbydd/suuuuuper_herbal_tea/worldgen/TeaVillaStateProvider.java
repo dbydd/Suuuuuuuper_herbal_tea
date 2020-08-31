@@ -1,9 +1,9 @@
 package com.dbydd.suuuuuper_herbal_tea.worldgen;
 
-import com.dbydd.suuuuuper_herbal_tea.blocks.Jujuce_Tree;
+import com.dbydd.suuuuuper_herbal_tea.blocks.JujuceTree;
 import com.dbydd.suuuuuper_herbal_tea.blocks.TeaTree;
-import com.dbydd.suuuuuper_herbal_tea.blocks.Wolf_Berry_Tree;
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Blocks;
+import com.dbydd.suuuuuper_herbal_tea.blocks.WolfBerryTree;
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.RegisteredBlocks;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.Dynamic;
 import com.mojang.datafixers.types.DynamicOps;
@@ -25,7 +25,7 @@ public class TeaVillaStateProvider extends BlockStateProvider {
 
     @Override
     public BlockState getBlockState(Random randomIn, BlockPos blockPosIn) {
-        List<BlockState> blocks = Arrays.asList(Registered_Blocks.JUJUCE_TREE_TREE.getDefaultState().with(Jujuce_Tree.GROW_TIER, 5), Registered_Blocks.TEA_TREE.getDefaultState().with(TeaTree.GROW_TIER, 5), Registered_Blocks.WOLF_BERRY_TREE.getDefaultState().with(Wolf_Berry_Tree.GROW_TIER, 5), Registered_Blocks.HONEYSUCKLE.getDefaultState(), Blocks.GRASS_PATH.getDefaultState());
+        List<BlockState> blocks = Arrays.asList(RegisteredBlocks.JUJUCE_TREE_TREE.getDefaultState().with(JujuceTree.GROW_TIER, 5), RegisteredBlocks.TEA_TREE.getDefaultState().with(TeaTree.GROW_TIER, 5), RegisteredBlocks.WOLF_BERRY_TREE.getDefaultState().with(WolfBerryTree.GROW_TIER, 5), RegisteredBlocks.HONEYSUCKLE.getDefaultState(), Blocks.GRASS_PATH.getDefaultState());
         return blocks.get(randomIn.nextInt(blocks.size()));
     }
 

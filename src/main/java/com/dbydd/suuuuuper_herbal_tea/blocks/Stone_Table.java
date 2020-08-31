@@ -1,10 +1,9 @@
 package com.dbydd.suuuuuper_herbal_tea.blocks;
 
-import com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys.TileStone_Table;
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Blocks;
+import com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys.TileStoneTable;
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.RegisteredBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -28,7 +27,7 @@ public class Stone_Table extends BlockBase {
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        return ((TileStone_Table)worldIn.getTileEntity(pos)).onBlockActivated(state, worldIn, pos, player, handIn, hit);
+        return ((TileStoneTable)worldIn.getTileEntity(pos)).onBlockActivated(state, worldIn, pos, player, handIn, hit);
     }
 
     @Override
@@ -39,13 +38,13 @@ public class Stone_Table extends BlockBase {
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new TileStone_Table();
+        return new TileStoneTable();
     }
 
     @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
         if(!worldIn.isRemote()) {
-            ItemEntity itemEntity = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Registered_Blocks.STONE_TABLE));
+            ItemEntity itemEntity = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(RegisteredBlocks.STONE_TABLE));
             worldIn.addEntity(itemEntity);
         }
         super.onBlockHarvested(worldIn, pos, state, player);

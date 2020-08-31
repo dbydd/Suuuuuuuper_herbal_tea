@@ -3,14 +3,15 @@ package com.dbydd.suuuuuper_herbal_tea.items;
 import com.dbydd.suuuuuper_herbal_tea.SuuuuuuuperHerbalTea;
 import com.dbydd.suuuuuper_herbal_tea.interfaces.ITeaEffects;
 import com.dbydd.suuuuuper_herbal_tea.interfaces.ITeaResource;
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.RegisteredBlocks;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Food;
 
-public class WolfBerry extends ItemBase implements ITeaResource {
-
+public class HoneySuckleItem extends BlockItem implements ITeaResource {
     private ITeaEffects effect;
 
-    public WolfBerry(String name, ITeaEffects effect) {
-        super(new Properties().group(SuuuuuuuperHerbalTea.TAB), name,new Food.Builder().setAlwaysEdible().hunger(2).saturation(3).build());
+    public HoneySuckleItem(ITeaEffects effect) {
+        super(RegisteredBlocks.HONEYSUCKLE,new Properties().group(SuuuuuuuperHerbalTea.TAB).food(new Food.Builder().saturation(2).hunger(2).fastToEat().setAlwaysEdible().build()));
         this.effect = effect;
     }
 

@@ -1,11 +1,11 @@
 package com.dbydd.suuuuuper_herbal_tea.items;
 
-import com.dbydd.suuuuuper_herbal_tea.Dimenisions.DimensionRegisteryEventHandler;
-import com.dbydd.suuuuuper_herbal_tea.Suuuuuuuper_herbal_tea;
+import com.dbydd.suuuuuper_herbal_tea.dimenisions.DimensionRegisteryEventHandler;
+import com.dbydd.suuuuuper_herbal_tea.SuuuuuuuperHerbalTea;
 import com.dbydd.suuuuuper_herbal_tea.blocks.Stone_Table;
 import com.dbydd.suuuuuper_herbal_tea.blocks.TeaTree;
 import com.dbydd.suuuuuper_herbal_tea.interfaces.IPutableItem;
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_Blocks;
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.RegisteredBlocks;
 import com.dbydd.suuuuuper_herbal_tea.utils.IResourceItemHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -28,7 +28,7 @@ import java.util.function.Function;
 
 public class TeaCupItem extends BlockItem implements IPutableItem {
     public TeaCupItem() {
-        super(Registered_Blocks.TEA_CUP, new Properties().maxStackSize(1).group(Suuuuuuuper_herbal_tea.TAB).food(new Food.Builder().setAlwaysEdible().hunger(1).build()));
+        super(RegisteredBlocks.TEA_CUP, new Properties().maxStackSize(1).group(SuuuuuuuperHerbalTea.TAB).food(new Food.Builder().setAlwaysEdible().hunger(1).build()));
     }
 
     @Override

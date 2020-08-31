@@ -1,6 +1,6 @@
 package com.dbydd.suuuuuper_herbal_tea.registeried_lists;
 
-import com.dbydd.suuuuuper_herbal_tea.fluids.Fluid_Base;
+import com.dbydd.suuuuuper_herbal_tea.fluids.FluidBase;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.dispenser.IBlockSource;
@@ -19,12 +19,12 @@ import java.util.List;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class FluidBucketDispenserRegister {
 
-    public static List<Fluid_Base> fluids = new ArrayList<>();
+    public static List<FluidBase> fluids = new ArrayList<>();
 
     @SubscribeEvent
     public static void onDispenserRegister(FMLCommonSetupEvent event) {
 
-        for (Fluid_Base fluidBase : fluids) {
+        for (FluidBase fluidBase : fluids) {
             DispenserBlock.registerDispenseBehavior(fluidBase.fluid_bucket.get(), new DefaultDispenseItemBehavior() {
                 private final DefaultDispenseItemBehavior dispenseItemBehavior = new DefaultDispenseItemBehavior();
                 /**

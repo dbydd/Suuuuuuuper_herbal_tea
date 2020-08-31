@@ -1,9 +1,8 @@
 package com.dbydd.suuuuuper_herbal_tea.blocks.tileentitys;
 
-import com.dbydd.suuuuuper_herbal_tea.registeried_lists.Registered_TileEntities;
+import com.dbydd.suuuuuper_herbal_tea.registeried_lists.RegisteredTileEntities;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -17,7 +16,7 @@ import javax.annotation.Nullable;
 
 public class TileSink extends TileEntity implements IFluidTank {
     public TileSink() {
-        super(Registered_TileEntities.TILE_SINK.get());
+        super(RegisteredTileEntities.TILE_SINK.get());
     }
 
 
